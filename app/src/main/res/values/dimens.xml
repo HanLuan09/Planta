@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_navigation_height">58dp</dimen>
+    <dimen name="bottom_navigation_icon_size">30dp</dimen>
+    <dimen name="tab_navigation_height">56dp</dimen>
+    <dimen name="appbar_layout">256dp</dimen>
+
+    <dimen name="margin_low">6dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_huge">36dp</dimen>
+    <dimen name="margin_mega">80dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_micro">4dp</dimen>
+
+    <dimen name="refresher_offset">50dp</dimen>
+    <dimen name="refresher_offset_end">125dp</dimen>
+
+    <dimen name="search_detail_word">80dp</dimen>
+    <dimen name="favorites_header">136dp</dimen>
+
+    <dimen name="text_size_h1">27sp</dimen>
+    <dimen name="text_size_h2">21sp</dimen>
+    <dimen name="text_size_h3">19sp</dimen>
+    <dimen name="text_size_h4">17sp</dimen>
+    <dimen name="text_size_h5">15sp</dimen>
+    <dimen name="text_size_h6">13sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="close_size">28dp</dimen>
+</resources>

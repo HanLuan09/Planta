@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Planta" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/tiktok_regular</item>
+    </style>
+
+    <style name="Theme.Planta" parent="Base.Theme.Planta" />
+
+    <style name="Theme.Splash" parent="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:fontFamily">@font/tiktok_regular</item>
+    </style>
+
+</resources>

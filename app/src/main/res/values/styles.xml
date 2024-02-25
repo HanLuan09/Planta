@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.Widget.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="android:background">@android:color/white</item>
+        <item name="itemIconTint">@color/selector_bottom_nav</item>
+        <item name="itemTextColor">@color/selector_bottom_nav</item>
+
+        <item name="itemIconSize">@dimen/bottom_navigation_icon_size</item>
+    </style>
+
+    <style name="Base.Widget.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@android:color/transparent</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabTextColor">#8A8A8A</item>
+        <item name="tabRippleColor">@null</item>
+    </style>
+
+    <style name="TextAppearance.Header.Title" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_h1</item>
+    </style>
+
+    <style name="TextAppearance.Title" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">@dimen/text_size_h2</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="TextAppearance.Word.Type" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">@dimen/text_size_h5</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextAppearance.Word.Example" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">@dimen/text_size_h5</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="MyShapeAppearanceOverlay" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>
+

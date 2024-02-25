@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="myGardenViewModel"
+            type="vn.edu.ptit.planta.ui.mygarden.MyGardenViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.mygarden.AddMyGardenActivity"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/id_add_garden_relayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:onClick="@{() -> myGardenViewModel.onBlackMyPlantClick()}"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"/>
+
+            <RelativeLayout
+                android:layout_marginTop="30dp"
+                android:id="@+id/id_garden_relayout_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/circle_img_myplanta"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay"
+                    app:srcCompat="@drawable/plant_img" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/circle_img_myplanta"
+                    android:layout_alignBottom="@id/circle_img_myplanta"
+                    android:layout_marginEnd="-6dp"
+                    android:padding="10dp"
+                    android:background="@drawable/rounded_icon_outline"
+                    android:src="@drawable/ic_check" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/id_add_garden_relayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/id_card_my_garden"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/colorBackground"
+                app:cardBackgroundColor="@color/colorBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="9"
+                        app:boxStrokeWidth="0dp"
+                        app:boxBackgroundMode="none"
+                        app:hintEnabled="false">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="text"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:hint="Name plant"
+                            android:text="@={myGardenViewModel.namePlant}"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="6dp"
+                        android:background="@drawable/rounded_icon_outline"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_backspace" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <RelativeLayout
+                android:id="@+id/id_layout_4"
+                android:layout_below="@id/id_card_my_garden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tiktok_bold"
+                    android:text="Nhắc nhở"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true" />
+
+                <ImageView
+                    android:onClick="@{() -> myGardenViewModel.onAddNotificationClick()}"
+                    android:padding="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_plus"
+                    android:background="@drawable/rounded_icon"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_above="@+id/id_layout_5"
+                android:layout_below="@+id/id_layout_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Your speakable text for NestedScrollView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/item_notification"/>
+
+                    <include layout="@layout/item_notification"/>
+                    <include layout="@layout/item_notification"/>
+                    <include layout="@layout/item_notification"/>
+                    <include layout="@layout/item_notification"/>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <RelativeLayout
+                android:id="@+id/id_layout_5"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp">
+                <Button
+                    android:onClick="@{() -> myGardenViewModel.handleSubmit()}"
+                    android:alpha="@{myGardenViewModel.validateGarden? 1.0f : 0.8f}"
+                    android:enabled="@{myGardenViewModel.validateGarden}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tiktok_medium"
+                    android:background="@drawable/custom_button_1"
+                    android:text="@{myGardenViewModel.busy ? `` : `Lưu`}"/>
+
+                    <ProgressBar
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminateTint="@color/white"
+                        android:visibility="@{myGardenViewModel.busy? View.VISIBLE : View.GONE}" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

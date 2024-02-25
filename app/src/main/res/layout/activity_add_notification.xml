@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="notificationViewModel"
+            type="vn.edu.ptit.planta.ui.mygarden.notification.AddNotificationViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.mygarden.notification.AddNotificationActivity"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/layout_add_1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_24"
+                app:tint="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:text="Add Notification"
+                android:fontFamily="@font/tiktok_bold"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_below="@id/layout_add_1"
+            android:layout_above="@+id/layout_add_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_check"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bài tập"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="14.5sp"/>
+                        <TextView
+                            android:layout_marginTop="6dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{notificationViewModel.exercise}"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSecond"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
+                <!-- 2 -->
+                <LinearLayout
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:id="@+id/layout_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_check"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ngày bắt đầu"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="14.5sp"/>
+                        <TextView
+                            android:layout_marginTop="6dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{notificationViewModel.date}"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSecond"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
+
+
+                <!--            -->
+
+                <LinearLayout
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:id="@+id/layout_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_sort"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Giờ"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="14.5sp"/>
+                        <TextView
+                            android:id="@+id/text_time"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{notificationViewModel.time}"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSecond"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:id="@+id/layout_add_2"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp">
+            <Button
+                android:id="@+id/btn_noti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/tiktok_medium"
+                android:background="@drawable/custom_button_1"
+                android:text="Lưu"/>
+
+            <!--        <ProgressBar-->
+            <!--            android:layout_width="25dp"-->
+            <!--            android:layout_height="25dp"-->
+            <!--            android:layout_centerInParent="true"-->
+            <!--            android:indeterminateTint="@color/white"-->
+            <!--            android:visibility="@{myGardenViewModel.busy? View.VISIBLE : View.GONE}" />-->
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

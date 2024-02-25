@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/id_main_home"
+        android:title="Trang chủ"
+        android:icon="@drawable/selector_menu_home"
+        app:contentDescription="@string/app_name" />
+
+    <item
+        android:id="@+id/id_main_my_plant"
+        android:title="Khu vườn"
+        android:icon="@drawable/selector_menu_garden"
+        app:contentDescription="@string/app_name" />
+
+    <item
+        android:id="@+id/id_main_search"
+        android:title="Cây"
+        android:icon="@drawable/selector_menu_plant"
+        app:contentDescription="@string/app_name" />
+
+    <item
+        android:id="@+id/id_main_se"
+        android:title="Tiện ích"
+        android:icon="@drawable/selector_menu_home"
+        app:contentDescription="@string/app_name" />
+
+    <item
+        android:id="@+id/id_main_user"
+        android:title="Cá nhân"
+        android:icon="@drawable/selector_menu_user"
+        app:contentDescription="@string/app_name" />
+</menu>
