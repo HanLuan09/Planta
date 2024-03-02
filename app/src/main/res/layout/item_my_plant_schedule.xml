@@ -42,7 +42,7 @@
             android:layout_marginTop="6dp"
             android:textSize="12sp"
             android:textColor="@color/colorPrimary"
-            android:text="Tưới nước vào ngày 20 tháng 2"/>
+            android:text="Tưới nước"/>
 
     </LinearLayout>
 

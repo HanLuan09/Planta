@@ -8,15 +8,10 @@
         android:icon="@drawable/selector_menu_home"
         app:contentDescription="@string/app_name" />
 
-    <item
-        android:id="@+id/id_main_my_plant"
-        android:title="Khu vườn"
-        android:icon="@drawable/selector_menu_garden"
-        app:contentDescription="@string/app_name" />
 
     <item
-        android:id="@+id/id_main_search"
-        android:title="Cây"
+        android:id="@+id/id_main_plant"
+        android:title="Thực vật"
         android:icon="@drawable/selector_menu_plant"
         app:contentDescription="@string/app_name" />
 

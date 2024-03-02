@@ -49,14 +49,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <include layout="@layout/item_my_plant_upcoming"/>
+                        <include layout="@layout/item_my_plant_schedule"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginRight="30dp"
                             android:layout_marginLeft="80dp"
                             android:background="#CCCCCC"/>
-                        <include layout="@layout/item_my_plant_upcoming"/>
+                        <include layout="@layout/item_my_plant_schedule"/>
 
                     </LinearLayout>
 
@@ -94,14 +94,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <include layout="@layout/item_my_plant_upcoming"/>
+                        <include layout="@layout/item_my_plant_schedule"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginRight="30dp"
                             android:layout_marginLeft="80dp"
                             android:background="#CCCCCC"/>
-                        <include layout="@layout/item_my_plant_upcoming"/>
+                        <include layout="@layout/item_my_plant_schedule"/>
 
                     </LinearLayout>
 

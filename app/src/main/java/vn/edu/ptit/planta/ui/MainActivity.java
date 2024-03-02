@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.ui.home.HomeFragment;
 import vn.edu.ptit.planta.ui.home.myplant.MyPlantFragment;
+import vn.edu.ptit.planta.ui.plant.PlantFragment;
 import vn.edu.ptit.planta.ui.user.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,12 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.id_main_home) {
                     replaceFragment(new HomeFragment());
                     return true;
-                }
-                else if (item.getItemId() == R.id.id_main_my_plant) {
-                    replaceFragment(new MyPlantFragment());
-                    return true;
-                }else if (item.getItemId() == R.id.id_main_search) {
-                    replaceFragment(new UserFragment());
+                } else if (item.getItemId() == R.id.id_main_plant) {
+                    replaceFragment(new PlantFragment());
                     return true;
                 } else if (item.getItemId() == R.id.id_main_se) {
                     replaceFragment(new HomeFragment());

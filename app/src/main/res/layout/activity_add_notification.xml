@@ -6,13 +6,13 @@
     <data>
         <variable
             name="notificationViewModel"
-            type="vn.edu.ptit.planta.ui.mygarden.notification.AddNotificationViewModel" />
+            type="vn.edu.ptit.planta.ui.schedule.notification.AddNotificationViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.mygarden.notification.AddNotificationActivity"
+        tools:context=".ui.schedule.notification.AddNotificationActivity"
         android:background="@color/white"
         android:padding="10dp">
 
@@ -23,6 +23,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <ImageView
+                android:onClick="@{()-> notificationViewModel.onCloseNotificationClick()}"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,9 +62,9 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_check"/>
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_water"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -93,10 +94,12 @@
                     android:background="@color/colorSecond"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"/>
+
+
                 <!-- 2 -->
                 <LinearLayout
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:id="@+id/layout_date"
+                    android:id="@+id/layout_start_date"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="8dp"
@@ -107,7 +110,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_check"/>
+                        android:src="@drawable/ic_calendar"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,7 +127,7 @@
                             android:layout_marginTop="6dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{notificationViewModel.date}"
+                            android:text="@{notificationViewModel.startDate}"
                             android:textColor="@color/colorPrimary"
                             android:fontFamily="@font/tiktok_medium"
                             android:textSize="13sp"/>
@@ -139,6 +142,51 @@
                     android:layout_marginRight="4dp"/>
 
 
+                <!--                -->
+
+                <LinearLayout
+                    android:id="@+id/layout_end_date"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_calendar"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ngày kết thúc"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="14.5sp"/>
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{notificationViewModel.endDate}"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSecond"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
                 <!--            -->
 
                 <LinearLayout
@@ -154,7 +202,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_sort"/>
+                        android:src="@drawable/ic_time"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -186,6 +234,52 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"/>
 
+                <!--                -->
+
+                <LinearLayout
+                    android:id="@+id/layout_frequency"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_sort"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tần suất"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="14.5sp"/>
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{notificationViewModel.frequency + ` ngày 1 lần`}"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSecond"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -200,6 +294,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp">
             <Button
+                android:onClick="@{() -> notificationViewModel.onSummitNotificationClick()}"
                 android:id="@+id/btn_noti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

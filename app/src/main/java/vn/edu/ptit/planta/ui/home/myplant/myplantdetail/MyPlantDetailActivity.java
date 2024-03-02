@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.palette.graphics.Palette;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -27,7 +29,6 @@ import vn.edu.ptit.planta.R;
 public class MyPlantDetailActivity extends AppCompatActivity {
 
     private final List<String> tabTitles = Arrays.asList("Care", "Notes", "Note");
-
     private ActivityMyPlantDetailBinding binding;
     private MyPlantDeatilPagerAdapter adapter;
     private Toolbar toolbar;
@@ -44,7 +45,18 @@ public class MyPlantDetailActivity extends AppCompatActivity {
 
         toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Thiết lập sự kiện nhấn vào biểu tượng "Back"
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               finish();
+            }
+        });
+
+        initCollapsingToolbarLayout();
     }
 
     private void initMyDetail(TabLayout tabLayout, @NonNull ViewPager2 viewPager2) {
@@ -61,20 +73,41 @@ public class MyPlantDetailActivity extends AppCompatActivity {
             tabLayout.getTabAt(i).setCustomView(textView);
         }
     }
+
     private void initCollapsingToolbarLayout() {
 
         final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
-//        collapsingToolbarLayout.setTitleEnabled(false);
-//        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorBackground));
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.plant_img);
-        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+
+        AppBarLayout appBarLayout = binding.appBarLayout;
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
             @Override
-            public void onGenerated(@Nullable Palette palette) {
-                int myColor = palette.getVibrantColor(getResources().getColor(R.color.colorBackground));
-                int myDackColor = palette.getVibrantColor(getResources().getColor(R.color.black_trans));
-                collapsingToolbarLayout.setContentScrimColor(myColor);
-                collapsingToolbarLayout.setStatusBarScrimColor(myDackColor);
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+
+                if (scrollRange + verticalOffset == 0) {
+                    // Collapsed
+                    isShow = true;
+                    updateToolbarColors(true);
+                } else if (isShow) {
+                    // Expanded
+                    isShow = false;
+                    updateToolbarColors(false);
+                }
             }
         });
+    }
+    private void updateToolbarColors(boolean collapsed) {
+        if (collapsed) {
+            // Collapsed
+            toolbar.getNavigationIcon().setTint(getResources().getColor(android.R.color.black));
+        } else {
+            // Expanded
+            toolbar.getNavigationIcon().setTint(getResources().getColor(android.R.color.white));
+        }
     }
 }

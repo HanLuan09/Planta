@@ -9,15 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -28,7 +24,7 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentHomeBinding;
 import vn.edu.ptit.planta.ui.home.myplant.calendarmyplant.CalendarMyPlantActivity;
 import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.MyPlantDetailActivity;
-import vn.edu.ptit.planta.ui.mygarden.AddMyGardenActivity;
+import vn.edu.ptit.planta.ui.schedule.ScheduleActivity;
 
 public class HomeFragment extends Fragment implements HomeNavigator {
 
@@ -77,7 +73,7 @@ public class HomeFragment extends Fragment implements HomeNavigator {
 
     @Override
     public void handleAddMyGarden() {
-        Intent intent = new Intent(requireContext(), AddMyGardenActivity.class);
+        Intent intent = new Intent(requireContext(), ScheduleActivity.class);
         startActivity(intent);
         requireActivity().overridePendingTransition(0, 0);
     }

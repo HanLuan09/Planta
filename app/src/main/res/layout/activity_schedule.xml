@@ -1,26 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="scheduleViewModel"
+            type="vn.edu.ptit.planta.ui.schedule.ScheduleViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.myplant.myplantdetail.care.CareFragment">
+        tools:context=".ui.schedule.ScheduleActivity"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <RelativeLayout
+            android:id="@+id/id_add_garden_relayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+
+            <RelativeLayout
+                android:layout_marginTop="30dp"
+                android:id="@+id/id_garden_relayout_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/circle_img_myplanta"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay"
+                    app:srcCompat="@drawable/plant_img" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/circle_img_myplanta"
+                    android:layout_alignBottom="@id/circle_img_myplanta"
+                    android:layout_marginEnd="-6dp"
+                    android:padding="10dp"
+                    android:background="@drawable/rounded_icon_outline"
+                    android:src="@drawable/ic_check" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/id_add_garden_relayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp">
+
+
+            <RelativeLayout
+                android:id="@+id/id_layout_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tiktok_bold"
+                    android:text="Nhắc nhở"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true" />
+
+                <ImageView
+                    android:onClick="@{() -> scheduleViewModel.onAddNotificationClick()}"
+                    android:padding="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_plus"
+                    android:background="@drawable/rounded_icon"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_above="@+id/id_layout_5"
+                android:layout_below="@+id/id_layout_4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:contentDescription="Your speakable text for NestedScrollView">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -33,8 +109,8 @@
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="1dp"
-                        app:cardBackgroundColor="@color/colorBackground"
-                        app:strokeColor="@color/colorBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:strokeColor="@color/white"
                         app:strokeWidth="2dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/id_cardview_my_plant">
@@ -111,9 +187,32 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-        </androidx.core.widget.NestedScrollView>
+            <RelativeLayout
+                android:id="@+id/id_layout_5"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
+                <Button
+                    android:onClick="@{() -> scheduleViewModel.handleSubmit()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tiktok_medium"
+                    android:background="@drawable/custom_button_1"
+                    android:text="@{scheduleViewModel.busy ? `` : `Hoàn thành`}"/>
+
+                    <ProgressBar
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminateTint="@color/white"
+                        android:visibility="@{scheduleViewModel.busy? View.VISIBLE : View.GONE}" />
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
+
 </layout>
