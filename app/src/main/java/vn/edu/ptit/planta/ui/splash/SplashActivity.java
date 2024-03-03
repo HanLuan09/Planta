@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import vn.edu.ptit.planta.ui.MainActivity;
+import vn.edu.ptit.planta.ui.guesthome.GuestHomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, GuestHomeActivity.class);
                 startActivity(intent);
                 SplashActivity.this.overridePendingTransition(0, 0);
                 finish();

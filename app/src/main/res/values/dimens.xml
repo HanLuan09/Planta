@@ -3,7 +3,7 @@
     <dimen name="bottom_navigation_height">58dp</dimen>
     <dimen name="bottom_navigation_icon_size">30dp</dimen>
     <dimen name="tab_navigation_height">56dp</dimen>
-    <dimen name="appbar_layout">256dp</dimen>
+    <dimen name="appbar_layout">246dp</dimen>
 
     <dimen name="margin_low">6dp</dimen>
     <dimen name="margin_medium">12dp</dimen>

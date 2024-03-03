@@ -26,7 +26,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         
-        TextView textView = findViewById(R.id.tv_date);
+//        TextView textView = findViewById(R.id.tv_date);
 
         collapsibleCalendar = findViewById(R.id.collapsibleCalendarView);
 
@@ -54,7 +54,12 @@ public class TestActivity extends AppCompatActivity {
 
             @Override
             public void onDaySelect() {
-                textView.setText(String.valueOf(collapsibleCalendar.getSelectedDay().toUnixTime()));
+                TextView text = findViewById(R.id.calendar_text_view);
+                int day = collapsibleCalendar.getSelectedDay().getDay();
+                int month = collapsibleCalendar.getSelectedDay().getMonth()+1;
+                int year = collapsibleCalendar.getSelectedDay().getYear();
+
+                text.setText("Ngày " +day+"/"+month+"/"+ year);
             }
 
             @Override
