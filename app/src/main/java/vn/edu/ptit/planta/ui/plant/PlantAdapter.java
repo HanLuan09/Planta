@@ -14,14 +14,15 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.model.Plant;
 
 public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHolder> {
 
-    private List<String> listPlants;
+    private List<Plant> listPlants;
 
     private PlantNavigator plantNavigator;
 
-    public PlantAdapter(List<String> listMyPlants) {
+    public PlantAdapter(List<Plant> listMyPlants) {
         this.listPlants = listMyPlants;
     }
 
@@ -29,7 +30,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
         this.plantNavigator = navigator;
     }
 
-    public void updateData(List<String> newData) {
+    public void updateData(List<Plant> newData) {
         this.listPlants = newData;
         notifyDataSetChanged();
     }
@@ -43,15 +44,16 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PlantViewHolder holder, int position) {
-        String s = listPlants.get(position);
-        if(s == null) return;
-        holder.textViewName.setText(s);
-        holder.shapeableImageView.setImageResource(R.drawable.plant_img);
+        Plant plant = listPlants.get(position);
+        if(plant == null) return;
+        holder.textViewName.setText(plant.getName());
+
+        plantNavigator.glideImage(plant.getImage(), holder.shapeableImageView);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(plantNavigator != null) plantNavigator.handleMyPlantDetail();
+                if(plantNavigator != null) plantNavigator.handlePlantDetail(plant);
             }
         });
     }
@@ -73,5 +75,8 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
             textViewName = itemView.findViewById(R.id.tv_name_planta);
 //            textViewDesc = itemView.findViewById(R.id.tv_desc_myplanta);
         }
+    }
+    public void release() {
+        //mContext = null;
     }
 }

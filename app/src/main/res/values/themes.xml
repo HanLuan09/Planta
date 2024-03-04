@@ -10,7 +10,7 @@
 
     </style>
 
-    <style name="Theme.Planta" parent="Base.Theme.Planta" >
+    <style name="Theme.Planta" parent="Base.Theme.Planta">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 

@@ -28,7 +28,7 @@ import vn.edu.ptit.planta.R;
 
 public class MyPlantDetailActivity extends AppCompatActivity {
 
-    private final List<String> tabTitles = Arrays.asList("Care", "Notes", "Note");
+    private final List<String> tabTitles = Arrays.asList("Care", "Notes", "Chart");
     private ActivityMyPlantDetailBinding binding;
     private MyPlantDeatilPagerAdapter adapter;
     private Toolbar toolbar;

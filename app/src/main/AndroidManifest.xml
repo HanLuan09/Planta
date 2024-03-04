@@ -15,6 +15,11 @@
         android:theme="@style/Theme.Planta"
         tools:targetApi="31">
         <activity
+            android:name=".ui.plant.plantdetail.PlantDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_plant_detail"
+            android:theme="@style/Theme.Planta" />
+        <activity
             android:name=".ui.TestActivity"
             android:exported="false" />
         <activity
@@ -24,7 +29,7 @@
             android:name=".ui.schedule.ScheduleActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.myplant.calendarmyplant.CalendarMyPlantActivity"
+            android:name=".ui.calendarmyplant.CalendarMyPlantActivity"
             android:exported="false"
             android:label="@string/title_activity_calendar_my_plant"
             android:theme="@style/Theme.Planta" />

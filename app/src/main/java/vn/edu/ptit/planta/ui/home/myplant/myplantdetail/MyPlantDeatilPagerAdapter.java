@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import vn.edu.ptit.planta.ui.home.myplant.MyPlantFragment;
 import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.care.CareFragment;
-import vn.edu.ptit.planta.ui.home.today.TodayFragment;
-import vn.edu.ptit.planta.ui.home.today.UpScheduleFragment;
+import vn.edu.ptit.planta.ui.note.ChartFragment;
 import vn.edu.ptit.planta.ui.note.NoteFragment;
 
 public class MyPlantDeatilPagerAdapter extends FragmentStateAdapter {
@@ -27,7 +25,7 @@ public class MyPlantDeatilPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new NoteFragment();
             case 2:
-                return new UpScheduleFragment();
+                return new ChartFragment();
             default:
                 return new CareFragment();
         }

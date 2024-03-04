@@ -52,17 +52,14 @@
                         style="@style/Widget.AppCompat.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_search"
-                        android:onClick="@{() -> homeViewModel.onMyPlantClick()}"/>
+                        android:src="@drawable/ic_search" />
 
                     <ImageView
                         style="@style/Widget.AppCompat.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_notification"
-                        android:contentDescription="Notifications"
-                        android:onClick="@{() -> homeViewModel.onMyPlantClick()}"/>
-
+                        android:contentDescription="Notifications" />
                 </LinearLayout>
             </RelativeLayout>
 

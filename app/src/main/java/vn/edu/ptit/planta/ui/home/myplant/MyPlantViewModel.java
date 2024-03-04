@@ -13,13 +13,13 @@ public class MyPlantViewModel extends ViewModel {
 
     private MyPlantNavigator myPlantNavigator;
     private MutableLiveData<List<String>> listMyPlants;
-
     private List<String> myPlants;
 
     public MyPlantViewModel() {
         listMyPlants = new MutableLiveData<>();
         initData();
     }
+
     public void setMyPlantNavigator(MyPlantNavigator navigator) {
         this.myPlantNavigator = navigator;
     }

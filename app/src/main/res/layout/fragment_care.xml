@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="careViewModel"
+            type="vn.edu.ptit.planta.ui.home.myplant.myplantdetail.care.CareViewModel" />
     </data>
 
     <LinearLayout
@@ -16,102 +19,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="12dp">
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/id_rcv_care"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="12dp" />
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_margin="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="1dp"
-                        app:cardBackgroundColor="@color/colorBackground"
-                        app:strokeColor="@color/colorBackground"
-                        app:strokeWidth="2dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:id="@+id/id_cardview_my_plant">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="14dp"
-                            android:paddingBottom="14dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2">
-
-                                <ImageView
-                                    android:id="@+id/img_item_noti"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/ic_water" />
-
-                                <LinearLayout
-                                    android:id="@+id/layout_myplanta"
-                                    android:layout_toEndOf="@id/img_item_noti"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:layout_centerVertical="true">
-
-                                    <TextView
-                                        android:id="@+id/tv_name_myplanta"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/tiktok_bold"
-                                        android:text="Tưới nước"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
-
-                                    <TextView
-                                        android:id="@+id/tv_desc_myplanta"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="6dp"
-                                        android:textSize="12sp"
-                                        android:textColor="@color/colorPrimary"
-                                        android:text="Định kì 2 ngày 1 lần vào lúc 8:30"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
-
-                                </LinearLayout>
-
-                            </RelativeLayout>
-
-                            <ImageView
-
-                                style="@style/Widget.AppCompat.ActionButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginRight="6dp"
-                                android:src="@drawable/ic_more_vert"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"/>
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
-
-            </LinearLayout>
+            </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
 

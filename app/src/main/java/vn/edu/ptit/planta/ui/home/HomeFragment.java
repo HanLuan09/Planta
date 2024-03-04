@@ -22,7 +22,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentHomeBinding;
-import vn.edu.ptit.planta.ui.home.myplant.calendarmyplant.CalendarMyPlantActivity;
+import vn.edu.ptit.planta.ui.calendarmyplant.CalendarMyPlantActivity;
 import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.MyPlantDetailActivity;
 import vn.edu.ptit.planta.ui.schedule.ScheduleActivity;
 
@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment implements HomeNavigator {
     private HomePagerAdapter homePagerAdapter;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -77,7 +76,6 @@ public class HomeFragment extends Fragment implements HomeNavigator {
         startActivity(intent);
         requireActivity().overridePendingTransition(0, 0);
     }
-
 
     private void initMyGarden(TabLayout tabLayout, @NonNull ViewPager2 viewPager2) {
         homePagerAdapter = new HomePagerAdapter(requireActivity());

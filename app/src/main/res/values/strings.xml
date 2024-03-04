@@ -51,4 +51,5 @@
     </string>
     <string name="title_activity_my_plant_detail">MyPlantDetailActivity</string>
     <string name="title_activity_calendar_my_plant">CalendarMyPlantActivity</string>
+    <string name="title_activity_plant_detail">PlantDetailActivity</string>
 </resources>

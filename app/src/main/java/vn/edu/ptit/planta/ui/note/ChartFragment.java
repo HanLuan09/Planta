@@ -1,4 +1,4 @@
-package vn.edu.ptit.planta.ui.home.today;
+package vn.edu.ptit.planta.ui.note;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import vn.edu.ptit.planta.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UpScheduleFragment#newInstance} factory method to
+ * Use the {@link ChartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpScheduleFragment extends Fragment {
+public class ChartFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class UpScheduleFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UpScheduleFragment() {
+    public ChartFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class UpScheduleFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UpScheduleFragment.
+     * @return A new instance of fragment ChartFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UpScheduleFragment newInstance(String param1, String param2) {
-        UpScheduleFragment fragment = new UpScheduleFragment();
+    public static ChartFragment newInstance(String param1, String param2) {
+        ChartFragment fragment = new ChartFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class UpScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_up_schedule, container, false);
+        return inflater.inflate(R.layout.fragment_chart, container, false);
     }
 }

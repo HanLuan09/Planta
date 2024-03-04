@@ -10,18 +10,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
+
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentPlantBinding;
+import vn.edu.ptit.planta.model.Plant;
 import vn.edu.ptit.planta.ui.TestActivity;
+import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
 
 public class PlantFragment extends Fragment implements PlantNavigator {
 
@@ -57,26 +61,50 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //if(plantAdapter != null) plantAdapter.release();
+    }
+
     private void initRecyclerView() {
         recyclerView = binding.idRcvPlant;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         // Quan sát dữ liệu thay đổi
-        viewModel.getListPlants().observe(requireActivity(), new Observer<List<String>>() {
+        viewModel.getListPlants().observe(requireActivity(), new Observer<List<Plant>>() {
             @Override
-            public void onChanged(List<String> strings) {
+            public void onChanged(List<Plant> plants) {
                 if (plantAdapter == null) {
                     // Nếu adapter chưa được tạo
-                    plantAdapter = new PlantAdapter(strings);
+                    plantAdapter = new PlantAdapter(plants);
                     plantAdapter.setPlantNavigator(PlantFragment.this);
                     recyclerView.setAdapter(plantAdapter);
                 } else {
                     // Nếu adapter đã tồn tại, cập nhật dữ liệu mới
-                    plantAdapter.updateData(strings);
+                    plantAdapter.updateData(plants);
                 }
             }
         });
 
+    }
+
+    @Override
+    public void handlePlantDetail(Plant plant) {
+        Intent intent = new Intent(requireContext(), PlantDetailActivity.class);
+        Bundle bundle = new Bundle();
+//        bundle.putInt("id_plant", 1);
+        bundle.putSerializable("plant", plant);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void glideImage(String image, ShapeableImageView shapeableImageView) {
+        Glide.with(requireContext())
+                .load(image)
+                .override(300,300)
+                .into(shapeableImageView);
     }
 }

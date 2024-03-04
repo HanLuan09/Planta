@@ -8,7 +8,6 @@
         android:icon="@drawable/selector_menu_home"
         app:contentDescription="@string/app_name" />
 
-
     <item
         android:id="@+id/id_main_plant"
         android:title="Thực vật"
@@ -16,9 +15,9 @@
         app:contentDescription="@string/app_name" />
 
     <item
-        android:id="@+id/id_main_se"
-        android:title="Tiện ích"
-        android:icon="@drawable/selector_menu_home"
+        android:id="@+id/id_main_utilities"
+        android:title="Tùy chọn"
+        android:icon="@drawable/selector_menu_utilities"
         app:contentDescription="@string/app_name" />
 
     <item
