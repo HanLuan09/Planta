@@ -8,29 +8,9 @@
     android:background="@color/colorBackground">
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="15dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:paddingBottom="50dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/id_rcv_myplant"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:onClick="@{() -> myPlantViewModel.onFloatingActionButton()}"
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

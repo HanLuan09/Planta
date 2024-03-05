@@ -38,4 +38,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
         this.overridePendingTransition(0, 0);
     }
 
+    @Override
+    public void handleBlackNotification() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        this.overridePendingTransition(0, 0);
+        finish();
+    }
+
 }

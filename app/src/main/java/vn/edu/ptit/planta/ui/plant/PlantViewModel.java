@@ -44,5 +44,4 @@ public class PlantViewModel extends ViewModel {
     public void onSearchPlant(){
 //        if(myPlantNavigator != null) myPlantNavigator.handleSearchMyPlant();
     }
-
 }

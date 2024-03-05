@@ -47,6 +47,21 @@
             android:name=".ui.guesthome.GuestHomeActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.plant.chooseplant.ChoosePlantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.plant.addplant.AddPlantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.plant.editplant.EditPlantActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="false" />
         <activity

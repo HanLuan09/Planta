@@ -9,6 +9,8 @@
 
     <color name="colorGrey">#80161823</color>
     <color name="colorGreen">#0BE09B</color>
+    <color name="colorGreenBanana">#5BD459</color>
+    <color name="colorGreenText">#2c6455</color>
 
     <color name="colorSecond">#cecece</color>
     <color name="colorBackground">#E8F4EC</color>
@@ -21,4 +23,8 @@
     <color name="divider">#EEEEEE</color>
     <color name="background">#f3f3f3</color>
     <color name="black_trans">#33000000</color>
+
+    <color name="colorLinkRegister">#005E93</color>
+    <color name="colorLinkForget">#6AB0B5</color>
+    <color name="colorBtnAccept">#44BB26</color>
 </resources>

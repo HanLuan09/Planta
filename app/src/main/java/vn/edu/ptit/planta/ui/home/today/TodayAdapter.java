@@ -3,16 +3,11 @@ package vn.edu.ptit.planta.ui.home.today;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.imageview.ShapeableImageView;
-
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.ui.plant.PlantAdapter;
 
 public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHolder> {
 

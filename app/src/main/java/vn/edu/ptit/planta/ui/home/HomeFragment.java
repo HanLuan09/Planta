@@ -24,7 +24,7 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentHomeBinding;
 import vn.edu.ptit.planta.ui.calendarmyplant.CalendarMyPlantActivity;
 import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.MyPlantDetailActivity;
-import vn.edu.ptit.planta.ui.schedule.ScheduleActivity;
+import vn.edu.ptit.planta.ui.plant.chooseplant.ChoosePlantActivity;
 
 public class HomeFragment extends Fragment implements HomeNavigator {
 
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment implements HomeNavigator {
 
     @Override
     public void handleAddMyGarden() {
-        Intent intent = new Intent(requireContext(), ScheduleActivity.class);
+        Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
         startActivity(intent);
         requireActivity().overridePendingTransition(0, 0);
     }

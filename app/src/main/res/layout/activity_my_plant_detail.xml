@@ -27,7 +27,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:collapsedTitleTextColor="@color/black"
+                app:collapsedTitleTextColor="@color/colorGreenText"
                 app:expandedTitleTextColor="@color/white"
                 app:title="Vạn niên thanh"
                 app:expandedTitleGravity="bottom|center"
@@ -53,17 +53,29 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:background="@color/white"
-                app:tabIndicatorHeight="0dp"
-                app:tabMode="fixed"
-                app:tabGravity="center"
-                app:tabRippleColor="@null"
-                android:contentDescription="description tab"/>
+                android:paddingRight="24dp"
+                android:paddingLeft="24dp"
+                android:layout_gravity="bottom"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabPaddingStart="3dp"
+                    app:tabPaddingEnd="3dp"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabMode="fixed"
+                    android:background="@drawable/tab_background"
+                    app:tabGravity="center"
+                    app:tabRippleColor="@null"
+                    android:contentDescription="description tab"/>
+
+            </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 

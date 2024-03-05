@@ -54,6 +54,7 @@ public class ScheduleViewModel extends ViewModel {
             @Override
             public void run() {
                 busy.setValue(false); // == View.GONE
+                scheduleNavigator.handleBlackNotification();
 
             }
         }, 3000);

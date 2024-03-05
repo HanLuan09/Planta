@@ -9,6 +9,7 @@ import android.os.Handler;
 
 import vn.edu.ptit.planta.ui.MainActivity;
 import vn.edu.ptit.planta.ui.guesthome.GuestHomeActivity;
+import vn.edu.ptit.planta.ui.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,8 +21,15 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, GuestHomeActivity.class);
-                startActivity(intent);
+                // xét đăng nhập
+                int t =1;
+                if( t== 1) {// chưa đăng nhập
+                    Intent intent = new Intent(SplashActivity.this, GuestHomeActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
                 SplashActivity.this.overridePendingTransition(0, 0);
                 finish();
             }

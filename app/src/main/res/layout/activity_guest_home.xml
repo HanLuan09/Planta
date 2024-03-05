@@ -17,6 +17,7 @@
         android:gravity="center">
 
         <ImageView
+            android:paddingStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -135,6 +136,7 @@
                     android:textColor="#1B1616" />
 
                 <TextView
+                    android:id="@+id/id_guest_tv_signup"
                     android:fontFamily="@font/tiktok_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

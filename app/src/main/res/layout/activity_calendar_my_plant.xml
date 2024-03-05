@@ -32,7 +32,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:src="@drawable/ic_backspace"
-          app:tint="@color/black" />
+          app:tint="@color/white" />
 
       <TextView
           android:id="@+id/calendar_text_view"
@@ -41,6 +41,7 @@
           android:paddingBottom="2dp"
           android:paddingLeft="10dp"
           android:text="Calendar"
+          android:textColor="@color/white"
           android:fontFamily="@font/tiktok_bold"
           android:textSize="16sp" />
 
