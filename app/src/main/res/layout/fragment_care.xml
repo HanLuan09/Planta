@@ -21,16 +21,50 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp">
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/id_rcv_care"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="12dp" />
+                    android:layout_margin="16dp" />
+                <LinearLayout
+                    android:layout_below="@id/id_rcv_care"
+                    android:layout_width="match_parent"
+                    android:background="@color/colorBackground"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:background="@color/white">
+
+                        <LinearLayout
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/item_schedule_care"/>
+                            <include layout="@layout/item_schedule_care"/>
+                            <include layout="@layout/item_schedule_care"/>
+                            <include layout="@layout/item_schedule_care"/>
+                            <include layout="@layout/item_schedule_care"/>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </RelativeLayout>
 

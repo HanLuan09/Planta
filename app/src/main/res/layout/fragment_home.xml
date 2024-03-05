@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
                     android:fontFamily="@font/tiktok_bold"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorGreenText"
                     android:textSize="20sp"
                     android:layout_marginStart="22dp"
                     android:layout_centerVertical="true"/>
@@ -78,6 +78,7 @@
                         android:id="@+id/tabLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:tabPaddingEnd="6dp"
                         app:tabIndicatorHeight="0dp"
                         app:tabMode="fixed"
                         app:tabGravity="center"
@@ -86,16 +87,22 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:id="@+id/imageView"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_calendar"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:onClick="@{() -> homeViewModel.onCalendarMyPlantClick()}"
-                    android:contentDescription="click calendar"/>
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        style="@style/Widget.AppCompat.ActionButton"
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_calendar"
+                        android:onClick="@{() -> homeViewModel.onCalendarMyPlantClick()}"
+                        android:contentDescription="click calendar"/>
+
+                </LinearLayout>
 
             </RelativeLayout>
 

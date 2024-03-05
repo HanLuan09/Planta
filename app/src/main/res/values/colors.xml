@@ -10,6 +10,8 @@
     <color name="colorGrey">#80161823</color>
     <color name="colorGreen">#0BE09B</color>
 
+    <color name="colorGreenText">#2c6455</color>
+
     <color name="colorSecond">#cecece</color>
     <color name="colorBackground">#E8F4EC</color>
     <!--    #01A4DB-->

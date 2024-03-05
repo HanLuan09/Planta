@@ -28,7 +28,7 @@ import vn.edu.ptit.planta.R;
 
 public class MyPlantDetailActivity extends AppCompatActivity {
 
-    private final List<String> tabTitles = Arrays.asList("Care", "Notes", "Chart");
+    private final List<String> tabTitles = Arrays.asList("Care", "Notes", "Chart", "About");
     private ActivityMyPlantDetailBinding binding;
     private MyPlantDeatilPagerAdapter adapter;
     private Toolbar toolbar;
@@ -48,6 +48,8 @@ public class MyPlantDetailActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
+
         // Thiết lập sự kiện nhấn vào biểu tượng "Back"
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,11 +58,11 @@ public class MyPlantDetailActivity extends AppCompatActivity {
             }
         });
 
-        initCollapsingToolbarLayout();
     }
 
     private void initMyDetail(TabLayout tabLayout, @NonNull ViewPager2 viewPager2) {
         adapter = new MyPlantDeatilPagerAdapter(this);
+        viewPager2.setUserInputEnabled(false);
         viewPager2.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) ->
@@ -74,40 +76,4 @@ public class MyPlantDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void initCollapsingToolbarLayout() {
-
-        final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
-
-        AppBarLayout appBarLayout = binding.appBarLayout;
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-
-                if (scrollRange + verticalOffset == 0) {
-                    // Collapsed
-                    isShow = true;
-                    updateToolbarColors(true);
-                } else if (isShow) {
-                    // Expanded
-                    isShow = false;
-                    updateToolbarColors(false);
-                }
-            }
-        });
-    }
-    private void updateToolbarColors(boolean collapsed) {
-        if (collapsed) {
-            // Collapsed
-            toolbar.getNavigationIcon().setTint(getResources().getColor(android.R.color.black));
-        } else {
-            // Expanded
-            toolbar.getNavigationIcon().setTint(getResources().getColor(android.R.color.white));
-        }
-    }
 }

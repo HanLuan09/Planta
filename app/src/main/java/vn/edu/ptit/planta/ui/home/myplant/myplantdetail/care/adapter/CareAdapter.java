@@ -1,4 +1,4 @@
-package vn.edu.ptit.planta.ui.home.myplant.myplantdetail.care;
+package vn.edu.ptit.planta.ui.home.myplant.myplantdetail.care.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.care.CareNavigator;
 
 public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder>  {
 
@@ -50,12 +51,13 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
         }else{
             holder.imageView.setImageResource(R.drawable.ic_check);
         }
-        holder.tvDesc.setText("Định kỳ 2 ngày một lần vào lúc "+schedule.getDesc());
+        holder.tvDesc.setText("Định kỳ 2 ngày một lần");
+        holder.tvTime.setText("Vào lúc: " + schedule.getDesc());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(plantNavigator != null) plantNavigator.handlePlantDetail(plant);
+                if(careNavigator != null) careNavigator.handleEditNotification();
             }
         });
     }
@@ -72,12 +74,14 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
         private ImageView imageView;
         private TextView tvName;
         private TextView tvDesc;
+        private TextView tvTime;
         public CareViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.id_cardview_care);
             imageView = itemView.findViewById(R.id.img_item_noti);
             tvName = itemView.findViewById(R.id.tv_name_care);
             tvDesc = itemView.findViewById(R.id.tv_desc_care);
+            tvTime = itemView.findViewById(R.id.tv_time_care);
         }
     }
 }

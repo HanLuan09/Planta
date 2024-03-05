@@ -27,7 +27,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:collapsedTitleTextColor="@color/blue"
+                app:collapsedTitleTextColor="@color/colorGreenText"
                 app:expandedTitleTextColor="@color/white"
                 app:title="Vạn niên thanh"
                 app:expandedTitleGravity="bottom|center"

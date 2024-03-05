@@ -12,4 +12,4 @@
     android:gravity="center"
     android:id="@+id/id_tab_textview"
     android:background="@drawable/tab_background_selector"
-    android:textColor="@color/tab_text_selector"/>
+    android:textColor="@color/tab_text_selector" />

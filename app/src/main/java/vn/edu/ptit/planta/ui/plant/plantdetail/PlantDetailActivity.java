@@ -33,7 +33,7 @@ public class PlantDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.blue));
+        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,6 +19,7 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentCareBinding;
 import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.care.adapter.CareAdapter;
 
 public class CareFragment extends Fragment implements CareNavigator {
 
@@ -32,7 +33,6 @@ public class CareFragment extends Fragment implements CareNavigator {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_care, container, false);
-
         viewModel = new ViewModelProvider(requireActivity()).get(CareViewModel.class);
         binding.setCareViewModel(viewModel);
         binding.setLifecycleOwner(this);
@@ -46,7 +46,7 @@ public class CareFragment extends Fragment implements CareNavigator {
 
     private void initRecyclerView() {
         recyclerView = binding.idRcvCare;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         viewModel.getListSchedules().observe(requireActivity(), new Observer<List<Schedule>>() {
@@ -63,6 +63,11 @@ public class CareFragment extends Fragment implements CareNavigator {
                 }
             }
         });
+
+    }
+
+    @Override
+    public void handleEditNotification() {
 
     }
 }
