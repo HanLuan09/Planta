@@ -34,12 +34,12 @@
             android:label="@string/title_activity_calendar_my_plant"
             android:theme="@style/Theme.Planta" />
         <activity
-            android:name=".ui.home.myplant.myplantdetail.MyPlantDetailActivity"
+            android:name=".ui.myplant.myplantdetail.MyPlantDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_my_plant_detail"
             android:theme="@style/Theme.Planta" />
         <activity
-            android:name=".ui.home.myplant.search.SearchMyPlantActivity"
+            android:name=".ui.myplant.search.SearchMyPlantActivity"
             android:exported="false"
             android:label="@string/title_activity_search_my_plant"
             android:theme="@style/Theme.Planta" />

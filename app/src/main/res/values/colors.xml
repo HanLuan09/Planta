@@ -12,13 +12,11 @@
     <color name="colorGreenBanana">#5BD459</color>
     <color name="colorGreenText">#2c6455</color>
 
-    <color name="colorGreenText">#2c6455</color>
-
     <color name="colorSecond">#cecece</color>
-    <color name="colorBackground">#E8F4EC</color>
+    <color name="colorBackground">#E2F4F1</color>
     <!--    #01A4DB-->
     <color name="nav_selected">#5cb38a</color>
-    <color name="nav_unselected">#161823</color>
+    <color name="nav_unselected">#767678</color>
 
     <color name="blue">#03A9F4</color>
     <color name="red">#FE2C55</color>

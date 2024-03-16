@@ -37,7 +37,7 @@
                     android:fontFamily="@font/tiktok_bold"
                     android:text="Thực vật"
                     android:textColor="@color/colorGreenText"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_size_h4" />
 
                 <LinearLayout
                     android:layout_marginRight="10dp"

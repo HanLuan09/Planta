@@ -30,16 +30,5 @@ public class GuestHomeActivity extends AppCompatActivity {
                 GuestHomeActivity.this.overridePendingTransition(0, 0);
             }
         });
-
-        TextView textView = findViewById(R.id.id_guest_tv_signup);
-
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GuestHomeActivity.this, RegisterActivity.class);
-                startActivity(intent);
-                GuestHomeActivity.this.overridePendingTransition(0, 0);
-            }
-        });
     }
 }

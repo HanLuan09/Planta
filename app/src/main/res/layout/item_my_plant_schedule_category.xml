@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="26dp"
+    app:cardElevation="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_catelog_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center_vertical"
+            android:background="#F5FAF8">
+            <ImageView
+                android:id="@+id/iv_my_plant_schedule_category"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ico_fertilize"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                app:tint="@color/colorGreenText"/>
+            <TextView
+                android:id="@+id/tv_my_plant_schedule_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tưới cây"
+                android:textColor="@color/colorGreenText"
+                android:textSize="16sp"
+                android:fontFamily="@font/tiktok_bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/layout_catelog_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_my_plant_schedule_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

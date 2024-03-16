@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".ui.home.myplant.myplantdetail.MyPlantDetailActivity">
+        tools:context=".ui.myplant.myplantdetail.MyPlantDetailActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
@@ -41,6 +41,13 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/plant_img" />
 
+                <View
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/gradient_mask" />
+
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -57,8 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="24dp"
-                android:paddingLeft="24dp"
+                android:paddingRight="29dp"
+                android:paddingLeft="29dp"
                 android:layout_gravity="bottom"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp">

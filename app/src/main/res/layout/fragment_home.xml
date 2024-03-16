@@ -37,8 +37,8 @@
                     android:text="@string/app_name"
                     android:fontFamily="@font/tiktok_bold"
                     android:textColor="@color/colorGreenText"
-                    android:textSize="20sp"
-                    android:layout_marginStart="22dp"
+                    android:textSize="@dimen/text_size_h2"
+                    android:layout_marginStart="22.5dp"
                     android:layout_centerVertical="true"/>
 
                 <LinearLayout

@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
-    android:backgroundTint="@color/colorPrimary"
-    android:layout_marginRight="10dp"
+    android:backgroundTint="@color/selector_schedule_background"
+    android:layout_margin="5dp"
+    android:elevation="0dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:id="@+id/care_calendar">
 
@@ -14,27 +15,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="7dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="7dp">
 
         <TextView
             android:id="@+id/tv_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:fontFamily="@font/tiktok_bold"
-            android:textColor="@color/colorGreenText"
+            android:textColor="@color/selector_schedule_text"
             android:text="TH 02" />
 
         <TextView
             android:id="@+id/tv_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:fontFamily="@font/tiktok_bold"
-            android:textColor="@color/white"
+            android:textColor="@color/selector_schedule_text"
             android:text="20" />
 
     </LinearLayout>

@@ -23,7 +23,7 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentHomeBinding;
 import vn.edu.ptit.planta.ui.calendarmyplant.CalendarMyPlantActivity;
-import vn.edu.ptit.planta.ui.home.myplant.myplantdetail.MyPlantDetailActivity;
+import vn.edu.ptit.planta.ui.myplant.myplantdetail.MyPlantDetailActivity;
 import vn.edu.ptit.planta.ui.plant.chooseplant.ChoosePlantActivity;
 
 public class HomeFragment extends Fragment implements HomeNavigator {

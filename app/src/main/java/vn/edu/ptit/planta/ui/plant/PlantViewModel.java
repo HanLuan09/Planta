@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.ui.home.myplant.MyPlantNavigator;
 
 public class PlantViewModel extends ViewModel {
 

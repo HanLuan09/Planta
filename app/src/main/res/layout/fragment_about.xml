@@ -8,7 +8,7 @@
     </data>
 
     <LinearLayout
-        tools:context=".ui.home.myplant.myplantdetail.about.AboutFragment"
+        tools:context=".ui.myplant.myplantdetail.about.AboutFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"

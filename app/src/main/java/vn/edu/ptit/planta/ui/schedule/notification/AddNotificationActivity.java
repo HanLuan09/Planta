@@ -18,6 +18,8 @@ import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -26,6 +28,8 @@ import java.util.Locale;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityAddNotificationBinding;
+import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.Schedule;
 import vn.edu.ptit.planta.model.ScheduleNodtification;
 import vn.edu.ptit.planta.ui.schedule.ScheduleViewModel;
 
@@ -50,6 +54,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         viewModel.setNotificationNavigator(this);
 
 
+        initBundle();
         initClick();
         binding.layoutStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +62,15 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
                 showStartDatePickerDialog();
             }
         });
+
+    }
+
+
+    private void initBundle() {
+        Bundle bundle = getIntent().getExtras();
+        if(bundle == null) return;
+        Schedule schedule = (Schedule) bundle.get("schedule_care");
+
 
     }
 

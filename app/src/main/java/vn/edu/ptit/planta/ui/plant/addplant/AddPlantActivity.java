@@ -40,9 +40,9 @@ public class AddPlantActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(AddPlantActivity.this, ScheduleActivity.class);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(AddPlantActivity.this, ScheduleActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

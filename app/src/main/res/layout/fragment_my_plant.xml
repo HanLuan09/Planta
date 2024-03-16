@@ -7,13 +7,13 @@
         <import type="android.view.View"/>
         <variable
             name="myPlantViewModel"
-            type="vn.edu.ptit.planta.ui.home.myplant.MyPlantViewModel" />
+            type="vn.edu.ptit.planta.ui.myplant.MyPlantViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.myplant.MyPlantFragment"
+        tools:context=".ui.myplant.MyPlantFragment"
         android:background="@color/colorBackground">
         <!--   Chưa có dữ liệu     -->
         <RelativeLayout
