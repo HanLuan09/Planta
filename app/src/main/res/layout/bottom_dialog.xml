@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:text="这里是一个标题"
+        android:text="Thông náo"
         android:textColor="#F88833"
         android:textSize="20sp" />
 

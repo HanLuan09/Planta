@@ -2,6 +2,8 @@ package vn.edu.ptit.planta.ui.myplant.myplantdetail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -18,6 +21,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityMyPlantDetailBinding;
+import vn.edu.ptit.planta.model.Plant;
 
 public class MyPlantDetailActivity extends AppCompatActivity {
 
@@ -25,6 +29,7 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     private ActivityMyPlantDetailBinding binding;
     private MyPlantDetailPagerAdapter adapter;
     private Toolbar toolbar;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class MyPlantDetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         initMyDetail(binding.tabLayout, binding.detalViewPager2);
+        initBundle();
 
         toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -52,6 +58,21 @@ public class MyPlantDetailActivity extends AppCompatActivity {
 
     }
 
+    private void initBundle() {
+        bundle = getIntent().getExtras();
+        if(bundle == null) return;
+        int id = bundle.getInt("id_myplant");
+        String name = bundle.getString("name_myplant");
+        String image = bundle.getString("image_myplant");
+
+        binding.collapsingToolbar.setTitle(name);
+
+        Glide.with(this)
+                .load(image)
+                .override(400,400)
+                .into(binding.ivMyPlantDetail);
+    }
+
     private void initMyDetail(TabLayout tabLayout, @NonNull ViewPager2 viewPager2) {
         adapter = new MyPlantDetailPagerAdapter(this);
         viewPager2.setUserInputEnabled(false);
@@ -66,6 +87,26 @@ public class MyPlantDetailActivity extends AppCompatActivity {
             textView.setText(tabTitles.get(i));
             tabLayout.getTabAt(i).setCustomView(textView);
         }
+
+        // Lấy Bundle từ Activity và truyền vào Fragment
+        adapter.setBundle(getIntent().getExtras());
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_my_plant_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_edit) {
+            // Xử lý sự kiện khi người dùng nhấn vào biểu tượng "edit" ở đây
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

@@ -93,7 +93,6 @@ public class PlantFragment extends Fragment implements PlantNavigator {
     public void handlePlantDetail(Plant plant) {
         Intent intent = new Intent(requireContext(), PlantDetailActivity.class);
         Bundle bundle = new Bundle();
-//        bundle.putInt("id_plant", 1);
         bundle.putSerializable("plant", plant);
         intent.putExtras(bundle);
         startActivity(intent);

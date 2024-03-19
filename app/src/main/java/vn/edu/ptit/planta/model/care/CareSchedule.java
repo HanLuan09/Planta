@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class CareSchedule implements Serializable {
     private int id;
     private String name;
+
+    private String image;
     private String  time;
 
     public CareSchedule() {
@@ -14,6 +16,7 @@ public class CareSchedule implements Serializable {
         this.id = id;
         this.name = name;
         this.time = time;
+        this.image = "https://hoatuoi360.vn/uploads/file/nhung-cau-noi-y-nghia-ve-hoa-sen(1).jpg";
     }
 
     public int getId() {
@@ -26,5 +29,9 @@ public class CareSchedule implements Serializable {
 
     public String getTime() {
         return time;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

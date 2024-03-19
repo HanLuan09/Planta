@@ -43,7 +43,7 @@
                         android:paddingTop="20dp"
                         android:paddingRight="20dp"
                         android:paddingLeft="20dp"
-                        android:paddingBottom="75dp">
+                        android:paddingBottom="60dp">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/id_rcv_myplant"

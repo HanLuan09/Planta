@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
+    android:id="@+id/click_item_my_plant_schedule"
     android:foreground="?android:attr/selectableItemBackground">
 
     <CheckBox
@@ -35,6 +36,7 @@
     <LinearLayout
         android:id="@+id/layout_myplanta"
         android:layout_toEndOf="@id/circle_item_my_plant_schedule"
+        android:layout_toStartOf="@id/cardview_item_my_plant_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -47,6 +49,8 @@
             android:textSize="@dimen/text_size_h7"
             android:textColor="@color/black"
             android:fontFamily="@font/tiktok_bold"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:text="Hoa hướng dương"/>
 
         <TextView
@@ -70,7 +74,7 @@
         app:cardElevation="0dp"
         app:strokeColor="@null"
         android:layout_marginRight="15dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:backgroundTint="@color/colorBackground">
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,8 +94,8 @@
     <View
         android:id="@+id/view_item_my_plant_schedule"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="62dp"
-        android:background="@color/colorSecond"/>
+        android:layout_height="1.2dp"
+        android:layout_marginLeft="60dp"
+        android:background="#F1F3FA"/>
 
 </RelativeLayout>

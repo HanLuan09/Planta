@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,12 @@ public class CareFragment extends Fragment implements CareNavigator {
         viewModel.setCareNavigator(this);
 
         initRecyclerView();
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            int id = bundle.getInt("id_myplant");
+            Log.e("id_test", id+"");
+        }
 
         return binding.getRoot();
     }

@@ -1,5 +1,7 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -12,6 +14,8 @@ import vn.edu.ptit.planta.ui.note.NoteFragment;
 
 public class MyPlantDetailPagerAdapter extends FragmentStateAdapter {
 
+    private Bundle bundle; //
+
     public MyPlantDetailPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -20,22 +24,40 @@ public class MyPlantDetailPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         // Tạo và trả về Fragment tại vị trí position
+        Fragment fragment;
         switch (position) {
             case 0:
-                return new CareFragment();
+                fragment = new CareFragment();
+                break;
             case 1:
-                return new NoteFragment();
+                fragment = new NoteFragment();
+                break;
             case 2:
-                return new ChartFragment();
+                fragment = new ChartFragment();
+                break;
             case 3:
-                return new AboutFragment();
+                fragment = new AboutFragment();
+                break;
             default:
-                return new CareFragment();
+                fragment = new CareFragment();
+                break;
         }
+        // Truyền Bundle vào Fragment nếu có
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
+        return fragment;
+
+
     }
 
     @Override
     public int getItemCount() {
         return 4;
+    }
+
+    // Phương thức để thiết lập Bundle
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
     }
 }

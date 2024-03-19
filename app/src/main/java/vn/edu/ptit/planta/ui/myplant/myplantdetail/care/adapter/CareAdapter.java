@@ -48,8 +48,10 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
         holder.tvName.setText(schedule.getName());
         if(schedule.getName().equals("Tưới nước")) {
             holder.imageView.setImageResource(R.drawable.ic_water);
-        }else{
+        }else if(schedule.getName().equals("Bón phân")) {
             holder.imageView.setImageResource(R.drawable.ico_fertilize);
+        }else {
+            holder.imageView.setImageResource(R.drawable.icon_pl_leaf);
         }
         holder.tvDesc.setText("Định kỳ 2 ngày một lần");
         holder.tvTime.setText("Vào lúc: " + schedule.getDesc());

@@ -54,6 +54,8 @@ public class CareScheduleCategoryAdapter extends RecyclerView.Adapter<CareSchedu
 
         CareScheduleAdapter careScheduleAdapter = new CareScheduleAdapter();
         careScheduleAdapter.setListCareSchedules(category.getCareSchedules());
+        careScheduleAdapter.setmContext(mContext);
+
         holder.recyclerView.setAdapter(careScheduleAdapter);
 
     }
@@ -76,5 +78,9 @@ public class CareScheduleCategoryAdapter extends RecyclerView.Adapter<CareSchedu
             textView = itemView.findViewById(R.id.tv_my_plant_schedule_category);
             recyclerView = itemView.findViewById(R.id.rcv_my_plant_schedule_category);
         }
+    }
+
+    public void release() {
+        mContext = null;
     }
 }

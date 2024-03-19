@@ -82,101 +82,10 @@
           android:padding="16dp"
           android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_marginBottom="10dp"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="26dp"
-            app:cardElevation="0dp">
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:background="@color/colorPrimary">
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Tưới cây"
-                  android:textSize="16sp"
-                  android:fontFamily="@font/tiktok_bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-              <include layout="@layout/item_my_plant_schedule" />
-
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:layout_marginRight="30dp"
-                  android:layout_marginLeft="80dp"
-                  android:background="#CCCCCC" />
-
-              <include layout="@layout/item_my_plant_schedule" />
-
-            </LinearLayout>
-
-          </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="26dp"
-            app:cardElevation="0dp">
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:background="@color/colorGreen">
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Bón phân"
-                  android:textSize="16sp"
-                  android:fontFamily="@font/tiktok_bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-              <include layout="@layout/item_my_plant_schedule" />
-
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:layout_marginRight="30dp"
-                  android:layout_marginLeft="80dp"
-                  android:background="#CCCCCC" />
-
-              <include layout="@layout/item_my_plant_schedule" />
-
-            </LinearLayout>
-
-          </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            android:id="@+id/rcv_calendar_my_plant"/>
 
       </LinearLayout>
 
