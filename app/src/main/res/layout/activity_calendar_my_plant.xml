@@ -19,6 +19,7 @@
       tools:context=".ui.calendarmyplant.CalendarMyPlantActivity">
 
     <LinearLayout
+        android:paddingTop="@dimen/top_end_to_end"
         android:background="@color/colorPrimary"
         android:id="@+id/layout_add_1"
         android:layout_width="match_parent"

@@ -1,8 +1,8 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.care;
 
-import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.model.ScheduleMyPlant;
 
 public interface CareNavigator {
 
-    public void handleEditNotification(Schedule schedule);
+    public void handleEditNotification(ScheduleMyPlant schedule);
 }

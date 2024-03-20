@@ -1,5 +1,6 @@
 package vn.edu.ptit.planta.ui.schedule;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +21,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule);

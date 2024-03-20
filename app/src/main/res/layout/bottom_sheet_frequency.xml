@@ -15,7 +15,6 @@
         android:gravity="center_horizontal"
         android:layout_margin="16dp"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -32,7 +31,10 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
+        <!--   Tần suất     -->
+
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -54,5 +56,54 @@
 
         </LinearLayout>
 
+        <!--   Bài tập     -->
+
+        <LinearLayout
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tưới nước"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bón phân"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bài tập khác"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/dialog_bt"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_2"
+                android:text="Xác nhận"/>
+
+        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.schedule.ScheduleActivity"
-        android:background="@color/white"
+        android:background="@drawable/bg_mobile"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -22,9 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <RelativeLayout
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:id="@+id/id_garden_relayout_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

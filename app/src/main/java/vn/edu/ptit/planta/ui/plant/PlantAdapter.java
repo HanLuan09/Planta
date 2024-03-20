@@ -48,7 +48,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
         if(plant == null) return;
         holder.textViewName.setText(plant.getName());
 
-        plantNavigator.glideImage(plant.getImage(), holder.shapeableImageView);
+        plantNavigator.glideImage(plant.getMainImage(), holder.shapeableImageView);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,22 +14,22 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.model.ScheduleMyPlant;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareNavigator;
 
 public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder>  {
 
-    private List<Schedule> listSchedules;
+    private List<ScheduleMyPlant> listSchedules;
     private CareNavigator careNavigator;
 
-    public CareAdapter(List<Schedule> listSchedules) {
+    public CareAdapter(List<ScheduleMyPlant> listSchedules) {
         this.listSchedules = listSchedules;
     }
 
     public void setCareNavigator(CareNavigator careNavigator) {
         this.careNavigator = careNavigator;
     }
-    public void updateData(List<Schedule> newData) {
+    public void updateData(List<ScheduleMyPlant> newData) {
         this.listSchedules = newData;
         notifyDataSetChanged();
     }
@@ -43,7 +43,7 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CareViewHolder holder, int position) {
-        Schedule schedule = listSchedules.get(position);
+        ScheduleMyPlant schedule = listSchedules.get(position);
         if(schedule == null) return;
         holder.tvName.setText(schedule.getName());
         if(schedule.getName().equals("Tưới nước")) {

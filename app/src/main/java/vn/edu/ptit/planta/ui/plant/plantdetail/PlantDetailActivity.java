@@ -1,12 +1,15 @@
 package vn.edu.ptit.planta.ui.plant.plantdetail;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
@@ -16,6 +19,7 @@ import vn.edu.ptit.planta.databinding.ActivityPlantDetailBinding;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.PlantDetail;
 import vn.edu.ptit.planta.ui.plant.PlantViewModel;
 
 public class PlantDetailActivity extends AppCompatActivity {
@@ -55,12 +59,20 @@ public class PlantDetailActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle == null) return;
         Plant plant = (Plant) bundle.get("plant");
+        viewModel.getIdPlant().setValue(plant.getId());
+        viewModel.initData();
+        viewModel.getPlantDetail().observe(this, new Observer<PlantDetail>() {
+            @Override
+            public void onChanged(PlantDetail plantDetail) {
+                binding.collapsingToolbar.setTitle(viewModel.getPlantDetail().getValue().getName());
 
-        binding.collapsingToolbar.setTitle(plant.getName());
+                Glide.with(PlantDetailActivity.this)
+                        .load(viewModel.getPlantDetail().getValue().getMainImage())
+                        .override(400,400)
+                        .into(binding.idImgPlant);
 
-        Glide.with(this)
-                .load(plant.getImage())
-                .override(400,400)
-                .into(binding.idImgPlant);
+                binding.tvContentNameMyplanta.setText(viewModel.getPlantDetail().getValue().getTypePlant());
+            }
+        });
     }
 }

@@ -6,15 +6,15 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.model.ScheduleMyPlant;
 
 public class CareViewModel extends ViewModel {
 
     private CareNavigator careNavigator;
 
-    private MutableLiveData<List<Schedule>> listSchedules;
+    private MutableLiveData<List<ScheduleMyPlant>> listSchedules;
 
-    private List<Schedule> schedules;
+    private List<ScheduleMyPlant> schedules;
 
     public CareViewModel() {
         listSchedules = new MutableLiveData<>();
@@ -25,22 +25,22 @@ public class CareViewModel extends ViewModel {
         this.careNavigator = careNavigator;
     }
 
-    public MutableLiveData<List<Schedule>> getListSchedules() {
+    public MutableLiveData<List<ScheduleMyPlant>> getListSchedules() {
         return listSchedules;
     }
 
     private void initData() {
 
         schedules = new ArrayList<>();
-        schedules.add(new Schedule(1, "Tưới nước", "8:30"));
-        schedules.add(new Schedule(2, "Tưới nước", "18:30"));
-        schedules.add(new Schedule(3, "Bón phân", "12:00"));
-        schedules.add(new Schedule(4, "Tưới nước", "9:30"));
-        schedules.add(new Schedule(5, "Bón phân", "9:30"));
-        schedules.add(new Schedule(6, "Tưới nước", "9:30"));
-        schedules.add(new Schedule(7, "Bón phân", "9:30"));
-        schedules.add(new Schedule(8, "Tưới nước", "9:30"));
-        schedules.add(new Schedule(9, "Tưới nước", "9:30"));
+        schedules.add(new ScheduleMyPlant(1, "Tưới nước", "8:30"));
+        schedules.add(new ScheduleMyPlant(2, "Tưới nước", "18:30"));
+        schedules.add(new ScheduleMyPlant(3, "Bón phân", "12:00"));
+        schedules.add(new ScheduleMyPlant(4, "Tưới nước", "9:30"));
+        schedules.add(new ScheduleMyPlant(5, "Bón phân", "9:30"));
+        schedules.add(new ScheduleMyPlant(6, "Tưới nước", "9:30"));
+        schedules.add(new ScheduleMyPlant(7, "Bón phân", "9:30"));
+        schedules.add(new ScheduleMyPlant(8, "Tưới nước", "9:30"));
+        schedules.add(new ScheduleMyPlant(9, "Tưới nước", "9:30"));
 
 
         listSchedules.setValue(schedules);

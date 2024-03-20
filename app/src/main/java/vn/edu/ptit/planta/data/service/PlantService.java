@@ -6,8 +6,11 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.PlantDetail;
 
 public interface PlantService {
+    @GET("plant/all")
+    Call<List<Plant>> listPlants();
     @GET("plant/{id}")
-    Call<List<Plant>> listRepos(@Path("id") String id);
+    Call<PlantDetail> plantDetail(@Path("id") int id);
 }
