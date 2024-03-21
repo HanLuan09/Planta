@@ -16,12 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentCareBinding;
 import vn.edu.ptit.planta.model.ScheduleMyPlant;
+import vn.edu.ptit.planta.model.care.CareCalendar;
+import vn.edu.ptit.planta.model.care.CareCalendarSchedule;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
+import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareCalendarAdapter;
 import vn.edu.ptit.planta.ui.schedule.notification.AddNotificationActivity;
 
 public class CareFragment extends Fragment implements CareNavigator {
@@ -29,7 +33,10 @@ public class CareFragment extends Fragment implements CareNavigator {
     private FragmentCareBinding binding;
     private CareViewModel viewModel;
     private CareAdapter careAdapter;
-    private RecyclerView recyclerView;
+    private CareCalendarAdapter careCalendarAdapter;
+    private RecyclerView recyclerViewCare, rcvSchedule;
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,21 +49,47 @@ public class CareFragment extends Fragment implements CareNavigator {
 
         viewModel.setCareNavigator(this);
 
-        initRecyclerView();
+        initRecyclerViewCare();
+        initRecyclerViewSchedule();
 
         Bundle bundle = getArguments();
         if (bundle != null) {
             int id = bundle.getInt("id_myplant");
-            Log.e("id_test", id+"");
         }
 
         return binding.getRoot();
     }
 
-    private void initRecyclerView() {
-        recyclerView = binding.idRcvCare;
+    private void initRecyclerViewSchedule() {
+        rcvSchedule = binding.idRcvSchedule;
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        rcvSchedule.setLayoutManager(linearLayoutManager);
+        careCalendarAdapter = new CareCalendarAdapter(getList());
+        rcvSchedule.setAdapter(careCalendarAdapter);
+
+
+    }
+
+    private List<CareCalendar> getList() {
+        List<CareCalendarSchedule> list = new ArrayList<>();
+        List<CareCalendar> careCalendars = new ArrayList<>();
+        careCalendars.add(new CareCalendar("10/10/2024", list));
+        careCalendars.add(new CareCalendar("10/11/2024", list));
+        careCalendars.add(new CareCalendar("20/01/2024", list));
+        careCalendars.add(new CareCalendar("10/02/2024", list));
+        careCalendars.add(new CareCalendar("10/06/2024", list));
+        careCalendars.add(new CareCalendar("10/08/2024", list));
+        careCalendars.add(new CareCalendar("10/09/2024", list));
+        careCalendars.add(new CareCalendar("10/06/2024", list));
+        careCalendars.add(new CareCalendar("10/01/2024", list));
+        return careCalendars;
+    }
+
+    private void initRecyclerViewCare() {
+        recyclerViewCare = binding.idRcvCare;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewCare.setLayoutManager(linearLayoutManager);
 
         viewModel.getListSchedules().observe(requireActivity(), new Observer<List<ScheduleMyPlant>>() {
             @Override
@@ -66,7 +99,7 @@ public class CareFragment extends Fragment implements CareNavigator {
                     careAdapter = new CareAdapter((schedules));
 
                     careAdapter.setCareNavigator(CareFragment.this);
-                    recyclerView.setAdapter(careAdapter);
+                    recyclerViewCare.setAdapter(careAdapter);
                 } else {
                    careAdapter.updateData(schedules);
                 }

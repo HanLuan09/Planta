@@ -58,6 +58,7 @@ public class CareScheduleAdapter extends RecyclerView.Adapter<CareScheduleAdapte
 
         Glide.with(mContext)
                 .load(careSchedule.getImage())
+                .placeholder(R.drawable.icon_no_mob)
                 .override(300,300)
                 .into(holder.imageView);
 

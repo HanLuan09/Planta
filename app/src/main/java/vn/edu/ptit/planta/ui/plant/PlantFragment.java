@@ -24,7 +24,6 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentPlantBinding;
 import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.ui.TestActivity;
 import vn.edu.ptit.planta.ui.myplant.search.SearchMyPlantActivity;
 import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
 
@@ -104,7 +103,7 @@ public class PlantFragment extends Fragment implements PlantNavigator {
     public void glideImage(String image, ShapeableImageView shapeableImageView) {
         Glide.with(requireContext())
                 .load(image)
-                .placeholder(R.drawable.icon_no_image)
+                .placeholder(R.drawable.icon_no_mob)
                 .override(300,300)
                 .into(shapeableImageView);
     }

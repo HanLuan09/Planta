@@ -6,6 +6,7 @@ import retrofit2.Retrofit;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 import vn.edu.ptit.planta.data.service.PlantService;
+import vn.edu.ptit.planta.data.service.UserService;
 
 
 public class RetrofitClient {
@@ -20,6 +21,11 @@ public class RetrofitClient {
     @NonNull
     public static PlantService getPlantService() {
         return retrofit.create(PlantService.class);
+    }
+
+    @NonNull
+    public static UserService getUserService() {
+        return retrofit.create(UserService.class);
     }
 }
 

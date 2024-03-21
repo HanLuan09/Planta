@@ -13,36 +13,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.databinding.ActivityLoginBinding;
+import vn.edu.ptit.planta.databinding.ActivityMyPlantDetailBinding;
 import vn.edu.ptit.planta.ui.MainActivity;
 import vn.edu.ptit.planta.ui.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView tvRegister;
-    private Toolbar toolbar;
-    private Button button;
+
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        toRegisterPage();
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        binding.idCloseLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        ///
-        button = findViewById(R.id.login);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        binding.idBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -54,12 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         ////
 
-
-    }
-
-    private void toRegisterPage() {
-        tvRegister = findViewById(R.id.btn_register);
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        binding.idLoginToSigup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -68,5 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
     }
+
 }

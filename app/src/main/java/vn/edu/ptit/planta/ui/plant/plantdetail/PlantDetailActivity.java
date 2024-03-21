@@ -68,6 +68,7 @@ public class PlantDetailActivity extends AppCompatActivity {
 
                 Glide.with(PlantDetailActivity.this)
                         .load(viewModel.getPlantDetail().getValue().getMainImage())
+                        .placeholder(R.drawable.icon_no_mob)
                         .override(400,400)
                         .into(binding.idImgPlant);
 

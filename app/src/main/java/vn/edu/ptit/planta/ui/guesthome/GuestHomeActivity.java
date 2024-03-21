@@ -34,7 +34,6 @@ public class GuestHomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(GuestHomeActivity.this, LoginActivity.class);
                 startActivity(intent);
                 GuestHomeActivity.this.overridePendingTransition(0, 0);
-                finish();
             }
         });
 
