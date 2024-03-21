@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,20 +20,15 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Welcome to your garden"
-            android:textSize="30dp"
-            android:gravity="center"
-            android:fontFamily="@font/tiktok_bold"></TextView>
-    </LinearLayout>
+        android:text="Login"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
+        android:layout_margin="50dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,15 +36,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:textSize="20dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:fontFamily="@font/tiktok_bold"></TextView>
 
         <EditText
             android:id="@+id/username"
@@ -57,9 +44,13 @@
             android:hint="Nhập tên đăng nhập"
             android:maxLines="1"
             android:lines="1"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"></EditText>
+            android:inputType="textPersonName"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/edit_text_background"
+            android:paddingVertical="20dp"
+            android:layout_marginHorizontal="25dp"
+            android:drawableRight="@drawable/ic_user"></EditText>
     </LinearLayout>
 
     <LinearLayout
@@ -68,15 +59,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="20dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:fontFamily="@font/tiktok_bold"/>
 
         <EditText
             android:id="@+id/password"
@@ -86,9 +68,12 @@
             android:hint="Nhập mật khẩu"
             android:maxLines="1"
             android:lines="1"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"/>
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/edit_text_background"
+            android:paddingVertical="20dp"
+            android:layout_marginHorizontal="25dp"
+            android:drawableRight="@drawable/ic_lock"/>
     </LinearLayout>
 
     <LinearLayout
@@ -100,46 +85,14 @@
 
         <Button
             android:id="@+id/login"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Đăng nhập"
+            android:padding="10dp"
             app:backgroundTint="@color/colorGreenBanana"
             android:textSize="20dp"
-            android:layout_marginRight="25dp"></Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/btn_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:padding="5dp"
-            android:text="Register"
-            android:textColor="@color/colorLinkRegister"
-            android:textSize="15dp"
-            android:textStyle="italic">
-
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:padding="5dp"
-            android:text="Forget Password?"
-            android:textColor="@color/colorLinkForget"
-            android:textSize="15dp"
-            android:textStyle="italic">
-
-        </TextView>
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -147,15 +100,25 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="120dp">
+        android:layout_marginTop="150dp"
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chính sách bảo mật. Help?"
+            android:text="Bạn chưa có tài khoản?"
             android:textSize="15dp"
             android:padding="10dp"
-            android:textColor="@color/colorLinkForget"></TextView>
+            android:textColor="@color/colorLinkForget"/>
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký ngay"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:textColor="@color/colorLinkForget"/>
     </LinearLayout>
 
 </LinearLayout>

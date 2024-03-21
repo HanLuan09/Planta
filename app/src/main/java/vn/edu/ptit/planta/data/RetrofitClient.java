@@ -2,6 +2,7 @@ package vn.edu.ptit.planta.data;
 
 import retrofit2.Retrofit;
 import vn.edu.ptit.planta.data.service.PlantService;
+import vn.edu.ptit.planta.data.service.UserService;
 
 public class RetrofitClient {
 //    private static Retrofit retrofit;
@@ -21,6 +22,7 @@ public class RetrofitClient {
             .baseUrl(BASE_URL)
             .build();
 
-    PlantService service = retrofit.create(PlantService.class);
+    UserService userService = retrofit.create(UserService.class);
+    PlantService plantService = retrofit.create(PlantService.class);
 }
 
