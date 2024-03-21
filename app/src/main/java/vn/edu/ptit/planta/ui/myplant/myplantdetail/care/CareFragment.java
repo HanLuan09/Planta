@@ -20,7 +20,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentCareBinding;
-import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.model.ScheduleMyPlant;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
 import vn.edu.ptit.planta.ui.schedule.notification.AddNotificationActivity;
 
@@ -58,9 +58,9 @@ public class CareFragment extends Fragment implements CareNavigator {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        viewModel.getListSchedules().observe(requireActivity(), new Observer<List<Schedule>>() {
+        viewModel.getListSchedules().observe(requireActivity(), new Observer<List<ScheduleMyPlant>>() {
             @Override
-            public void onChanged(List<Schedule> schedules) {
+            public void onChanged(List<ScheduleMyPlant> schedules) {
                 if (careAdapter == null) {
                     // Nếu adapter chưa được tạo
                     careAdapter = new CareAdapter((schedules));
@@ -76,7 +76,7 @@ public class CareFragment extends Fragment implements CareNavigator {
     }
 
     @Override
-    public void handleEditNotification(Schedule schedule) {
+    public void handleEditNotification(ScheduleMyPlant schedule) {
         Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("schedule_care", schedule);

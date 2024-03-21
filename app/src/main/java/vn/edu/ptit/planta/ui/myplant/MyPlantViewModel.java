@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPlantViewModel extends ViewModel {
 
+public class MyPlantViewModel extends ViewModel {
     private MyPlantNavigator myPlantNavigator;
     private MutableLiveData<List<String>> listMyPlants;
     private List<String> myPlants;

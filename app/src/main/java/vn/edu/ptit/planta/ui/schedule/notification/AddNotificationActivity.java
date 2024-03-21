@@ -1,35 +1,28 @@
 package vn.edu.ptit.planta.ui.schedule.notification;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.NumberPicker;
 import android.widget.TimePicker;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityAddNotificationBinding;
-import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.model.ScheduleMyPlant;
 import vn.edu.ptit.planta.model.ScheduleNodtification;
 import vn.edu.ptit.planta.ui.schedule.ScheduleViewModel;
 
@@ -41,6 +34,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_notification);
 
@@ -69,7 +63,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     private void initBundle() {
         Bundle bundle = getIntent().getExtras();
         if(bundle == null) return;
-        Schedule schedule = (Schedule) bundle.get("schedule_care");
+        ScheduleMyPlant schedule = (ScheduleMyPlant) bundle.get("schedule_care");
 
 
     }

@@ -17,9 +17,10 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:paddingTop="@dimen/top_end_to_end"
             android:id="@+id/layout_add_1"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <ImageView
@@ -301,7 +302,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/tiktok_medium"
                 android:background="@drawable/custom_button_2"
-                android:text="Lưu"/>
+                android:text="Lưu lịch trình"/>
 
             <!--        <ProgressBar-->
             <!--            android:layout_width="25dp"-->

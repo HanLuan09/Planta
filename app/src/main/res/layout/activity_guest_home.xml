@@ -1,104 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.guesthome.GuestHomeActivity"
-    android:orientation="vertical"
-    android:background="@color/white">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".ui.guesthome.GuestHomeActivity"
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/img_guest_2"
-        android:layout_marginBottom="20dp">
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
             android:orientation="vertical"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/id_guest_button_login"
+            <ImageView
+                android:id="@+id/iv_guest_home"
                 android:layout_width="200dp"
-                android:layout_height="60dp"
-                android:text="Đăng nhập"
-                android:textSize="16sp"
-                android:fontFamily="@font/tiktok_medium"
-                android:layout_marginBottom="30dp"/>
+                android:layout_height="200dp"
+                android:src="@drawable/face" />
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/tiktok_bold"
+                android:textColor="@color/colorGreenText"
+                android:textSize="@dimen/text_size_h2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Are you ready to become"/>
+
+            <TextView
+                android:fontFamily="@font/tiktok_bold"
+                android:textColor="@color/colorGreenText"
+                android:textSize="@dimen/text_size_h2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="better plant parent?"/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_alignParentBottom="true">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/id_guest_button_login"
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:text="Bắt đầu"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/tiktok_medium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical"
                 android:gravity="center"
                 android:layout_alignParentBottom="true">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_book_cover"
-                        android:layout_marginBottom="8dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/tiktok_regular"
-                        android:textSize="11sp"
-                        android:textColor="@color/black"
-                        android:text="Hướng dẫn"/>
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_book_cover"
+                            android:layout_marginBottom="8dp" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_sp"
-                        android:layout_marginBottom="8dp"/>
-                    <TextView
-                        android:fontFamily="@font/tiktok_regular"
-                        android:textSize="11sp"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/tiktok_regular"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:text="Hướng dẫn" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Hỗ trợ"/>
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:fontFamily="@font/tiktok_regular"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hỗ trợ" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-</LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

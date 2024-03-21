@@ -17,6 +17,7 @@
         tools:context=".ui.home.HomeFragment"
         android:background="@color/colorBackground">
         <LinearLayout
+            android:paddingTop="@dimen/top_end_to_end"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

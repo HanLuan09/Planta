@@ -46,7 +46,7 @@
             android:maxLines="2"
             android:text="Hoa hướng dương"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_h7" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -9,20 +9,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.databinding.ActivityGuestHomeBinding;
+import vn.edu.ptit.planta.databinding.ActivityMyPlantDetailBinding;
 import vn.edu.ptit.planta.ui.login.LoginActivity;
 import vn.edu.ptit.planta.ui.register.RegisterActivity;
 
 public class GuestHomeActivity extends AppCompatActivity {
 
+    private ActivityGuestHomeBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_home);
+        binding = ActivityGuestHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Button button = findViewById(R.id.id_guest_button_login);
-        button.setOnClickListener(new View.OnClickListener() {
+        binding.idGuestButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GuestHomeActivity.this, LoginActivity.class);
@@ -31,5 +37,9 @@ public class GuestHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Glide.with(this)
+                .load(R.drawable.face)
+                .into(binding.ivGuestHome);
     }
 }

@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="todayViewModel"
+            type="vn.edu.ptit.planta.ui.home.today.TodayViewModel" />
     </data>
 
     <RelativeLayout

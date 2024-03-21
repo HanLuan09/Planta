@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +20,14 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentTodayBinding;
 import vn.edu.ptit.planta.model.care.CareSchedule;
 import vn.edu.ptit.planta.model.care.CareScheduleCategory;
+import vn.edu.ptit.planta.ui.plant.PlantViewModel;
 import vn.edu.ptit.planta.ui.schedule.adapter.CareScheduleCategoryAdapter;
 
 
 public class TodayFragment extends Fragment {
 
     private FragmentTodayBinding binding;
+    private TodayViewModel viewModel;
     private RecyclerView recyclerView;
     private CareScheduleCategoryAdapter adapter;
 
@@ -33,6 +36,9 @@ public class TodayFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(TodayViewModel.class);
+        binding.setTodayViewModel(viewModel);
+        binding.setLifecycleOwner(this);
 
         recyclerView = binding.rcvToday;
 

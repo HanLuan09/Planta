@@ -1,5 +1,6 @@
 package vn.edu.ptit.planta.ui.calendarmyplant;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -33,6 +34,7 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_calendar_my_plant);

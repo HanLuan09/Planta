@@ -5,23 +5,29 @@ import java.io.Serializable;
 public class Plant implements Serializable {
     private int id;
     private String name;
-    private String image;
+    private String typePlant;
+    private String mainImage;
 
-    public Plant(int id, String name, String image) {
+    public Plant() {
+        super();
+    }
+    public Plant(int id, String name, String typePlant, String mainImage) {
+        super();
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.typePlant = typePlant;
+        this.mainImage = mainImage;
     }
-
     public int getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
-    public String getImage() {
-        return image;
+    public String getTypePlant() {
+        return typePlant;
+    }
+    public String getMainImage() {
+        return mainImage;
     }
 }
