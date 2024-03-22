@@ -62,11 +62,10 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <include layout="@layout/item_schedule_care"/>
-                            <include layout="@layout/item_schedule_care"/>
-                            <include layout="@layout/item_schedule_care"/>
-                            <include layout="@layout/item_schedule_care"/>
-                            <include layout="@layout/item_schedule_care"/>
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/id_rcv_schedule"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
 
                         </LinearLayout>
 

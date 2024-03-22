@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -21,7 +23,7 @@
             android:label="@string/title_activity_plant_detail"
             android:theme="@style/Theme.Planta" />
         <activity
-            android:name=".ui.TestActivity"
+            android:name=".ui.test.TestActivity"
             android:exported="false" />
         <activity
             android:name=".ui.schedule.notification.AddNotificationActivity"

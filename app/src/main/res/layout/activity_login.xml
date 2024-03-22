@@ -15,7 +15,7 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/iv_close_login"
+            android:id="@+id/id_close_login"
             android:layout_width="@dimen/close_size"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -68,7 +68,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edUsername"
+                            android:id="@+id/editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -86,7 +86,6 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
@@ -114,12 +113,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/btn_login"
+                            android:id="@+id/id_btn_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/tiktok_medium"
                             android:background="@drawable/custom_button_1"
                             android:text="Đăng nhập"/>
+
+<!--                        <ProgressBar-->
+<!--                            android:layout_width="25dp"-->
+<!--                            android:layout_height="25dp"-->
+<!--                            android:layout_centerInParent="true"-->
+<!--                            android:indeterminateTint="@color/white" />-->
 
                     </RelativeLayout>
 
@@ -140,7 +145,7 @@
                         android:textColor="#1B1616" />
 
                     <TextView
-                        android:id="@+id/tv_login_to_sigup"
+                        android:id="@+id/id_login_to_sigup"
                         android:fontFamily="@font/tiktok_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

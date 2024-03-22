@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
-    android:backgroundTint="@color/selector_schedule_background"
     android:layout_margin="5dp"
     android:elevation="0dp"
     android:foreground="?android:attr/selectableItemBackground"
@@ -15,27 +14,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingTop="7dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="7dp">
+        android:paddingTop="6dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:id="@+id/tv_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:fontFamily="@font/tiktok_bold"
-            android:textColor="@color/selector_schedule_text"
             android:text="TH 02" />
 
         <TextView
             android:id="@+id/tv_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:fontFamily="@font/tiktok_bold"
-            android:textColor="@color/selector_schedule_text"
             android:text="20" />
 
     </LinearLayout>
