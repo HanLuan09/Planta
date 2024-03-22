@@ -3,34 +3,60 @@ package vn.edu.ptit.planta.model;
 import java.util.Date;
 
 public class MyPlant {
-    private Long id;
+    private int id;
     private String name;
     private String image;
-    private Date createDate;
+    private String kindOfLight;
+    private String grownDate;
 
     public MyPlant() {
     }
 
-    public MyPlant(Long id, String name, String image, Date createDate) {
+    public MyPlant(int id, String name, String image, String kindOfLight, String grownDate) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.createDate = createDate;
+        this.kindOfLight = kindOfLight;
+        this.grownDate = grownDate;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getImage() {
         return image;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getKindOfLight() {
+        return kindOfLight;
+    }
+
+    public void setKindOfLight(String kindOfLight) {
+        this.kindOfLight = kindOfLight;
+    }
+
+    public String getGrownDate() {
+        return grownDate;
+    }
+
+    public void setGrownDate(String grownDate) {
+        this.grownDate = grownDate;
     }
 }

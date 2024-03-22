@@ -64,14 +64,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:src="@drawable/plant_img"
-                android:scaleType="fitCenter"></ImageView>
+                android:id="@+id/iv_image_myplanta"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plant_img"></ImageView>
         </LinearLayout>
 
     </LinearLayout>

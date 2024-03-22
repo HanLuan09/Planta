@@ -2,22 +2,25 @@ package vn.edu.ptit.planta.model;
 
 public class User {
     private int id;
-    private String name;
-    private String phone;
-    private String email;
-    private String address;
     private String username;
     private String password;
+    private String name;
+    private String phone;
+    private String address;
+    private String email;
     private String token;
 
-    public User(int id, String name, String phone, String email, String address, String username, String password, String token) {
+    public User() {
+    }
+
+    public User(int id, String username, String password, String name, String phone, String address, String email, String token) {
         this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
         this.token = token;
     }
 

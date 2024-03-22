@@ -3,6 +3,7 @@ package vn.edu.ptit.planta.ui.myplant.myplantdetail.about;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.model.AttributeOfMyPlant;
 import vn.edu.ptit.planta.model.Test;
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.AboutViewHolder> {
 
-    private List<Test> listTests;
+    private List<AttributeOfMyPlant> attributeOfMyPlants;
 
-    public AboutAdapter(List<Test> listTests) {
-        this.listTests = listTests;
+    public AboutAdapter(List<AttributeOfMyPlant> attributeOfMyPlants) {
+        this.attributeOfMyPlants = attributeOfMyPlants;
     }
 
     @NonNull
@@ -31,38 +33,55 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.AboutViewHol
 
     @Override
     public void onBindViewHolder(@NonNull AboutViewHolder holder, int position) {
-        Test test = listTests.get(position);
-        if(test == null) return;
+        AttributeOfMyPlant attributeOfMyPlant = attributeOfMyPlants.get(position);
+        if(attributeOfMyPlant == null) return;
 
-        holder.tvName.setText(test.getName());
-        holder.tvDesc.setText(test.getDesc());
-        holder.layout_myplanta.setVisibility(View.GONE);
-        holder.tvName.setOnClickListener(new View.OnClickListener() {
+        holder.tvTitle.setText(attributeOfMyPlant.getTitle());
+        holder.tvContent.setText(attributeOfMyPlant.getContent());
+        holder.layout_content_myplanta.setVisibility(View.GONE);
+        holder.layout_expand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(holder.layout_myplanta.getVisibility() == View.GONE)
-                    holder.layout_myplanta.setVisibility(View.VISIBLE);
-                else holder.layout_myplanta.setVisibility(View.GONE);
+                expand(holder.layout_content_myplanta, holder.checkBox);
             }
         });
-
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand(holder.layout_content_myplanta, holder.checkBox);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        if(listTests != null) return listTests.size();
+        if(attributeOfMyPlants != null) return attributeOfMyPlants.size();
         return 0;
     }
 
+    public void expand(LinearLayout layout, CheckBox checkBox){
+        if(layout.getVisibility() == View.GONE) {
+            layout.setVisibility(View.VISIBLE);
+            checkBox.setChecked(true);
+        }
+        else {
+            layout.setVisibility(View.GONE);
+            checkBox.setChecked(false);
+        }
+    }
+
     public class AboutViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvName;
-        private TextView tvDesc;
-        private LinearLayout layout_myplanta;
+        private TextView tvTitle;
+        private TextView tvContent;
+        private LinearLayout layout_content_myplanta, layout_expand;
+        private CheckBox checkBox;
         public AboutViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvDesc = itemView.findViewById(R.id.tv_content_name_myplanta);
-            tvName = itemView.findViewById(R.id.tv_name_myplanta);
-            layout_myplanta = itemView.findViewById(R.id.layout_content_myplanta);
+            tvTitle = itemView.findViewById(R.id.tv_title_myplanta);
+            tvContent = itemView.findViewById(R.id.tv_content_myplanta);
+            layout_expand = itemView.findViewById(R.id.layout_expand);
+            layout_content_myplanta = itemView.findViewById(R.id.layout_content_myplanta);
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
     }
 }

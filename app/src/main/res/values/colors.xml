@@ -28,4 +28,5 @@
     <color name="colorLinkRegister">#005E93</color>
     <color name="colorLinkForget">#6AB0B5</color>
     <color name="colorBtnAccept">#44BB26</color>
+    <color name="colorBtnCancel">#AE1728</color>
 </resources>
