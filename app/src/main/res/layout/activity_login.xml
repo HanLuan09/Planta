@@ -59,6 +59,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Tên đăng nhập/Email"
@@ -68,7 +69,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editText"
+                            android:id="@+id/edUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -113,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/id_btn_login"
+                            android:id="@+id/btn_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/tiktok_medium"
@@ -145,7 +146,7 @@
                         android:textColor="#1B1616" />
 
                     <TextView
-                        android:id="@+id/id_login_to_sigup"
+                        android:id="@+id/tv_login_to_sigup"
                         android:fontFamily="@font/tiktok_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
