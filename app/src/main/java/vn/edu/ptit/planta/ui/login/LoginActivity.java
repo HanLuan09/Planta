@@ -12,6 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,34 +28,41 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvRegister;
     private Toolbar toolbar;
     private Button btnLogin;
-    private EditText edUsername, edPassword;
+//    private EditText edUsername, edPassword;
+    private TextInputLayout tilUsername, tilPassword;
+    private TextInputEditText edUsername, edPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        toRegisterPage();
+        toRegisterView();
+        back();
 
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                edUsername = findViewById(R.id.edUsername);
-                edPassword = findViewById(R.id.edPassword);
+                tilUsername = (TextInputLayout) findViewById(R.id.til_username);
+                tilPassword = (TextInputLayout) findViewById(R.id.til_password);
+
+                edUsername = (TextInputEditText) tilUsername.getEditText();
+                edPassword = (TextInputEditText) tilPassword.getEditText();
+                Log.println(Log.INFO,"username", String.valueOf(edUsername));
                 User userSend = new User();
                 userSend.setUsername(edUsername.getText().toString());
                 userSend.setPassword(edPassword.getText().toString());
-                checkLogin(userSend);
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
+//                checkLogin(userSend);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
 
-    private void toRegisterPage() {
-        tvRegister = findViewById(R.id.tv_login_to_sigup);
+    private void toRegisterView() {
+        tvRegister = findViewById(R.id.tv_login_to_signup);
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +72,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void back(){
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     public void checkLogin(User userSend){
         RetrofitClient.getUserService().getUser(userSend).enqueue(new Callback<User>() {
             @Override

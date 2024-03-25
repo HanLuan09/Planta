@@ -59,7 +59,7 @@
             android:name=".ui.plant.chooseplant.ChoosePlantActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.plant.addplant.AddPlantActivity"
+            android:name=".ui.myplant.addmyplant.AddMyPlantActivity"
             android:exported="false" />
         <activity
             android:name=".ui.myplant.editmyplant.EditMyPlantActivity"
