@@ -74,13 +74,91 @@
                         android:paddingRight="30dp"
                         android:paddingBottom="75dp">
 
-                        <include layout="@layout/item_edit_information_plant"></include>
-                        <include layout="@layout/item_edit_information_plant"></include>
-                        <include layout="@layout/item_edit_information_plant"></include>
-                        <include layout="@layout/item_image_information_plant"></include>
-                        <include layout="@layout/item_edit_information_plant"></include>
-                        <include layout="@layout/item_edit_information_plant"></include>
-                        <include layout="@layout/item_edit_information_plant"></include>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerview_edit_my_plant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:background="@drawable/rounder_background"
+                                android:gravity="center_vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:gravity="center_vertical">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="10">
+
+                                        <LinearLayout
+                                            android:id="@+id/layout_myplanta"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:layout_centerVertical="true"
+                                            android:layout_marginLeft="20dp">
+
+                                            <TextView
+                                                android:id="@+id/tv_name_myplanta"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="14sp"
+                                                android:textColor="@color/black"
+                                                android:fontFamily="@font/tiktok_bold"
+                                                android:text="Ảnh thực vật"
+                                                android:maxLines="1"
+                                                android:ellipsize="end"/>
+
+                                        </LinearLayout>
+
+                                    </RelativeLayout>
+
+                                    <ImageView
+                                        android:id="@+id/iv_choose_image"
+                                        style="@style/Widget.AppCompat.ActionButton"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginRight="6dp"
+                                        android:src="@drawable/ic_image"
+                                        android:padding="10dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:id="@+id/iv_image_myplanta"
+                                        android:layout_width="300dp"
+                                        android:layout_height="wrap_content"
+                                        android:paddingVertical="10dp"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/plant_img"></ImageView>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -96,7 +174,7 @@
                                 android:textSize="16dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/background_button_accept"
-                                android:backgroundTint="@color/colorBtnAccept"></Button>
+                                app:backgroundTint="@color/colorBtnCancel"></Button>
 
                             <Button
                                 android:id="@+id/btn_save"

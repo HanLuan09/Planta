@@ -5,5 +5,5 @@ public class HarvestSeason {
     private int monthBegin;
     private int monthEnd;
     private String description;
-
+    private Plant plant;
 }

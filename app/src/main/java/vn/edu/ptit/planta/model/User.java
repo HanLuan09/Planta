@@ -5,14 +5,15 @@ public class User {
     private String username;
     private String password;
     private String name;
-    private String	phone;
-    private String	address;
-    private String	email;
+    private String phone;
+    private String address;
+    private String email;
     private String token;
 
-    public User(int id, String username, String password, String name, String phone, String address, String email,
-                String token) {
-        super();
+    public User() {
+    }
+
+    public User(int id, String username, String password, String name, String phone, String address, String email, String token) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -23,33 +24,12 @@ public class User {
         this.token = token;
     }
 
-    public User() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -68,6 +48,14 @@ public class User {
         this.phone = phone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -76,12 +64,20 @@ public class User {
         this.address = address;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getToken() {
@@ -91,7 +87,4 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
-
-
-
 }

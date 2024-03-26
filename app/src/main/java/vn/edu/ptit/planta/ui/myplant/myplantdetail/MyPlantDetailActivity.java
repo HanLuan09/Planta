@@ -1,5 +1,6 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityMyPlantDetailBinding;
 import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.ui.myplant.editmyplant.EditMyPlantActivity;
 
 public class MyPlantDetailActivity extends AppCompatActivity {
 
@@ -103,7 +105,8 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_edit) {
-            // Xử lý sự kiện khi người dùng nhấn vào biểu tượng "edit" ở đây
+            Intent intent = new Intent(this, EditMyPlantActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

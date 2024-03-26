@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -62,10 +63,10 @@
             android:name=".ui.plant.chooseplant.ChoosePlantActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.plant.addplant.AddPlantActivity"
+            android:name=".ui.myplant.addmyplant.AddMyPlantActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.plant.editplant.EditPlantActivity"
+            android:name=".ui.myplant.editmyplant.EditMyPlantActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"

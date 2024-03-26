@@ -32,8 +32,8 @@ public class GuestHomeActivity extends AppCompatActivity {
         binding.idGuestButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(GuestHomeActivity.this, LoginActivity.class);
-                Intent intent = new Intent(GuestHomeActivity.this, MainActivity.class);
+                Intent intent = new Intent(GuestHomeActivity.this, LoginActivity.class);
+//                Intent intent = new Intent(GuestHomeActivity.this, MainActivity.class);
                 startActivity(intent);
                 GuestHomeActivity.this.overridePendingTransition(0, 0);
             }
