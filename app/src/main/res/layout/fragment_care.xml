@@ -9,7 +9,7 @@
             type="vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.myplant.myplantdetail.care.CareFragment">
@@ -22,14 +22,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/care_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="25dp"
+                    android:paddingLeft="25dp">
+
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lịch trình"
+                        android:fontFamily="@font/tiktok_bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorGreenText"/>
+
+                    <LinearLayout
+                        android:onClick="@{() -> careViewModel.onAddNotificationClick()}"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:padding="7dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_plus"
+                            android:background="@drawable/rounded_icon" />
+
+                        <TextView
+                            android:layout_marginLeft="3dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thêm mới"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:textSize="@dimen/text_size_h8"
+                            android:textColor="@color/colorPrimary"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@id/care_layout"
                     android:id="@+id/id_rcv_care"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="8dp" />
                 <LinearLayout
                     android:layout_below="@id/id_rcv_care"
                     android:layout_width="match_parent"
@@ -37,7 +82,7 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -51,7 +96,7 @@
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:layout_marginLeft="5dp"
-                            android:text="Lịch trình"
+                            android:text="Lịch sắp tới"
                             android:fontFamily="@font/tiktok_bold"
                             android:textSize="14sp"
                             android:textColor="@color/colorGreenText"/>
@@ -72,15 +117,17 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingBottom="20dp">
 
+                            <include layout="@layout/item_schedule_note"/>
                             <include layout="@layout/item_schedule_note"/>
                         </LinearLayout>
 
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content" />-->
 
                     </LinearLayout>
 
@@ -90,5 +137,5 @@
 
         </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

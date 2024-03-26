@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentCareBinding;
-import vn.edu.ptit.planta.model.ScheduleMyPlant;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.care.CareCalendar;
 import vn.edu.ptit.planta.model.care.CareCalendarSchedule;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
@@ -91,9 +90,9 @@ public class CareFragment extends Fragment implements CareNavigator {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCare.setLayoutManager(linearLayoutManager);
 
-        viewModel.getListSchedules().observe(requireActivity(), new Observer<List<ScheduleMyPlant>>() {
+        viewModel.getListSchedules().observe(requireActivity(), new Observer<List<MySchedule>>() {
             @Override
-            public void onChanged(List<ScheduleMyPlant> schedules) {
+            public void onChanged(List<MySchedule> schedules) {
                 if (careAdapter == null) {
                     // Nếu adapter chưa được tạo
                     careAdapter = new CareAdapter((schedules));
@@ -109,11 +108,18 @@ public class CareFragment extends Fragment implements CareNavigator {
     }
 
     @Override
-    public void handleEditNotification(ScheduleMyPlant schedule) {
+    public void handleEditNotification(MySchedule schedule) {
         Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("schedule_care", schedule);
+        bundle.putInt("care_id", 1);
         intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void handleAddNotification() {
+        Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
         startActivity(intent);
     }
 }

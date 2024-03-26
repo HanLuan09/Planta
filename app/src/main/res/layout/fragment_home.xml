@@ -8,7 +8,6 @@
         <variable
             name="homeViewModel"
             type="vn.edu.ptit.planta.ui.home.HomeViewModel" />
-
     </data>
 
     <RelativeLayout
@@ -25,7 +24,7 @@
             android:paddingRight="10dp"
             android:background="@color/white"
             android:orientation="vertical"
-            android:elevation="6dp">
+            android:elevation="2dp">
 
             <RelativeLayout
                 android:id="@+id/relativeLayout"
@@ -122,11 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/colorGreen"
+            android:layout_margin="12dp"
+            android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/add_planta"
             android:src="@drawable/ic_plus"
             app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay"

@@ -55,7 +55,7 @@ public class ChoosePlantAdapter extends RecyclerView.Adapter<ChoosePlantAdapter.
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(choosePlantNavigator != null) choosePlantNavigator.handleAddPlant();
+                if(choosePlantNavigator != null) choosePlantNavigator.handleAddPlant(plant);
             }
         });
     }

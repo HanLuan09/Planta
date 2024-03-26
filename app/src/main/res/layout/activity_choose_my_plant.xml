@@ -5,6 +5,10 @@
 
     <data>
 
+        <import type="android.view.View"/>
+        <variable
+            name="choosePlantViewModel"
+            type="vn.edu.ptit.planta.ui.plant.chooseplant.ChoosePlantViewModel" />
     </data>
 
     <LinearLayout
@@ -12,68 +16,127 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
-
+        <!--        Add plant-->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="end">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:visibility="@{choosePlantViewModel.isSearch? View.GONE : View.VISIBLE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end"
-                android:text="Choose your plant"
-                android:textColor="@color/colorGreenBanana"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                android:fontFamily="@font/tiktok_bold"></TextView>
-        </LinearLayout>
+                android:layout_height="48dp"
+                android:gravity="end">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="20dp"
-            android:background="@drawable/background_rounder_search"
-            android:orientation="vertical"
-            android:gravity="center">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/search_my_plant"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search my plant"
-                android:textSize="20dp"
-                android:inputType="text"
-                android:layout_marginLeft="10dp"
-                android:paddingVertical="10dp"
-                android:background="@null"></EditText>
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
 
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_search"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp"></ImageView>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:text="Choose your plant"
+                    android:textColor="@color/colorGreenBanana"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/tiktok_bold"></TextView>
+            </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/background_rounder_search"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/search_my_plant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search my plant"
+                    android:textSize="20dp"
+                    android:inputType="text"
+                    android:layout_marginLeft="10dp"
+                    android:paddingVertical="10dp"
+                    android:background="@null"></EditText>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_search"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!--        Search plant-->
+        <LinearLayout
+            android:visibility="@{choosePlantViewModel.isSearch? View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:elevation="2dp"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:onClick="@{() -> choosePlantViewModel.onBlackClick()}"
+                    style="@style/Widget.AppCompat.ActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_backspace"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:boxStrokeWidth="0dp"
+                    app:boxBackgroundMode="none"
+                    app:endIconMode="clear_text"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@={choosePlantViewModel.textSearch}"
+                        android:textSize="16sp"
+                        android:hint="Search plants"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--   List item     -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

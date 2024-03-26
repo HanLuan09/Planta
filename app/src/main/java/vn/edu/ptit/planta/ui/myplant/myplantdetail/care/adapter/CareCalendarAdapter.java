@@ -47,24 +47,21 @@ public class CareCalendarAdapter extends RecyclerView.Adapter<CareCalendarAdapte
         String[] dateParts = date.split("/");
         String newMonth = setMonth(dateParts[1]);
 
-        holder.tvDay.setText(dateParts[0]);
-        holder.tvMonth.setText(newMonth);
+        ViewGroup.LayoutParams layoutParams = holder.cardView.getLayoutParams();
+        if(position == 0) {
+            holder.tvDay.setText("Hôm nay");
+            holder.tvMonth.setVisibility(View.GONE);
+            layoutParams.width = 240;
+        }else {
+            holder.tvDay.setText(dateParts[0]);
+            holder.tvMonth.setVisibility(View.VISIBLE);
+            holder.tvMonth.setText(newMonth);
+            layoutParams.width = 148;
+        }
+        holder.cardView.setLayoutParams(layoutParams);
 
         // Set background drawable based on selection state
-        int unSelection = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorblackText);
-        int selection = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimary);
-        int text = ContextCompat.getColor(holder.itemView.getContext(), R.color.white);
-        if (selectedItemPos == position) {
-            // Set background drawable for selected item
-            holder.cardView.setCardBackgroundColor(selection);
-            holder.tvMonth.setTextColor(text);
-            holder.tvDay.setTextColor(text);
-        } else {
-
-            holder.cardView.setCardBackgroundColor(unSelection);
-            holder.tvMonth.setTextColor(selection);
-            holder.tvDay.setTextColor(selection);
-        }
+        intitSetBackground(holder, position);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +92,23 @@ public class CareCalendarAdapter extends RecyclerView.Adapter<CareCalendarAdapte
             cardView = itemView.findViewById(R.id.care_calendar);
             tvDay = itemView.findViewById(R.id.tv_day);
             tvMonth = itemView.findViewById(R.id.tv_month);
+        }
+    }
+
+    private void intitSetBackground(@NonNull CareCategoryCalendarViewHolder holder, int position) {
+        int unSelection = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorblackText);
+        int selection = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimary);
+        int text = ContextCompat.getColor(holder.itemView.getContext(), R.color.white);
+        int unText = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorGreenText);
+        if (selectedItemPos == position) {
+            // Set background drawable for selected item
+            holder.cardView.setCardBackgroundColor(selection);
+            holder.tvMonth.setTextColor(text);
+            holder.tvDay.setTextColor(text);
+        } else {
+            holder.cardView.setCardBackgroundColor(unSelection);
+            holder.tvMonth.setTextColor(unText);
+            holder.tvDay.setTextColor(unText);
         }
     }
 

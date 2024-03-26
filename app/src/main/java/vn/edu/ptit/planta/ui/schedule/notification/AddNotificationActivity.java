@@ -1,18 +1,30 @@
 package vn.edu.ptit.planta.ui.schedule.notification;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
@@ -24,13 +36,18 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityAddNotificationBinding;
 import vn.edu.ptit.planta.model.ScheduleMyPlant;
 import vn.edu.ptit.planta.model.ScheduleNodtification;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
+import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareFragment;
 import vn.edu.ptit.planta.ui.schedule.ScheduleViewModel;
+import vn.edu.ptit.planta.utils.DateUtils;
+import vn.edu.ptit.planta.utils.TimeUtils;
 
 public class AddNotificationActivity extends AppCompatActivity implements NotificationNavigator {
 
     private ActivityAddNotificationBinding binding;
     private AddNotificationViewModel viewModel;
-    private ScheduleViewModel scheduleViewModel;
+
+    private int careId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,80 +59,60 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         binding.setNotificationViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-
-        scheduleViewModel = new ViewModelProvider(this).get(ScheduleViewModel.class);
-
         viewModel.setNotificationNavigator(this);
 
-
         initBundle();
-        initClick();
-        binding.layoutStartDate.setOnClickListener(new View.OnClickListener() {
+        initObserveDate();
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void onClick(View view) {
-                showStartDatePickerDialog();
+            public void handleOnBackPressed() {
+                if(!viewModel.getIsCheckEdit().getValue()) {
+                    final Dialog dialog = new Dialog(AddNotificationActivity.this);
+                    openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!");
+                    dialog.show();
+                }else {
+                    finish();
+                }
             }
         });
 
     }
-
 
     private void initBundle() {
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null) return;
-        ScheduleMyPlant schedule = (ScheduleMyPlant) bundle.get("schedule_care");
+        if(bundle == null) {
+            binding.ivNotiDelete.setVisibility(View.GONE);
+            binding.tvNoti.setText("Add Notification");
+            return;
+        }
+        MySchedule schedule = (MySchedule)bundle.get("schedule_care");
 
+        careId = bundle.getInt("care_id");
+        binding.ivNotiDelete.setVisibility(careId == 0? View.GONE : View.VISIBLE);
+        binding.tvNoti.setText(careId == 0? "Add Notification" : "Notification");
+
+        if(schedule != null) {
+            viewModel.getIsCheckEdit().setValue(true); //
+            viewModel.getExercise().setValue(schedule.getName());
+            viewModel.getStartDate().setValue(schedule.getStartDate().toString());
+            viewModel.getEndDate().setValue(schedule.getEndDate().toString());
+            viewModel.getTime().setValue(TimeUtils.formatToHHMM(schedule.getTime()));
+            viewModel.getFrequency().setValue(schedule.getFrequency());
+        }
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
 
     }
 
-    private void initClick() {
-        binding.layoutEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showEndDatePickerDialog();
-            }
-        });
-
-        binding.layoutTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showTimePickerDialog();
-            }
-        });
-
-        binding.layoutFrequency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.getCheckDialog().setValue(1);
-                FrequencyBottomSheet frequencyBottomSheet = new FrequencyBottomSheet();
-                frequencyBottomSheet.show(getSupportFragmentManager(), frequencyBottomSheet.getTag());
-            }
-        });
-    }
-
-    private void showTimePickerDialog() {
-        // Lấy thời gian hiện tại
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
-                        viewModel.getTime().setValue(selectedTime);
-                    }
-                },
-                hour, minute, true);
-
-        timePickerDialog.show();
-    }
-
-    private void showStartDatePickerDialog() {
+    @Override
+    public void handleStartDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        // Tạo và hiển thị DatePickerDialog AlertDialog.THEME_HOLO_LIGHT
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -127,7 +124,8 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         datePickerDialog.show();
     }
 
-    private void showEndDatePickerDialog() {
+    @Override
+    public void handleEndDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -144,85 +142,125 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     }
 
     @Override
+    public void handleTimePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                viewModel.getTime().setValue(selectedTime);
+            }
+        },
+                hour, minute, true);
+
+        timePickerDialog.show();
+    }
+
+    @Override
+    public void handleFrequencyDialog() {
+        viewModel.getCheckDialog().setValue(1);
+        FrequencyBottomSheet frequencyBottomSheet = new FrequencyBottomSheet();
+        frequencyBottomSheet.show(getSupportFragmentManager(), frequencyBottomSheet.getTag());
+    }
+
+    @Override
+    public void handleExerciseDialog() {
+
+    }
+
+    @Override
+    public void handleDeleteNotification() {
+        final Dialog dialog = new Dialog(this);
+        openDialog(dialog, "Cảnh báo", "Bạn có muốn xóa lịch trình này không?");
+        dialog.show();
+
+    }
+
+    @Override
     public void handleCloseNotification() {
-        finish();
+        if(!viewModel.getIsCheckEdit().getValue()) {
+            final Dialog dialog = new Dialog(this);
+            openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!");
+            dialog.show();
+        }else {
+            finish();
+        }
     }
 
     @Override
     public void handleSummitNotification() {
-        ScheduleNodtification scheduleNodtification = new ScheduleNodtification(
+
+        MySchedule mySchedule = new MySchedule(
                 viewModel.getExercise().getValue(),
-                viewModel.getStartDate().getValue(),
-                viewModel.getEndDate().getValue(),
-                viewModel.getTime().getValue(),
+                DateUtils.stringToDate(viewModel.getStartDate().getValue()),
+                DateUtils.stringToDate(viewModel.getEndDate().getValue()),
+                null,
                 viewModel.getFrequency().getValue()
         );
 
-        List<ScheduleNodtification> list = new ArrayList<>();
-        if(scheduleViewModel.getListSchedules().getValue() != null)
-            list = scheduleViewModel.getListSchedules().getValue();
-        list.add(scheduleNodtification);
-
-        scheduleViewModel.getListSchedules().setValue(list);
+//        Log.e("test add", mySchedule.getStartDate().toString());
+//        if(careId == 1) {
+//            Intent intent = new Intent(this, CareFragment.class);
+//            startActivity(intent);
+//        }
         finish();
-
-        Log.e("Test" , scheduleViewModel.getListSchedules().getValue().size()+"");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    private void showCustomDatePickerDialog() {
-        // Lấy thời gian hiện tại
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // Tạo DatePicker
-        DatePicker datePicker = new DatePicker(this);
-        datePicker.init(year, month, dayOfMonth, null);
-
-        // Tạo AlertDialog.Builder với THEME_HOLO_DARK
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-        builder.setTitle("Select Date");
-        builder.setView(datePicker);
-
-        // Thiết lập nút OK
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    private void initObserveDate() {
+        viewModel.getEndDate().observe(this, new Observer<String>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Xử lý khi người dùng chọn OK
-                int selectedYear = datePicker.getYear();
-                int selectedMonth = datePicker.getMonth();
-                int selectedDay = datePicker.getDayOfMonth();
-
-                String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
-
-                // Cập nhật giá trị ngày trong ViewModel hoặc thực hiện các hành động khác
-                viewModel.getStartDate().setValue(selectedDate);
+            public void onChanged(String endDateValue) {
+                String startDateValue = null;
+                if(viewModel.getStartDate() !=null) startDateValue = viewModel.getStartDate().getValue();
+                if (startDateValue != null && endDateValue != null) {
+                    viewModel.getIsCheckEndDate().setValue(DateUtils.stringToDate(startDateValue).before(DateUtils.stringToDate(endDateValue)));
+                }
             }
         });
-
-        // Thiết lập nút Cancel
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        viewModel.getStartDate().observe(this, new Observer<String>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Xử lý khi người dùng chọn Cancel
+            public void onChanged(String startDateValue) {
+                String endDateValue = null;
+                if (viewModel.getEndDate() != null) endDateValue = viewModel.getEndDate().getValue();
+                if (startDateValue != null && endDateValue != null) {
+                    viewModel.getIsCheckEndDate().setValue(DateUtils.stringToDate(startDateValue).before(DateUtils.stringToDate(endDateValue)));
+                }
+            }
+        });
+    }
+
+    private void openDialog(Dialog dialog, String name, String message) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_dialog);
+        Window window = dialog.getWindow();
+        if(window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(false);
+        TextView tvCancel = dialog.findViewById(R.id.dialog_cancel);
+        TextView tvOk = dialog.findViewById(R.id.dialog_sure);
+        TextView tvName = dialog.findViewById(R.id.dialog_text_name);
+        TextView tvMessage = dialog.findViewById(R.id.dialog_text_message);
+        tvMessage.setText(message);
+        tvName.setText(name);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
                 dialog.dismiss();
             }
         });
 
-        // Hiển thị AlertDialog
-        builder.show();
     }
 }

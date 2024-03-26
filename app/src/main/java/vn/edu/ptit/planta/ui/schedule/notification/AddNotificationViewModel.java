@@ -1,12 +1,17 @@
 package vn.edu.ptit.planta.ui.schedule.notification;
 
+import android.os.Handler;
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.Observer;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-import vn.edu.ptit.planta.ui.home.HomeNavigator;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
+import vn.edu.ptit.planta.utils.DateUtils;
 
 public class AddNotificationViewModel extends ViewModel {
 
@@ -15,8 +20,16 @@ public class AddNotificationViewModel extends ViewModel {
     private MutableLiveData<String> exercise;
     private MutableLiveData<String> time;
     private MutableLiveData<String> startDate;
+
     private MutableLiveData<String> endDate;
+
     private MutableLiveData<Integer> frequency;
+
+    private MutableLiveData<Boolean> isCheckEndDate;
+    private MutableLiveData<Boolean> busy;
+
+    private MutableLiveData<Boolean> isCheckEdit;
+
 
     public void setNotificationNavigator(NotificationNavigator navigator) {
         this.notificationNavigator = navigator;
@@ -58,6 +71,7 @@ public class AddNotificationViewModel extends ViewModel {
         }
         return startDate;
     }
+
     public MutableLiveData<String> getEndDate() {
         if(endDate == null) {
             endDate = new MutableLiveData<>();
@@ -70,21 +84,88 @@ public class AddNotificationViewModel extends ViewModel {
         }
         return endDate;
     }
+    public void setEndDate(MutableLiveData<String> endDate) {
+        this.endDate = endDate;
+    }
 
     public MutableLiveData<Integer> getFrequency() {
         if(frequency == null) {
             frequency = new MutableLiveData<>();
-            frequency.setValue(2);
         }
         return frequency;
     }
 
+    public MutableLiveData<Boolean> getIsCheckEndDate() {
+        if(isCheckEndDate == null) {
+            isCheckEndDate = new MutableLiveData<>();
+        }
+        return isCheckEndDate;
+    }
+
+    public MutableLiveData<Boolean> getBusy() {
+        if (busy == null) {
+            busy = new MutableLiveData<>();
+            busy.setValue(false);
+        }
+
+        return busy;
+    }
+
+    public MutableLiveData<Boolean> getIsCheckEdit() {
+        if(isCheckEdit == null) {
+            isCheckEdit = new MutableLiveData<>();
+            isCheckEdit.setValue(false);
+        }
+        return isCheckEdit;
+    }
+
+    public void onStartDatePickerDialog(){
+        if(!isCheckEdit.getValue() && notificationNavigator != null){
+            notificationNavigator.handleStartDatePickerDialog();
+        }
+    }
+    public void onEndDatePickerDialog(){
+        if(!isCheckEdit.getValue() && notificationNavigator != null)
+            notificationNavigator.handleEndDatePickerDialog();
+    }
+
+    public void onFrequencyDialog(){
+        if(!isCheckEdit.getValue() && notificationNavigator != null)
+            notificationNavigator.handleFrequencyDialog();
+    }
+
+    public void onExerciseDialog(){
+        if(!isCheckEdit.getValue() && notificationNavigator != null)
+            notificationNavigator.handleExerciseDialog();
+    }
+
+    public void onTimePickerDialog(){
+        if(!isCheckEdit.getValue() &&notificationNavigator != null)
+            notificationNavigator.handleTimePickerDialog();
+    }
 
     public void onCloseNotificationClick() {
         if(notificationNavigator != null) notificationNavigator.handleCloseNotification();
     }
 
     public void onSummitNotificationClick() {
-        if(notificationNavigator != null) notificationNavigator.handleSummitNotification();
+        getBusy().setValue(true); //View.VISIBLE
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                busy.setValue(false); // == View.GONE
+                if(notificationNavigator != null) notificationNavigator.handleSummitNotification();
+
+            }
+        }, 3000);
     }
+
+    public void onEditClick() {
+        isCheckEdit.setValue(false);
+    }
+
+    public void onDeleteClick() {
+        if(notificationNavigator != null) notificationNavigator.handleDeleteNotification();
+    }
+
 }

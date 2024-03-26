@@ -1,20 +1,26 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.care;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.ptit.planta.model.ScheduleMyPlant;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.edu.ptit.planta.data.RetrofitClient;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
 
 public class CareViewModel extends ViewModel {
 
     private CareNavigator careNavigator;
 
-    private MutableLiveData<List<ScheduleMyPlant>> listSchedules;
+    private MutableLiveData<List<MySchedule>> listSchedules;
 
-    private List<ScheduleMyPlant> schedules;
+    private List<MySchedule> schedules;
 
     public CareViewModel() {
         listSchedules = new MutableLiveData<>();
@@ -25,24 +31,36 @@ public class CareViewModel extends ViewModel {
         this.careNavigator = careNavigator;
     }
 
-    public MutableLiveData<List<ScheduleMyPlant>> getListSchedules() {
+    public MutableLiveData<List<MySchedule>> getListSchedules() {
         return listSchedules;
     }
 
     private void initData() {
 
         schedules = new ArrayList<>();
-        schedules.add(new ScheduleMyPlant(1, "Tưới nước", "8:30"));
-        schedules.add(new ScheduleMyPlant(2, "Tưới nước", "18:30"));
-        schedules.add(new ScheduleMyPlant(3, "Bón phân", "12:00"));
-        schedules.add(new ScheduleMyPlant(4, "Tưới nước", "9:30"));
-        schedules.add(new ScheduleMyPlant(5, "Bón phân", "9:30"));
-        schedules.add(new ScheduleMyPlant(6, "Tưới nước", "9:30"));
-        schedules.add(new ScheduleMyPlant(7, "Bón phân", "9:30"));
-        schedules.add(new ScheduleMyPlant(8, "Tưới nước", "9:30"));
-        schedules.add(new ScheduleMyPlant(9, "Tưới nước", "9:30"));
+        RetrofitClient.getMyScheduleService().myScheduleByPlant(1).enqueue(new Callback<List<MySchedule>>() {
+            @Override
+            public void onResponse(Call<List<MySchedule>> call, Response<List<MySchedule>> response) {
+                if(response.isSuccessful()){
+                    schedules = response.body();
+                    listSchedules.setValue(schedules);
 
+                }else{
 
-        listSchedules.setValue(schedules);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MySchedule>> call, Throwable throwable) {
+                Log.e("test 2", "Error: " + throwable.toString());
+
+            }
+        });
+
     }
+
+    public void onAddNotificationClick(){
+        if(careNavigator != null) careNavigator.handleAddNotification();
+    }
+
 }

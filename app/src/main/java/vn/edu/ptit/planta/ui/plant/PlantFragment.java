@@ -25,6 +25,7 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentPlantBinding;
 import vn.edu.ptit.planta.model.Plant;
 import vn.edu.ptit.planta.ui.myplant.search.SearchMyPlantActivity;
+import vn.edu.ptit.planta.ui.plant.chooseplant.ChoosePlantActivity;
 import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
 
 public class PlantFragment extends Fragment implements PlantNavigator {
@@ -52,7 +53,10 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         binding.idPlantSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(requireContext(), SearchMyPlantActivity.class);
+                Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("is_search", true);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
