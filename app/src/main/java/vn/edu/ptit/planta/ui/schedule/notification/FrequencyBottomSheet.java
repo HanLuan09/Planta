@@ -65,7 +65,7 @@ public class FrequencyBottomSheet extends BottomSheetDialogFragment {
         binding.dialogText.setText("Tần suất");
         numberPicker.setMaxValue(100);
         numberPicker.setMinValue(1);
-        if(viewModel.getFrequency() != null) {
+        if(viewModel.getFrequency() != null && viewModel.getFrequency().getValue()!= null) {
             numberPicker.setValue(viewModel.getFrequency().getValue());
         }
         buttonDialog.setText("Nhắc lại sau " + numberPicker.getValue() + " ngày");
@@ -91,7 +91,7 @@ public class FrequencyBottomSheet extends BottomSheetDialogFragment {
         binding.dialogText.setText("Khoảng thời gian");
         numberPicker.setMaxValue(365);
         numberPicker.setMinValue(30);
-        if(viewModel.getFrequency() != null) {
+        if(viewModel.getFrequency() != null && viewModel.getFrequency().getValue()!= null) {
             numberPicker.setValue(viewModel.getFrequency().getValue());
         }
         buttonDialog.setText("Khoảng thời gian " + numberPicker.getValue() + " ngày");

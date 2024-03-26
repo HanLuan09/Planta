@@ -15,6 +15,9 @@
     <dimen name="spacing_normal">8dp</dimen>
     <dimen name="spacing_micro">4dp</dimen>
 
+    <dimen name="item_size_height">80dp</dimen>
+    <dimen name="resize_icon_h5">20dp</dimen>
+
     <dimen name="refresher_offset">50dp</dimen>
     <dimen name="refresher_offset_end">125dp</dimen>
 

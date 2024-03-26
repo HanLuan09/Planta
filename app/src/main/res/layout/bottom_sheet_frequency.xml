@@ -34,7 +34,7 @@
         <!--   Tần suất     -->
 
         <LinearLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -59,7 +59,7 @@
         <!--   Bài tập     -->
 
         <LinearLayout
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

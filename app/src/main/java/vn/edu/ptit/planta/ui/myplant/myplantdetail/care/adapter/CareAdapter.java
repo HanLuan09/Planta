@@ -14,22 +14,24 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.model.ScheduleMyPlant;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareNavigator;
+import vn.edu.ptit.planta.utils.DateUtils;
+import vn.edu.ptit.planta.utils.TimeUtils;
 
 public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder>  {
 
-    private List<ScheduleMyPlant> listSchedules;
+    private List<MySchedule> listSchedules;
     private CareNavigator careNavigator;
 
-    public CareAdapter(List<ScheduleMyPlant> listSchedules) {
+    public CareAdapter(List<MySchedule> listSchedules) {
         this.listSchedules = listSchedules;
     }
 
     public void setCareNavigator(CareNavigator careNavigator) {
         this.careNavigator = careNavigator;
     }
-    public void updateData(List<ScheduleMyPlant> newData) {
+    public void updateData(List<MySchedule> newData) {
         this.listSchedules = newData;
         notifyDataSetChanged();
     }
@@ -43,18 +45,21 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CareViewHolder holder, int position) {
-        ScheduleMyPlant schedule = listSchedules.get(position);
+        MySchedule schedule = listSchedules.get(position);
         if(schedule == null) return;
         holder.tvName.setText(schedule.getName());
-        if(schedule.getName().equals("Tưới nước")) {
+
+        if(schedule.getName().trim().equals("Tưới nước")) {
             holder.imageView.setImageResource(R.drawable.ic_water);
-        }else if(schedule.getName().equals("Bón phân")) {
+        }else if(schedule.getName().trim().equals("Bón phân")) {
             holder.imageView.setImageResource(R.drawable.ico_fertilize);
         }else {
             holder.imageView.setImageResource(R.drawable.icon_pl_leaf);
         }
-        holder.tvDesc.setText("Định kỳ 2 ngày một lần");
-        holder.tvTime.setText("Vào lúc: " + schedule.getDesc());
+
+        holder.tvDesc.setText("Định kỳ " + schedule.getFrequency() + " ngày một lần");
+        holder.tvTime.setText("Vào lúc: " + TimeUtils.formatToHHMM(schedule.getTime()));
+        holder.tvDate.setText("Từ: "+ DateUtils.formatToDDMMYYYY(schedule.getStartDate()) + " - " + DateUtils.formatToDDMMYYYY(schedule.getEndDate()));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +82,7 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
         private TextView tvName;
         private TextView tvDesc;
         private TextView tvTime;
+        private TextView tvDate;
         public CareViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.id_cardview_care);
@@ -84,6 +90,7 @@ public class CareAdapter extends RecyclerView.Adapter<CareAdapter.CareViewHolder
             tvName = itemView.findViewById(R.id.tv_name_care);
             tvDesc = itemView.findViewById(R.id.tv_desc_care);
             tvTime = itemView.findViewById(R.id.tv_time_care);
+            tvDate = itemView.findViewById(R.id.tv_start_end_date_care);
         }
     }
 }

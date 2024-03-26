@@ -20,12 +20,15 @@
             android:name=".ui.plant.plantdetail.PlantDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_plant_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Planta" />
         <activity
             android:name=".ui.test.TestActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.schedule.notification.AddNotificationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.schedule.ScheduleActivity"
@@ -47,6 +50,7 @@
             android:theme="@style/Theme.Planta" />
         <activity
             android:name=".ui.guesthome.GuestHomeActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -65,9 +69,11 @@
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/Theme.Splash">
             <intent-filter>

@@ -8,27 +8,31 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/dialog_text"
+        android:id="@+id/dialog_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:text="Thông náo"
-        android:textColor="#F88833"
-        android:textSize="20sp" />
+        android:text="Cảnh báo"
+        android:fontFamily="@font/tiktok_medium"
+        android:textColor="@color/colorGreenText"
+        android:textSize="@dimen/text_size_h5" />
 
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="20dp">
 
-        <NumberPicker
-            android:id="@+id/number_frequency"
-            android:layout_width="match_parent"
+        <TextView
+            android:gravity="center"
+            android:id="@+id/dialog_text_message"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/NumberPickerTheme"/>
-
+            android:text="Bạn có muốn xóa lịch trình này không?"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_h6" />
     </LinearLayout>
 
     <View
@@ -48,8 +52,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Thoát"
-            android:textColor="#6FBF6A"
-            android:textSize="16sp" />
+            android:fontFamily="@font/tiktok_medium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_h6" />
 
         <View
             android:layout_width="1dp"
@@ -63,8 +68,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="OK"
-            android:textColor="#6FBF6A"
-            android:textSize="16sp" />
+            android:fontFamily="@font/tiktok_medium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_h6" />
     </LinearLayout>
 
 </LinearLayout>
