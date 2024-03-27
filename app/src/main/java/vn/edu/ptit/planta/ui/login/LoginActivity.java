@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 User userSend = new User();
                 userSend.setUsername(edUsername.getText().toString());
                 userSend.setPassword(edPassword.getText().toString());
-                checkLogin(userSend);
+//                checkLogin(userSend);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

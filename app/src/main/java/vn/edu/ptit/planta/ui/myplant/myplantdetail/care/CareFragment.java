@@ -1,8 +1,13 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.care;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -11,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +96,11 @@ public class CareFragment extends Fragment implements CareNavigator {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCare.setLayoutManager(linearLayoutManager);
 
+        setAdapterSchedules();
+
+    }
+
+    private void setAdapterSchedules() {
         viewModel.getListSchedules().observe(requireActivity(), new Observer<List<MySchedule>>() {
             @Override
             public void onChanged(List<MySchedule> schedules) {
@@ -100,11 +111,10 @@ public class CareFragment extends Fragment implements CareNavigator {
                     careAdapter.setCareNavigator(CareFragment.this);
                     recyclerViewCare.setAdapter(careAdapter);
                 } else {
-                   careAdapter.updateData(schedules);
+                    careAdapter.updateData(schedules);
                 }
             }
         });
-
     }
 
     @Override
@@ -114,12 +124,22 @@ public class CareFragment extends Fragment implements CareNavigator {
         bundle.putSerializable("schedule_care", schedule);
         bundle.putInt("care_id", 1);
         intent.putExtras(bundle);
-        startActivity(intent);
+        mActivityResultLauncher.launch(intent);
     }
 
     @Override
     public void handleAddNotification() {
         Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
-        startActivity(intent);
+        mActivityResultLauncher.launch(intent);
     }
+
+    private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == Activity.RESULT_OK){
+                viewModel.initData();
+                setAdapterSchedules();
+            }
+        }
+    });
 }
