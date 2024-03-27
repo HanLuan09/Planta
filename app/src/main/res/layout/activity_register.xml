@@ -161,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:text="Bạn đã có tài khoản?"
                         android:fontFamily="@font/tiktok_regular"
-                        android:textSize="13sp"
+                        android:textSize="@dimen/text_size_h8"
                         android:textColor="#1B1616" />
 
                     <TextView
@@ -172,7 +172,7 @@
                         android:text="Đăng nhập"
                         android:layout_marginStart="3dp"
                         android:padding="5dp"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_size_h7"
                         android:textColor="@color/colorPrimary" />
                 </LinearLayout>
             </LinearLayout>

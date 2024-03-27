@@ -18,6 +18,10 @@ public class CareViewModel extends ViewModel {
 
     private CareNavigator careNavigator;
 
+    public List<MySchedule> getSchedules() {
+        return schedules;
+    }
+
     private MutableLiveData<List<MySchedule>> listSchedules;
 
     private List<MySchedule> schedules;
@@ -35,9 +39,7 @@ public class CareViewModel extends ViewModel {
         return listSchedules;
     }
 
-    private void initData() {
-
-        schedules = new ArrayList<>();
+    public void initData() {
         RetrofitClient.getMyScheduleService().myScheduleByPlant(1).enqueue(new Callback<List<MySchedule>>() {
             @Override
             public void onResponse(Call<List<MySchedule>> call, Response<List<MySchedule>> response) {
