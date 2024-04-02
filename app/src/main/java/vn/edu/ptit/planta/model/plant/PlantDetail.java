@@ -1,6 +1,10 @@
-package vn.edu.ptit.planta.model;
+package vn.edu.ptit.planta.model.plant;
 
 import java.util.List;
+
+import vn.edu.ptit.planta.model.HarvestSeason;
+import vn.edu.ptit.planta.model.Schedule;
+import vn.edu.ptit.planta.model.Weather;
 
 public class PlantDetail {
     private int id;

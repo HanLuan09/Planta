@@ -14,6 +14,4 @@ public interface NotificationNavigator {
     public void handleDeleteNotification();
     public void handleDialogScheduleSuccess(String message);
     public void handleDialogScheduleFail(String message);
-    public void handleResult();
-
 }

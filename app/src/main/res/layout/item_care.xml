@@ -15,8 +15,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -28,8 +28,8 @@
                 android:id="@+id/img_item_noti"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
                 app:tint="@color/colorGreenText"
                 android:src="@drawable/ic_water" />

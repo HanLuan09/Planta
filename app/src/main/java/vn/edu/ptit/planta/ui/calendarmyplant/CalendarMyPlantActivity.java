@@ -1,21 +1,30 @@
 package vn.edu.ptit.planta.ui.calendarmyplant;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityCalendarMyPlantBinding;
 import vn.edu.ptit.planta.model.care.CareSchedule;
-import vn.edu.ptit.planta.model.care.CareScheduleCategory;
+import vn.edu.ptit.planta.model.care.CareScheduleResponse;
 import vn.edu.ptit.planta.ui.schedule.adapter.CareScheduleCategoryAdapter;
+import vn.edu.ptit.planta.utils.DateUtils;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +32,7 @@ import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CalendarMyPlantActivity extends AppCompatActivity implements CalendarMyPlantNavigator {
 
@@ -45,24 +55,23 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
         binding.setLifecycleOwner(this);
 
         viewModel.setCalendarMyPlantNavigator(this);
-
+        viewModel.initData();
 
         collapsibleCalendar = binding.collapsibleCalendarView;
 
         recyclerView = binding.rcvCalendarMyPlant;
         adapter = new CareScheduleCategoryAdapter(this);
+        adapter.setActivityResultLauncher(mActivityResultLauncher);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter.setListCareScheduleCategorys(getListCareScheduleCategorys());
-        recyclerView.setAdapter(adapter);
-
-//        collapsibleCalendar.setExpandIconVisible(true);
-//        Calendar today = new GregorianCalendar();
-//        collapsibleCalendar.addEventTag(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
-//        today.add(Calendar.DATE, 1);
-//        collapsibleCalendar.setSelectedDay(new Day(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
-//        collapsibleCalendar.addEventTag(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), Color.BLUE);
-//        collapsibleCalendar.setParams(new CollapsibleCalendar.Params(0, 100));
+        viewModel.getListCareSchedules().observe(this, new Observer<List<CareScheduleResponse>>() {
+            @Override
+            public void onChanged(List<CareScheduleResponse> careSchedules) {
+                if (careSchedules != null) {
+                    setAdapterSchedules();
+                }
+            }
+        });
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDayChanged() {
@@ -84,6 +93,16 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
                 int day = collapsibleCalendar.getSelectedDay().getDay();
                 int month = collapsibleCalendar.getSelectedDay().getMonth()+1;
                 int year = collapsibleCalendar.getSelectedDay().getYear();
+
+                String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d",year,month,day);
+                viewModel.getDaySelect().setValue(selectedDate);
+                viewModel.getDaySelect().observe(CalendarMyPlantActivity.this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        viewModel.getListCareSchedules().setValue(viewModel.myPlantToDayByUser(viewModel.getListMyPlantSchedules().getValue(), s));
+                        setAdapterSchedules();
+                    }
+                });
 
                 text.setText("Ngày " +day+"/"+month+"/"+ year);
             }
@@ -110,6 +129,7 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
         });
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -121,31 +141,18 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
         finish();
     }
 
-    @NonNull
-    private List<CareScheduleCategory> getListCareScheduleCategorys() {
-        List<CareScheduleCategory> careScheduleCategories = new ArrayList<>();
-        List<CareSchedule> careSchedules = new ArrayList<>();
-        careSchedules.add(new CareSchedule(1, "Hoa hướng dương", "9:00"));
-        careSchedules.add(new CareSchedule(2, "Cây ngô", "8:00"));
-        careSchedules.add(new CareSchedule(3, "Hoa cẩm tú cầu", "18:00"));
-
-        careScheduleCategories.add(new CareScheduleCategory("Tưới cây", careSchedules));
-
-        careSchedules = new ArrayList<>();
-        careSchedules.add(new CareSchedule(1, "Hoa hồng", "9:00"));
-        careSchedules.add(new CareSchedule(2, "Cây vạn niên thanh", "16:00"));
-        careScheduleCategories.add(new CareScheduleCategory("Bón phân", careSchedules));
-
-        careSchedules = new ArrayList<>();
-        careSchedules.add(new CareSchedule(1, "Hoa hướng dương", "9:00"));
-        careScheduleCategories.add(new CareScheduleCategory("Thu hoạch", careSchedules));
-
-
-        careSchedules = new ArrayList<>();
-        careSchedules.add(new CareSchedule(1, "Hoa hồng", "9:00"));
-        careSchedules.add(new CareSchedule(2, "Hoa cẩm tú cầu hoa tú cầu Hoa cẩm tú cầu hoa tú cầu", "8:00"));
-        careSchedules.add(new CareSchedule(3, "Hoa cẩm tú cầu hoa tú cầu", "18:00"));
-        careScheduleCategories.add(new CareScheduleCategory("Cắt tỉa cây", careSchedules));
-        return careScheduleCategories;
+    private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == Activity.RESULT_OK){
+                viewModel.initData();
+                setAdapterSchedules();
+            }
+        }
+    });
+    private void setAdapterSchedules() {
+        adapter.setListCareScheduleCategorys(viewModel.getListCareSchedules().getValue());
+        adapter.setSelectDate(viewModel.getDaySelect().getValue());
+        recyclerView.setAdapter(adapter);
     }
 }

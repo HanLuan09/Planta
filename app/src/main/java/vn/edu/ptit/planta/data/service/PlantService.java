@@ -6,8 +6,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.model.PlantDetail;
+import vn.edu.ptit.planta.model.plant.Plant;
+import vn.edu.ptit.planta.model.plant.PlantDetail;
 
 public interface PlantService {
     @GET("plant/all")

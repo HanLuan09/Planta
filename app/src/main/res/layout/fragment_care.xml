@@ -102,7 +102,7 @@
                             android:textColor="@color/colorGreenText"/>
 
                         <LinearLayout
-                            android:paddingBottom="8dp"
+                            android:paddingBottom="6dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -118,16 +118,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:gravity="center_horizontal"
                             android:paddingBottom="20dp">
 
-                            <include layout="@layout/item_schedule_note"/>
-                            <include layout="@layout/item_schedule_note"/>
+                            <TextView
+                                android:id="@+id/tv_schedule_note"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rcv_schedule_note"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
-
-<!--                        <androidx.recyclerview.widget.RecyclerView-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content" />-->
 
                     </LinearLayout>
 

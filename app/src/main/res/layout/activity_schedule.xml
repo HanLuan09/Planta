@@ -22,6 +22,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:visibility="@{scheduleViewModel.isCheckBlack? View.GONE: View.VISIBLE}"
+                android:onClick="@{() -> scheduleViewModel.onBlackClick()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:text="Bỏ qua"
+                android:textSize="@dimen/text_size_h8"
+                android:fontFamily="@font/tiktok_medium"
+                android:textColor="@color/colorGreenText"
+                app:backgroundTint="@color/colorblackText"/>
             <RelativeLayout
                 android:layout_marginTop="40dp"
                 android:id="@+id/id_garden_relayout_icon"
@@ -76,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/tiktok_bold"
                     android:text="Nhắc nhở"
+                    android:textColor="@color/colorGreenText"
                     android:textSize="15sp"
                     android:layout_centerVertical="true" />
 
@@ -83,8 +97,8 @@
                     android:onClick="@{() -> scheduleViewModel.onAddNotificationClick()}"
                     android:padding="10dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/ic_plus"
                     android:background="@drawable/rounded_icon"
                     android:layout_centerVertical="true"/>
@@ -103,86 +117,10 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_margin="4dp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_schedule"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="20dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:strokeColor="@color/black_trans"
-                        app:strokeWidth="0.8dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:id="@+id/id_cardview_my_plant">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="14dp"
-                            android:paddingBottom="14dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2">
-
-                                <ImageView
-                                    android:id="@+id/img_item_noti"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/ic_water" />
-
-                                <LinearLayout
-                                    android:id="@+id/layout_myplanta"
-                                    android:layout_toEndOf="@id/img_item_noti"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:layout_centerVertical="true">
-
-                                    <TextView
-                                        android:id="@+id/tv_name_myplanta"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/tiktok_bold"
-                                        android:text="Tưới nước"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
-
-                                    <TextView
-                                        android:id="@+id/tv_desc_myplanta"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="6dp"
-                                        android:textSize="12sp"
-                                        android:textColor="@color/colorPrimary"
-                                        android:text="Định kì 2 ngày 1 lần vào lúc 8:30"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
-
-                                </LinearLayout>
-
-                            </RelativeLayout>
-
-                            <ImageView
-
-                                style="@style/Widget.AppCompat.ActionButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginRight="6dp"
-                                android:src="@drawable/ic_more_vert"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"/>
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -196,6 +134,8 @@
                 android:layout_margin="12dp">
                 <Button
                     android:onClick="@{() -> scheduleViewModel.handleSubmit()}"
+                    android:alpha="@{scheduleViewModel.isCheckBlack? 1.0f : 0.8f}"
+                    android:enabled="@{scheduleViewModel.isCheckBlack}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/tiktok_medium"
