@@ -60,8 +60,6 @@ public class PlantFragment extends Fragment implements PlantNavigator {
                 startActivity(intent);
             }
         });
-        ///
-
         return binding.getRoot();
     }
 

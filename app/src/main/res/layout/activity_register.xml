@@ -75,7 +75,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tied_username"
+                            android:id="@+id/tiet_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -94,7 +94,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tied_password"
+                            android:id="@+id/tiet_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
@@ -113,7 +113,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tied_confirm_password"
+                            android:id="@+id/tiet_confirm_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
@@ -133,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/btn_login"
+                            android:id="@+id/btn_register"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/tiktok_medium"
