@@ -8,27 +8,34 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.Observer;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.edu.ptit.planta.data.RetrofitClient;
+import vn.edu.ptit.planta.model.ApiResponse;
+import vn.edu.ptit.planta.model.Plant;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
+import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
 import vn.edu.ptit.planta.utils.DateUtils;
 
 public class AddNotificationViewModel extends ViewModel {
 
     private NotificationNavigator notificationNavigator;
     private MutableLiveData<Integer> checkDialog;
+    private MutableLiveData<Integer> idMySchedule;
     private MutableLiveData<String> exercise;
     private MutableLiveData<String> time;
     private MutableLiveData<String> startDate;
-
     private MutableLiveData<String> endDate;
-
     private MutableLiveData<Integer> frequency;
-
     private MutableLiveData<Boolean> isCheckEndDate;
     private MutableLiveData<Boolean> busy;
-
     private MutableLiveData<Boolean> isCheckEdit;
+
+    private boolean edit = false;
 
 
     public void setNotificationNavigator(NotificationNavigator navigator) {
@@ -43,10 +50,14 @@ public class AddNotificationViewModel extends ViewModel {
         return checkDialog;
     }
 
+    public MutableLiveData<Integer> getIdMySchedule() {
+        if(idMySchedule == null) idMySchedule = new MutableLiveData<>();
+        return idMySchedule;
+    }
     public MutableLiveData<String> getExercise() {
         if(exercise == null) {
             exercise = new MutableLiveData<>();
-            exercise.setValue("Tưới nuớc");
+            exercise.setValue("Tưới nước");
         }
         return exercise;
     }
@@ -154,7 +165,13 @@ public class AddNotificationViewModel extends ViewModel {
             @Override
             public void run() {
                 busy.setValue(false); // == View.GONE
-                if(notificationNavigator != null) notificationNavigator.handleSummitNotification();
+                if(notificationNavigator != null) {
+                    if(!edit) notificationNavigator.handleSummitNotification();
+                    else {
+                        notificationNavigator.handleEditSummitNotification();
+                        edit = false;
+                    }
+                }
 
             }
         }, 3000);
@@ -162,10 +179,59 @@ public class AddNotificationViewModel extends ViewModel {
 
     public void onEditClick() {
         isCheckEdit.setValue(false);
+        edit = true;
     }
 
     public void onDeleteClick() {
         if(notificationNavigator != null) notificationNavigator.handleDeleteNotification();
     }
 
+    public void handleAddMySchedule(MyScheduleRequest request, boolean isAdd) {
+
+        if(isAdd == true){
+            RetrofitClient.getMyScheduleService().createMyScheduleByPlant(request).enqueue(new Callback<MySchedule>() {
+                @Override
+                public void onResponse(Call<MySchedule> call, Response<MySchedule> response) {
+                    notificationNavigator.handleDialogScheduleSuccess("Xóa lịch trình không thành công");
+                }
+
+                @Override
+                public void onFailure(Call<MySchedule> call, Throwable throwable) {
+                    notificationNavigator.handleDialogScheduleFail("Xóa lịch trình không thành công");
+                }
+            });
+        }else {
+            if(idMySchedule != null && idMySchedule.getValue() != null) {
+                RetrofitClient.getMyScheduleService().updateMyScheduleByPlant(idMySchedule.getValue(), request).enqueue(new Callback<MySchedule>() {
+                    @Override
+                    public void onResponse(Call<MySchedule> call, Response<MySchedule> response) {
+                        notificationNavigator.handleDialogScheduleSuccess("Sửa lịch trình thành công");
+                    }
+
+                    @Override
+                    public void onFailure(Call<MySchedule> call, Throwable throwable) {
+                        notificationNavigator.handleDialogScheduleFail("Xóa lịch trình không thành công");
+                    }
+                });
+            }
+        }
+    }
+    public void handleDeleteMySchedule(){
+        if(idMySchedule != null && idMySchedule.getValue() != null) {
+            RetrofitClient.getMyScheduleService().deleteMySchedule(idMySchedule.getValue()).enqueue(new Callback<MySchedule>() {
+                @Override
+                public void onResponse(Call<MySchedule> call, Response<MySchedule> response) {
+                    notificationNavigator.handleDialogScheduleSuccess("Xóa lịch trình thành công");
+                    notificationNavigator.handleResult();
+                }
+
+                @Override
+                public void onFailure(Call<MySchedule> call, Throwable throwable) {
+                    notificationNavigator.handleDialogScheduleFail("Xóa lịch trình không thành công");
+                }
+            });
+        }else{
+            Log.e("Delete", "faile");
+        }
+    }
 }

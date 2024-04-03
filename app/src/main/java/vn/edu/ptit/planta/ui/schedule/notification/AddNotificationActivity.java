@@ -2,12 +2,14 @@ package vn.edu.ptit.planta.ui.schedule.notification;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -17,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -37,6 +40,7 @@ import vn.edu.ptit.planta.databinding.ActivityAddNotificationBinding;
 import vn.edu.ptit.planta.model.ScheduleMyPlant;
 import vn.edu.ptit.planta.model.ScheduleNodtification;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
+import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareFragment;
 import vn.edu.ptit.planta.ui.schedule.ScheduleViewModel;
 import vn.edu.ptit.planta.utils.DateUtils;
@@ -69,7 +73,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
             public void handleOnBackPressed() {
                 if(!viewModel.getIsCheckEdit().getValue()) {
                     final Dialog dialog = new Dialog(AddNotificationActivity.this);
-                    openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!");
+                    openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!", 2);
                     dialog.show();
                 }else {
                     finish();
@@ -93,6 +97,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         binding.tvNoti.setText(careId == 0? "Add Notification" : "Notification");
 
         if(schedule != null) {
+            viewModel.getIdMySchedule().setValue(schedule.getId());
             viewModel.getIsCheckEdit().setValue(true); //
             viewModel.getExercise().setValue(schedule.getName());
             viewModel.getStartDate().setValue(schedule.getStartDate().toString());
@@ -173,16 +178,15 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     @Override
     public void handleDeleteNotification() {
         final Dialog dialog = new Dialog(this);
-        openDialog(dialog, "Cảnh báo", "Bạn có muốn xóa lịch trình này không?");
+        openDialog(dialog, "Cảnh báo", "Bạn có muốn xóa lịch trình này không?", 1);
         dialog.show();
-
     }
 
     @Override
     public void handleCloseNotification() {
         if(!viewModel.getIsCheckEdit().getValue()) {
             final Dialog dialog = new Dialog(this);
-            openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!");
+            openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!", 2);
             dialog.show();
         }else {
             finish();
@@ -192,20 +196,34 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     @Override
     public void handleSummitNotification() {
 
-        MySchedule mySchedule = new MySchedule(
+        MyScheduleRequest myScheduleRequest = new MyScheduleRequest(
                 viewModel.getExercise().getValue(),
                 DateUtils.stringToDate(viewModel.getStartDate().getValue()),
                 DateUtils.stringToDate(viewModel.getEndDate().getValue()),
-                null,
+                TimeUtils.stringToTime(viewModel.getTime().getValue()),
+                viewModel.getFrequency().getValue(),
+                1
+        );
+        viewModel.handleAddMySchedule(myScheduleRequest, true);
+
+//        Intent intent = new Intent();
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
+    }
+
+    @Override
+    public void handleEditSummitNotification() {
+        MyScheduleRequest myScheduleRequest = new MyScheduleRequest(
+                viewModel.getExercise().getValue(),
+                DateUtils.stringToDate(viewModel.getStartDate().getValue()),
+                DateUtils.stringToDate(viewModel.getEndDate().getValue()),
+                TimeUtils.stringToTime(viewModel.getTime().getValue()),
                 viewModel.getFrequency().getValue()
         );
-
-//        Log.e("test add", mySchedule.getStartDate().toString());
-//        if(careId == 1) {
-//            Intent intent = new Intent(this, CareFragment.class);
-//            startActivity(intent);
-//        }
-        finish();
+        viewModel.handleAddMySchedule(myScheduleRequest, false);
+//        Intent intent = new Intent();
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
     }
 
     private void initObserveDate() {
@@ -231,7 +249,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         });
     }
 
-    private void openDialog(Dialog dialog, String name, String message) {
+    private void openDialog(@NonNull Dialog dialog, String name, String message, int idStatus) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_dialog);
         Window window = dialog.getWindow();
@@ -257,10 +275,66 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                dialog.dismiss();
+                if(idStatus == 1) {
+                    dialog.dismiss();
+                    viewModel.handleDeleteMySchedule();
+                }else {
+                    dialog.dismiss();
+                }
             }
         });
-
     }
+
+
+    private void openDialogSchedule(@NonNull Dialog dialog, String message) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_dialog_schedule);
+        Window window = dialog.getWindow();
+        if(window == null) return;
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(false);
+
+        TextView tvMessage = dialog.findViewById(R.id.dialog_text_message);
+        tvMessage.setText(message);
+    }
+
+    @Override
+    public void handleDialogScheduleSuccess(String message) {
+        final Dialog dialog = new Dialog(this);
+        openDialogSchedule(dialog, message);
+        dialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        }, 3000);
+    }
+    @Override
+    public void handleDialogScheduleFail(String message) {
+        final Dialog dialog = new Dialog(this);
+        openDialogSchedule(dialog, message);
+        dialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 3000);
+    }
+    @Override
+    public void handleResult(){
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
 }

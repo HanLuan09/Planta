@@ -371,7 +371,6 @@
                 android:background="@drawable/custom_button_2"
                 android:text="Lưu lịch trình"/>
 
-
             <Button
                 android:visibility="@{notificationViewModel.busy? View.VISIBLE : View.GONE}"
                 android:layout_width="match_parent"
