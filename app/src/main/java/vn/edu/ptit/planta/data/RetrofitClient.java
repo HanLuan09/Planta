@@ -14,9 +14,7 @@ import vn.edu.ptit.planta.data.service.UserService;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.110.140:8080/api/";
-//    private static final String BASE_URL = "http://192.168.43.134:8080/api/";
-//    private static final String BASE_URL = "http://192.168.0.104:8080/api/";
+    private static final String BASE_URL = "http://192.168.125.222:8080/api/";;
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -33,9 +31,7 @@ public class RetrofitClient {
     }
 
     @NonNull
-    public static MyScheduleService getMyScheduleService() {
-        return retrofit.create(MyScheduleService.class);
-    }
+    public static MyScheduleService getMyScheduleService() { return retrofit.create(MyScheduleService.class); }
     @NonNull
     public static UserService getUserService() {
         return retrofit.create(UserService.class);

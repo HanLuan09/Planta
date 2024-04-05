@@ -47,7 +47,17 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         viewModel.setPlantNavigator(this);
 
         initRecyclerView();
-
+        ///
+        binding.idRcvPlant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("is_search", true);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         return binding.getRoot();
     }
 

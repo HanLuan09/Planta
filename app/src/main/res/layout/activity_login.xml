@@ -75,7 +75,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tied_username"
+                            android:id="@+id/tiet_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -94,7 +94,7 @@
                         app:hintTextColor="#80161823">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tied_password"
+                            android:id="@+id/tiet_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
