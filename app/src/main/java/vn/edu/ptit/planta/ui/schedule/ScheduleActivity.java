@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityScheduleBinding;
@@ -31,6 +32,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
         binding.setScheduleViewModel(viewModel);
         binding.setLifecycleOwner(this);
         viewModel.setScheduleNavigator(this);
+
+        if(viewModel.getListSchedules() != null && viewModel.getListSchedules().getValue() != null)
+            Log.e("Test" , viewModel.getListSchedules().getValue().size()+"");
     }
 
     @Override

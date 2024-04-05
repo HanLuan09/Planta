@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -17,7 +18,8 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityChooseMyPlantBinding;
 import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.ui.plant.addplant.AddPlantActivity;
+import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
+import vn.edu.ptit.planta.ui.myplant.addmyplant.AddMyPlantActivity;
 
 public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlantNavigator {
     private ActivityChooseMyPlantBinding binding;
@@ -29,10 +31,16 @@ public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlan
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_my_plant);
+
+        back();
 //        setContentView(R.layout.activity_add_my_plant);
         choosePlantViewModel = new ViewModelProvider(this).get(ChoosePlantViewModel.class);
-//        binding.setAddPlantViewModel(addPlantViewModel);
+        binding.setChoosePlantViewModel(choosePlantViewModel);
         binding.setLifecycleOwner(this);
+
+        initBundleSearch(); //
+
+        choosePlantViewModel.setChoosePlantNavigator(this);
 
         rcvAddMyPlant = findViewById(R.id.rcv_add_my_plant);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -42,13 +50,15 @@ public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlan
         choosePlantAdapter = new ChoosePlantAdapter(getListPlant());
         choosePlantAdapter.setChoosePlantNavigator(this);
         rcvAddMyPlant.setAdapter(choosePlantAdapter);
+    }
 
-
-//      Thiết lập sự kiện back
-        toolbar = binding.toolbar;
+    private void back() {
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
         toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
+        toolbar.setTitle(null);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +67,7 @@ public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlan
         });
     }
 
+    @NonNull
     private List<Plant> getListPlant() {
         List<Plant> plants = new ArrayList<>();
         plants.add(new Plant(1, "Hoa hướng dương","", "https://cdn.tgdd.vn/Files/2021/08/03/1372812/dac-diem-nguon-goc-va-y-nghia-dac-biet-cua-hoa-huong-duong-202206031122479117.jpeg"));
@@ -68,14 +79,32 @@ public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlan
         return plants;
     }
 
+    private void initBundleSearch() {
+        Bundle bundle = getIntent().getExtras();
+        if(bundle == null) {
+            choosePlantViewModel.getIsSearch().setValue(false);
+            return;
+        }
+        choosePlantViewModel.getIsSearch().setValue(bundle.getBoolean("is_search"));
+    }
+
+
     @Override
     public void handleBack() {
-
+        finish();
     }
 
     @Override
-    public void handleAddPlant() {
-        Intent intent = new Intent(this, AddPlantActivity.class);
+    public void handleAddPlant(Plant plant) {
+        Intent intent;
+        if (choosePlantViewModel.getIsSearch().getValue() == true) {
+            intent = new Intent(this, PlantDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("plant", plant);
+            intent.putExtras(bundle);
+        } else {
+            intent = new Intent(this, AddMyPlantActivity.class);
+        }
         startActivity(intent);
     }
 }

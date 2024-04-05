@@ -13,10 +13,27 @@ public class ChoosePlantViewModel extends ViewModel {
     private ChoosePlantNavigator choosePlantNavigator;
     private MutableLiveData<List<Plant>> listPlant;
     private List<Plant> plants;
+    private MutableLiveData<Boolean> isSearch;
+    private MutableLiveData<String> textSearch;
+
 
     public ChoosePlantViewModel() {
         listPlant = new MutableLiveData<>();
         initData();
+    }
+
+    public void setChoosePlantNavigator(ChoosePlantNavigator choosePlantNavigator) {
+        this.choosePlantNavigator = choosePlantNavigator;
+    }
+
+    public MutableLiveData<Boolean> getIsSearch() {
+        if(isSearch == null) isSearch = new MutableLiveData<>();
+        return isSearch;
+    }
+
+    public MutableLiveData<String> getTextSearch() {
+        if(textSearch == null) textSearch = new MutableLiveData<>();
+        return textSearch;
     }
 
     private void initData() {
@@ -33,5 +50,9 @@ public class ChoosePlantViewModel extends ViewModel {
 
     public MutableLiveData<List<Plant>> getListPlant() {
         return listPlant;
+    }
+
+    public void onBlackClick() {
+        choosePlantNavigator.handleBack();
     }
 }

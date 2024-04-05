@@ -1,4 +1,4 @@
-package vn.edu.ptit.planta.ui.myplant.editmyplant;
+package vn.edu.ptit.planta.ui.myplant.addmyplant;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.annotation.AttrRes;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,38 +19,36 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.AttributeOfMyPlant;
 import vn.edu.ptit.planta.model.MyPlant;
-import vn.edu.ptit.planta.ui.MainActivity;
+import vn.edu.ptit.planta.ui.schedule.ScheduleActivity;
 
-public class EditMyPlantActivity extends AppCompatActivity {
-    private EditMyPlantAdapter editMyPlantAdapter;
+public class AddMyPlantActivity extends AppCompatActivity {
+    private AddMyPlantAdapter addMyPlantAdapter;
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private ImageView ivChooseImage, ivImageMyplanta;
-    private Button btnCancel, btnSave;
+    private Button btnSave;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_information_plant);
+    protected void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.activity_add_information_plant);
 
         back();
-        editMyPlant();
+        addMyPlant();
 
-        recyclerView = findViewById(R.id.recyclerview_edit_my_plant);
+        recyclerView = findViewById(R.id.recyclerview_add_my_plant);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        MyPlant myPlant = getMyPlant();
-        List<AttributeOfMyPlant> attributeOfMyPlants = getListAttributeOfMyPlant(myPlant);
-        editMyPlantAdapter = new EditMyPlantAdapter(attributeOfMyPlants);
-        recyclerView.setAdapter(editMyPlantAdapter);
+        List<AttributeOfMyPlant> attributeOfMyPlants = getListAttributeOfMyPlant();
+        addMyPlantAdapter = new AddMyPlantAdapter(attributeOfMyPlants);
+        recyclerView.setAdapter(addMyPlantAdapter);
 
         ivChooseImage = findViewById(R.id.iv_choose_image);
         ivImageMyplanta = findViewById(R.id.iv_image_myplanta);
-        
+
         Glide.with(this)
-                .load(myPlant.getImage())
-                .placeholder(R.drawable.icon_no_image)
+                .load(R.drawable.icon_no_image)
                 .into(ivImageMyplanta);
     }
 
@@ -60,11 +56,11 @@ public class EditMyPlantActivity extends AppCompatActivity {
         return new MyPlant(1, "Hoa hướng dương", "https://cdn.tgdd.vn/Files/2021/08/03/1372812/dac-diem-nguon-goc-va-y-nghia-dac-biet-cua-hoa-huong-duong-202206031122479117.jpeg","Sáng", "2024/03/21");
     }
 
-    private List<AttributeOfMyPlant> getListAttributeOfMyPlant(MyPlant myPlant) {
+    private List<AttributeOfMyPlant> getListAttributeOfMyPlant() {
         List<AttributeOfMyPlant> attributeOfMyPlants = new ArrayList<>();
-        attributeOfMyPlants.add(new AttributeOfMyPlant("Tên thực vật",myPlant.getName()));
-        attributeOfMyPlants.add(new AttributeOfMyPlant("Ngày trồng",myPlant.getGrownDate()));
-        attributeOfMyPlants.add(new AttributeOfMyPlant("Loại ánh sáng",myPlant.getKindOfLight()));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Tên thực vật","Nhập tên thực vật"));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Ngày trồng","Nhập ngày trồng"));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Loại ánh sáng","Nhập loại ánh sáng"));
 //        attributeOfMyPlants.add(new AttributeOfMyPlant("Kích thước trưởng thành",myPlant.getName()));
 //        attributeOfMyPlants.add(new AttributeOfMyPlant("Thời gian trưởng thành",myPlant.getName()));
 //        attributeOfMyPlants.add(new AttributeOfMyPlant("Mô tả",myPlant.getName()));
@@ -72,13 +68,14 @@ public class EditMyPlantActivity extends AppCompatActivity {
         return attributeOfMyPlants;
     }
 
-    private void editMyPlant() {
+    public void addMyPlant(){
         btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditMyPlantActivity.this, MainActivity.class);
+                Intent intent = new Intent(AddMyPlantActivity.this, ScheduleActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -89,7 +86,6 @@ public class EditMyPlantActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
         toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
-        toolbar.setTitle(null);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

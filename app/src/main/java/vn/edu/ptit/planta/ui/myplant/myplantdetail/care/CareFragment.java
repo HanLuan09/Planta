@@ -1,8 +1,13 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.care;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -21,7 +26,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentCareBinding;
-import vn.edu.ptit.planta.model.ScheduleMyPlant;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.care.CareCalendar;
 import vn.edu.ptit.planta.model.care.CareCalendarSchedule;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
@@ -91,9 +96,14 @@ public class CareFragment extends Fragment implements CareNavigator {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCare.setLayoutManager(linearLayoutManager);
 
-        viewModel.getListSchedules().observe(requireActivity(), new Observer<List<ScheduleMyPlant>>() {
+        setAdapterSchedules();
+
+    }
+
+    private void setAdapterSchedules() {
+        viewModel.getListSchedules().observe(requireActivity(), new Observer<List<MySchedule>>() {
             @Override
-            public void onChanged(List<ScheduleMyPlant> schedules) {
+            public void onChanged(List<MySchedule> schedules) {
                 if (careAdapter == null) {
                     // Nếu adapter chưa được tạo
                     careAdapter = new CareAdapter((schedules));
@@ -101,19 +111,35 @@ public class CareFragment extends Fragment implements CareNavigator {
                     careAdapter.setCareNavigator(CareFragment.this);
                     recyclerViewCare.setAdapter(careAdapter);
                 } else {
-                   careAdapter.updateData(schedules);
+                    careAdapter.updateData(schedules);
                 }
             }
         });
-
     }
 
     @Override
-    public void handleEditNotification(ScheduleMyPlant schedule) {
+    public void handleEditNotification(MySchedule schedule) {
         Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("schedule_care", schedule);
+        bundle.putInt("care_id", 1);
         intent.putExtras(bundle);
-        startActivity(intent);
+        mActivityResultLauncher.launch(intent);
     }
+
+    @Override
+    public void handleAddNotification() {
+        Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
+        mActivityResultLauncher.launch(intent);
+    }
+
+    private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == Activity.RESULT_OK){
+                viewModel.initData();
+                setAdapterSchedules();
+            }
+        }
+    });
 }

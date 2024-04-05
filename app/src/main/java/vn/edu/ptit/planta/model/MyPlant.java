@@ -8,6 +8,7 @@ public class MyPlant {
     private String image;
     private String kindOfLight;
     private String grownDate;
+    private Plant plant;
 
     public MyPlant() {
     }

@@ -8,11 +8,10 @@
 
         <item name="android:fontFamily">@font/tiktok_regular</item>
 
+
     </style>
 
-    <style name="Theme.Planta" parent="Base.Theme.Planta">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
+    <style name="Theme.Planta" parent="Base.Theme.Planta"/>
 
     <style name="Theme.Splash" parent="@style/Theme.AppCompat.Light.NoActionBar">
 
