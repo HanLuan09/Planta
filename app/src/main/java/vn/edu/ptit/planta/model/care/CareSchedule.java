@@ -1,37 +1,94 @@
 package vn.edu.ptit.planta.model.care;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
+
+import vn.edu.ptit.planta.config.SqlDateTypeAdapter;
+import vn.edu.ptit.planta.config.SqlTimeTypeAdapter;
 
 public class CareSchedule implements Serializable {
-    private int id;
-    private String name;
-
+    private int myPlantId;
+    private String myPlantName;
     private String image;
-    private String  time;
+    @JsonAdapter(SqlDateTypeAdapter.class)
+    private Date startDate;
+    @JsonAdapter(SqlDateTypeAdapter.class)
+    private Date endDate;
+    @JsonAdapter(SqlTimeTypeAdapter.class)
+    private Time time;
+    private int frequency;
 
-    public CareSchedule() {
+    public CareSchedule(int myPlantId, String myPlantName) {
+        this.myPlantId = myPlantId;
+        this.myPlantName = myPlantName;
     }
 
-    public CareSchedule(int id, String name, String time) {
-        this.id = id;
-        this.name = name;
+    public CareSchedule(int myPlantId, String myPlantName, String image, Date startDate, Date endDate, Time time, int frequency) {
+        this.myPlantId = myPlantId;
+        this.myPlantName = myPlantName;
+        this.image = image;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.time = time;
-        this.image = "https://www.cleanipedia.com/images/5iwkm8ckyw6v/4ZwMFO8WOz3sQGFl3RHNLW/41535593e4c3881b21e59666594da804/Y2FjaC1jaGFtLXNvYy1jYXktaG9hLWhvbmcuamZpZg/1200w/c%C3%A1ch-ch%C4%83m-s%C3%B3c-c%C3%A2y-hoa-h%E1%BB%93ng-chu%E1%BA%A9n%2C-kh%E1%BB%8Fe-th%C3%A2n%2C-d%C3%A0y-c%C3%A1nh.jpg";
+        this.frequency = frequency;
     }
 
-    public int getId() {
-        return id;
+    public int getMyPlantId() {
+        return myPlantId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getTime() {
-        return time;
+    public String getMyPlantName() {
+        return myPlantName;
     }
 
     public String getImage() {
         return image;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setMyPlantId(int myPlantId) {
+        this.myPlantId = myPlantId;
+    }
+
+    public void setMyPlantName(String myPlantName) {
+        this.myPlantName = myPlantName;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 }

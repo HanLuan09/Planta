@@ -10,6 +10,7 @@
     android:foreground="?android:attr/selectableItemBackground">
 
     <CheckBox
+        android:visibility="gone"
         android:id="@+id/checkbox_item_my_plant_schedule"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -22,7 +23,7 @@
         android:id="@+id/circle_item_my_plant_schedule"
         android:layout_width="68dp"
         android:layout_height="68dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
@@ -73,7 +74,7 @@
         app:cardCornerRadius="6dp"
         app:cardElevation="0dp"
         app:strokeColor="@null"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="26dp"
         android:layout_marginLeft="15dp"
         android:backgroundTint="@color/colorBackground">
         <LinearLayout
@@ -95,7 +96,7 @@
         android:id="@+id/view_item_my_plant_schedule"
         android:layout_width="match_parent"
         android:layout_height="1.2dp"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="32dp"
         android:background="#F1F3FA"/>
 
 </RelativeLayout>

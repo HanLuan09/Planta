@@ -1,28 +1,24 @@
 package vn.edu.ptit.planta.ui.plant;
 
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.ptit.planta.data.RetrofitClient;
-import vn.edu.ptit.planta.data.service.PlantService;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.DataStatus;
+import vn.edu.ptit.planta.model.plant.Plant;
 
 public class PlantViewModel extends ViewModel {
 
     private PlantNavigator plantNavigator;
     private MutableLiveData<List<Plant>> listPlants;
-    private MutableLiveData<Boolean> isData;
-
-    private List<Plant> plants;
+    private MutableLiveData<DataStatus> dataStatus;
 
     public PlantViewModel() {
         listPlants = new MutableLiveData<>();
@@ -32,34 +28,38 @@ public class PlantViewModel extends ViewModel {
         this.plantNavigator = navigator;
     }
 
-    public MutableLiveData<Boolean> getIsData() {
-        if(isData == null) isData = new MutableLiveData<>();
-        return isData;
+    public MutableLiveData<DataStatus> getDataStatus() {
+        if(dataStatus == null) {
+            dataStatus = new MutableLiveData<>();
+            dataStatus.setValue(new DataStatus(false, "Đang kết nối"));
+        }
+        return dataStatus;
     }
 
     private void initData() {
-
-        plants = new ArrayList<>();
         RetrofitClient.getPlantService().listPlants().enqueue(new Callback<ApiResponse<List<Plant>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Plant>>> call, Response<ApiResponse<List<Plant>>> response) {
                 if (response.isSuccessful()) {
                     ApiResponse<List<Plant>> apiResponse = response.body();
                     if(apiResponse.isSuccess()){
-                        plants = apiResponse.getResult();
-                        listPlants.setValue(plants);
-                        isData.setValue(true);
+                        if(apiResponse.getResult() == null) dataStatus.setValue(new DataStatus(false, "Không có dữ liệu"));
+                        else {
+                            listPlants.setValue(apiResponse.getResult());
+                            dataStatus.setValue(new DataStatus(true, null));
+                        }
+
                     }else {
-                        isData.setValue(false);
+                        dataStatus.setValue(new DataStatus(false, apiResponse.getMessage()));
                     }
                 } else {
-                    isData.setValue(false);
+                    dataStatus.setValue(new DataStatus(false, "Kết nối thất bại"));
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Plant>>> call, Throwable t) {
-                isData.setValue(false);
+                dataStatus.setValue(new DataStatus(false, "Không có kết nối"));
             }
         });
 
@@ -69,7 +69,7 @@ public class PlantViewModel extends ViewModel {
         return listPlants;
     }
 
-    public void onSearchPlant(){
-//        if(myPlantNavigator != null) myPlantNavigator.handleSearchMyPlant();
+    public void onSearchPlantClick(){
+        if(plantNavigator != null) plantNavigator.handlePlantSearch();
     }
 }

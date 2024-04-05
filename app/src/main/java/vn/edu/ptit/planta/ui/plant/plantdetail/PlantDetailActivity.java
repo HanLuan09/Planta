@@ -1,12 +1,8 @@
 package vn.edu.ptit.planta.ui.plant.plantdetail;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -18,9 +14,8 @@ import com.bumptech.glide.Glide;
 import vn.edu.ptit.planta.databinding.ActivityPlantDetailBinding;
 
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.model.PlantDetail;
-import vn.edu.ptit.planta.ui.plant.PlantViewModel;
+import vn.edu.ptit.planta.model.plant.Plant;
+import vn.edu.ptit.planta.model.plant.PlantDetail;
 
 public class PlantDetailActivity extends AppCompatActivity {
 
