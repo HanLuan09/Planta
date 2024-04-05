@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
 //                edUsername = findViewById(R.id.edUsername);
 //                edPassword = findViewById(R.id.edPassword);
 //                User userSend = new User();
@@ -57,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 //                finish();
-=======
                 btnLogin.setEnabled(false);
 
                 tilUsername = (TextInputLayout) findViewById(R.id.til_username);
@@ -74,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 checkLogin(userSend);
                 btnLogin.setEnabled(true);
->>>>>>> 042fbd6856e472d4018cf7e093b1904d061ab111
             }
         });
     }
