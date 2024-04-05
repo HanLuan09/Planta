@@ -1,11 +1,9 @@
 package vn.edu.ptit.planta.ui.schedule.notification;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,7 +12,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,24 +22,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityAddNotificationBinding;
-import vn.edu.ptit.planta.model.ScheduleMyPlant;
-import vn.edu.ptit.planta.model.ScheduleNodtification;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
-import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareFragment;
-import vn.edu.ptit.planta.ui.schedule.ScheduleViewModel;
 import vn.edu.ptit.planta.utils.DateUtils;
 import vn.edu.ptit.planta.utils.TimeUtils;
 
@@ -52,6 +42,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     private AddNotificationViewModel viewModel;
 
     private int careId = 0;
+    private int myplantId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,20 +58,6 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
 
         initBundle();
         initObserveDate();
-
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if(!viewModel.getIsCheckEdit().getValue()) {
-                    final Dialog dialog = new Dialog(AddNotificationActivity.this);
-                    openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!", 2);
-                    dialog.show();
-                }else {
-                    finish();
-                }
-            }
-        });
-
     }
 
     private void initBundle() {
@@ -91,7 +68,8 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
             return;
         }
         MySchedule schedule = (MySchedule)bundle.get("schedule_care");
-
+        myplantId = bundle.getInt("care_my_plant_id");
+        Log.e("care_my_plant_id", myplantId+"");
         careId = bundle.getInt("care_id");
         binding.ivNotiDelete.setVisibility(careId == 0? View.GONE : View.VISIBLE);
         binding.tvNoti.setText(careId == 0? "Add Notification" : "Notification");
@@ -172,25 +150,21 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
 
     @Override
     public void handleExerciseDialog() {
-
+        viewModel.getCheckDialog().setValue(2);
+        FrequencyBottomSheet frequencyBottomSheet = new FrequencyBottomSheet();
+        frequencyBottomSheet.show(getSupportFragmentManager(), frequencyBottomSheet.getTag());
     }
 
     @Override
     public void handleDeleteNotification() {
         final Dialog dialog = new Dialog(this);
-        openDialog(dialog, "Cảnh báo", "Bạn có muốn xóa lịch trình này không?", 1);
+        openDialog(dialog, "Cảnh báo", "Bạn có muốn xóa lịch trình này không?");
         dialog.show();
     }
 
     @Override
     public void handleCloseNotification() {
-        if(!viewModel.getIsCheckEdit().getValue()) {
-            final Dialog dialog = new Dialog(this);
-            openDialog(dialog, "Thông báo", "Lịch trình này sẽ không được lưu!", 2);
-            dialog.show();
-        }else {
-            finish();
-        }
+        finish();
     }
 
     @Override
@@ -202,13 +176,9 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
                 DateUtils.stringToDate(viewModel.getEndDate().getValue()),
                 TimeUtils.stringToTime(viewModel.getTime().getValue()),
                 viewModel.getFrequency().getValue(),
-                1
+                myplantId
         );
         viewModel.handleAddMySchedule(myScheduleRequest, true);
-
-//        Intent intent = new Intent();
-//        setResult(Activity.RESULT_OK, intent);
-//        finish();
     }
 
     @Override
@@ -221,9 +191,6 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
                 viewModel.getFrequency().getValue()
         );
         viewModel.handleAddMySchedule(myScheduleRequest, false);
-//        Intent intent = new Intent();
-//        setResult(Activity.RESULT_OK, intent);
-//        finish();
     }
 
     private void initObserveDate() {
@@ -249,7 +216,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         });
     }
 
-    private void openDialog(@NonNull Dialog dialog, String name, String message, int idStatus) {
+    private void openDialog(@NonNull Dialog dialog, String name, String message) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_dialog);
         Window window = dialog.getWindow();
@@ -275,66 +242,50 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(idStatus == 1) {
-                    dialog.dismiss();
-                    viewModel.handleDeleteMySchedule();
-                }else {
-                    dialog.dismiss();
-                }
+                dialog.dismiss();
+                viewModel.handleDeleteMySchedule();
             }
         });
     }
 
-
-    private void openDialogSchedule(@NonNull Dialog dialog, String message) {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottom_dialog_schedule);
-        Window window = dialog.getWindow();
-        if(window == null) return;
-
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = Gravity.CENTER;
-        window.setAttributes(windowAttributes);
-        dialog.setCancelable(false);
-
-        TextView tvMessage = dialog.findViewById(R.id.dialog_text_message);
-        tvMessage.setText(message);
-    }
-
     @Override
     public void handleDialogScheduleSuccess(String message) {
-        final Dialog dialog = new Dialog(this);
-        openDialogSchedule(dialog, message);
-        dialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+        builder.setTitle("Thành công")
+                .setMessage(message)
+                .setCancelable(false);
+
+        final AlertDialog alertDialog = builder.create();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                dialog.dismiss();
+                alertDialog.dismiss();
                 Intent intent = new Intent();
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
-        }, 3000);
+        }, 2000);
+        alertDialog.show();
     }
+
     @Override
     public void handleDialogScheduleFail(String message) {
-        final Dialog dialog = new Dialog(this);
-        openDialogSchedule(dialog, message);
-        dialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+        builder.setTitle("Thất bại")
+                .setMessage(message)
+                .setCancelable(false);
+
+        final AlertDialog alertDialog = builder.create();
+
+        // Đóng AlertDialog sau 2 giây
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                dialog.dismiss();
+                alertDialog.dismiss();
             }
-        }, 3000);
-    }
-    @Override
-    public void handleResult(){
-        Intent intent = new Intent();
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
+        }, 2000);
 
+        // Hiển thị AlertDialog
+        alertDialog.show();
+    }
 }

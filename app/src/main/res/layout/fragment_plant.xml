@@ -51,7 +51,7 @@
                     android:layout_centerVertical="true">
 
                     <ImageView
-                        android:id="@+id/id_plant_search"
+                        android:onClick="@{() -> plantViewModel.onSearchPlantClick()}"
                         style="@style/Widget.AppCompat.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -73,7 +73,8 @@
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp">
                 <LinearLayout
-                    android:visibility="@{plantViewModel.isData? View.GONE : View.VISIBLE}"
+                    android:layout_marginTop="30dp"
+                    android:visibility="@{plantViewModel.dataStatus.status? View.GONE : View.VISIBLE}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -81,19 +82,21 @@
                     android:layout_centerHorizontal="true">
 
                     <ImageView
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="145dp"
+                        android:layout_height="125dp"
                         android:src="@drawable/ic_prof_bloom" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Không có dữ liệu"
+                        android:text="@{plantViewModel.dataStatus.message}"
+                        android:textColor="@color/colorGreenText"
+                        android:textSize="@dimen/text_size_h8"
                         android:fontFamily="@font/tiktok_medium"/>
 
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="@{plantViewModel.isData? View.VISIBLE : View.GONE}"
+                    android:visibility="@{plantViewModel.dataStatus.status? View.VISIBLE : View.GONE}"
                     android:id="@+id/id_rcv_plant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

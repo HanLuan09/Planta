@@ -17,7 +17,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityChooseMyPlantBinding;
-import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.plant.Plant;
 import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
 import vn.edu.ptit.planta.ui.myplant.addmyplant.AddMyPlantActivity;
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View"/>
@@ -34,7 +35,7 @@
         <!--   Tần suất     -->
 
         <LinearLayout
-            android:visibility="visible"
+            android:visibility="@{notificationViewModel.checkDialog == 1? View.VISIBLE: View.GONE}"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -59,35 +60,40 @@
         <!--   Bài tập     -->
 
         <LinearLayout
-            android:visibility="gone"
+            android:visibility="@{notificationViewModel.checkDialog == 2? View.VISIBLE: View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp">
 
             <LinearLayout
+                android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <RadioGroup
+                    android:id="@+id/dialog_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <RadioButton
+                        android:id="@+id/dialog_radio_button_water"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tưới nước"/>
 
                     <RadioButton
+                        android:id="@+id/dialog_radio_button_fertilizer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bón phân"/>
 
                     <RadioButton
+                        android:id="@+id/dialog_radio_button_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bài tập khác"/>
@@ -96,10 +102,36 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:visibility="@{dialogRadioButtonOther.checked? View.VISIBLE: View.GONE}"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tên bài tập"
+                    android:layout_marginBottom="15dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:boxStrokeColor="#80161823"
+                    app:hintTextColor="#80161823">
+                    <!-- android:text="@={notificationViewModel.exercise}"-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_exercise"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
 
             <Button
-                android:id="@+id/dialog_bt"
-                android:layout_width="200dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/dialog_bt_exercise"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button_2"
                 android:text="Xác nhận"/>

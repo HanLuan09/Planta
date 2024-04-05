@@ -20,7 +20,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.AttributeOfMyPlant;
-import vn.edu.ptit.planta.model.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 
 public class AboutFragment extends Fragment {
     private RecyclerView recyclerView;
