@@ -17,20 +17,34 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.care.CareCalendar;
-import vn.edu.ptit.planta.model.care.CareCalendarSchedule;
-import vn.edu.ptit.planta.model.care.CategoryCalendar;
+import vn.edu.ptit.planta.model.care.CareCalendarResponse;
+import vn.edu.ptit.planta.utils.DateUtils;
 
 public class CareCalendarAdapter extends RecyclerView.Adapter<CareCalendarAdapter.CareCategoryCalendarViewHolder> {
 
-    private List<CareCalendar> listCareCalendars;
+    private List<CareCalendarResponse> listCareCalendars;
+    private OnItemClickListener mListener;
 
     private int selectedItemPos = 0;
+    private boolean checkPos = true;
     private int lastItemSelectedPos = 0;
 
-    public CareCalendarAdapter(List<CareCalendar> listCareCalendars) {
+    public CareCalendarAdapter(List<CareCalendarResponse> listCareCalendars) {
         this.listCareCalendars = listCareCalendars;
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public void updateCareCalendars(List<CareCalendarResponse> listCareCalendars) {
+        this.listCareCalendars = listCareCalendars;
+        notifyDataSetChanged();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(List<CareCalendar> schedules, String date);
+    }
     @NonNull
     @Override
     public CareCategoryCalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,41 +54,34 @@ public class CareCalendarAdapter extends RecyclerView.Adapter<CareCalendarAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CareCategoryCalendarViewHolder holder, int position) {
-        CareCalendar careCalendar = listCareCalendars.get(position);
+        CareCalendarResponse careCalendar = listCareCalendars.get(position);
 
         if (careCalendar == null) return;
-        String date = careCalendar.getDate();
-        String[] dateParts = date.split("/");
+        String date = DateUtils.formatToDDMMYYYY(careCalendar.getDateCare());
+        String[] dateParts = date.split("-");
         String newMonth = setMonth(dateParts[1]);
 
+        if (checkPos && mListener != null) {
+            mListener.onItemClick(careCalendar.getCareCalendars(), date);
+            checkPos = false;
+        }
         ViewGroup.LayoutParams layoutParams = holder.cardView.getLayoutParams();
         if(position == 0) {
             holder.tvDay.setText("Hôm nay");
             holder.tvMonth.setVisibility(View.GONE);
-            layoutParams.width = 240;
+            layoutParams.width = 254;
+            initClickCardView(holder, careCalendar, date);
         }else {
             holder.tvDay.setText(dateParts[0]);
             holder.tvMonth.setVisibility(View.VISIBLE);
             holder.tvMonth.setText(newMonth);
-            layoutParams.width = 148;
+            layoutParams.width = 154;
+            initClickCardView(holder, careCalendar, date);
         }
         holder.cardView.setLayoutParams(layoutParams);
 
         // Set background drawable based on selection state
-        intitSetBackground(holder, position);
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Update selected item positions
-                lastItemSelectedPos = selectedItemPos;
-                selectedItemPos = holder.getAdapterPosition();
-
-                // Notify adapter of item changes
-                notifyItemChanged(lastItemSelectedPos);
-                notifyItemChanged(selectedItemPos);
-            }
-        });
+        initSetBackground(holder, position);
     }
 
     @Override
@@ -95,7 +102,25 @@ public class CareCalendarAdapter extends RecyclerView.Adapter<CareCalendarAdapte
         }
     }
 
-    private void intitSetBackground(@NonNull CareCategoryCalendarViewHolder holder, int position) {
+    private void initClickCardView(@NonNull CareCategoryCalendarViewHolder holder, CareCalendarResponse careCalendar, String date) {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Update selected item positions
+                lastItemSelectedPos = selectedItemPos;
+                selectedItemPos = holder.getAdapterPosition();
+
+                // Notify adapter of item changes
+                notifyItemChanged(lastItemSelectedPos);
+                notifyItemChanged(selectedItemPos);
+                if (mListener != null) {
+                    mListener.onItemClick(careCalendar.getCareCalendars(), date);
+                }
+
+            }
+        });
+    }
+    private void initSetBackground(@NonNull CareCategoryCalendarViewHolder holder, int position) {
         int unSelection = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorblackText);
         int selection = ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimary);
         int text = ContextCompat.getColor(holder.itemView.getContext(), R.color.white);

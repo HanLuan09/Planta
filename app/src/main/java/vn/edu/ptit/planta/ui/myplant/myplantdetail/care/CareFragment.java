@@ -21,16 +21,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentCareBinding;
-import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.care.CareCalendar;
-import vn.edu.ptit.planta.model.care.CareCalendarSchedule;
+import vn.edu.ptit.planta.model.care.CareCalendarResponse;
+import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareCalendarAdapter;
+import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareScheduleCalendarAdapter;
 import vn.edu.ptit.planta.ui.schedule.notification.AddNotificationActivity;
 
 public class CareFragment extends Fragment implements CareNavigator {
@@ -39,8 +39,8 @@ public class CareFragment extends Fragment implements CareNavigator {
     private CareViewModel viewModel;
     private CareAdapter careAdapter;
     private CareCalendarAdapter careCalendarAdapter;
-    private RecyclerView recyclerViewCare, rcvSchedule;
-
+    private CareScheduleCalendarAdapter careScheduleCalendarAdapter;
+    private RecyclerView recyclerViewCare, rcvSchedule, rcvScheduleCalendar;
 
 
     @Override
@@ -51,53 +51,46 @@ public class CareFragment extends Fragment implements CareNavigator {
         viewModel = new ViewModelProvider(requireActivity()).get(CareViewModel.class);
         binding.setCareViewModel(viewModel);
         binding.setLifecycleOwner(this);
-
         viewModel.setCareNavigator(this);
-
-        initRecyclerViewCare();
-        initRecyclerViewSchedule();
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            int id = bundle.getInt("id_myplant");
+            int myPlantId = bundle.getInt("id_myplant");
+            viewModel.getIdMyPlant().setValue(myPlantId);
         }
+        if(viewModel.getIdMyPlant()!= null && viewModel.getIdMyPlant().getValue()!= null) {
+            viewModel.initDataSchedule();
+//            viewModel.initDataCareCalendar();
+        }
+
+        initRecyclerViewCareScheduleCalendar();
+        initRecyclerViewSchedule();
+        initRecyclerViewCareCalendar();
 
         return binding.getRoot();
     }
 
-    private void initRecyclerViewSchedule() {
+    private void initRecyclerViewCareCalendar() {
         rcvSchedule = binding.idRcvSchedule;
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         rcvSchedule.setLayoutManager(linearLayoutManager);
-        careCalendarAdapter = new CareCalendarAdapter(getList());
-        rcvSchedule.setAdapter(careCalendarAdapter);
 
+        setAdapterCareCalendar();
 
     }
 
-    private List<CareCalendar> getList() {
-        List<CareCalendarSchedule> list = new ArrayList<>();
-        List<CareCalendar> careCalendars = new ArrayList<>();
-        careCalendars.add(new CareCalendar("10/10/2024", list));
-        careCalendars.add(new CareCalendar("10/11/2024", list));
-        careCalendars.add(new CareCalendar("20/01/2024", list));
-        careCalendars.add(new CareCalendar("10/02/2024", list));
-        careCalendars.add(new CareCalendar("10/06/2024", list));
-        careCalendars.add(new CareCalendar("10/08/2024", list));
-        careCalendars.add(new CareCalendar("10/09/2024", list));
-        careCalendars.add(new CareCalendar("10/06/2024", list));
-        careCalendars.add(new CareCalendar("10/01/2024", list));
-        return careCalendars;
-    }
-
-    private void initRecyclerViewCare() {
+    private void initRecyclerViewSchedule() {
         recyclerViewCare = binding.idRcvCare;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCare.setLayoutManager(linearLayoutManager);
-
         setAdapterSchedules();
+    }
 
+    private void initRecyclerViewCareScheduleCalendar() {
+        rcvScheduleCalendar = binding.rcvScheduleNote;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+        rcvScheduleCalendar.setLayoutManager(linearLayoutManager);
+        careScheduleCalendarAdapter = new CareScheduleCalendarAdapter();
     }
 
     private void setAdapterSchedules() {
@@ -107,12 +100,32 @@ public class CareFragment extends Fragment implements CareNavigator {
                 if (careAdapter == null) {
                     // Nếu adapter chưa được tạo
                     careAdapter = new CareAdapter((schedules));
-
                     careAdapter.setCareNavigator(CareFragment.this);
                     recyclerViewCare.setAdapter(careAdapter);
                 } else {
                     careAdapter.updateData(schedules);
                 }
+
+            }
+        });
+    }
+
+    private void setAdapterCareCalendar() {
+        viewModel.getListCareCalendars().observe(requireActivity(), new Observer<List<CareCalendarResponse>>() {
+            @Override
+            public void onChanged(List<CareCalendarResponse> careCalendarResponses) {
+
+                careCalendarAdapter = new CareCalendarAdapter(careCalendarResponses);
+                rcvSchedule.setAdapter(careCalendarAdapter);
+                careCalendarAdapter.setOnItemClickListener(new CareCalendarAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(List<CareCalendar> schedules, String date) {
+                        careScheduleCalendarAdapter.setListCareScheduleCalendars(schedules);
+                        rcvScheduleCalendar.setAdapter(careScheduleCalendarAdapter);
+                        binding.tvScheduleNote.setText(date);
+                    }
+
+                });
             }
         });
     }
@@ -123,6 +136,7 @@ public class CareFragment extends Fragment implements CareNavigator {
         Bundle bundle = new Bundle();
         bundle.putSerializable("schedule_care", schedule);
         bundle.putInt("care_id", 1);
+        bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
         intent.putExtras(bundle);
         mActivityResultLauncher.launch(intent);
     }
@@ -130,6 +144,9 @@ public class CareFragment extends Fragment implements CareNavigator {
     @Override
     public void handleAddNotification() {
         Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
+        intent.putExtras(bundle);
         mActivityResultLauncher.launch(intent);
     }
 
@@ -137,8 +154,10 @@ public class CareFragment extends Fragment implements CareNavigator {
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode() == Activity.RESULT_OK){
-                viewModel.initData();
+                viewModel.initDataSchedule();
                 setAdapterSchedules();
+                //viewModel.initDataCareCalendar();
+                setAdapterCareCalendar();
             }
         }
     });

@@ -55,6 +55,15 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                edUsername = findViewById(R.id.edUsername);
+//                edPassword = findViewById(R.id.edPassword);
+//                User userSend = new User();
+//                userSend.setUsername(edUsername.getText().toString());
+//                userSend.setPassword(edPassword.getText().toString());
+//                checkLogin(userSend);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+//                finish();
                 btnLogin.setEnabled(false);
 
                 progressBar = findViewById(R.id.progressBar);

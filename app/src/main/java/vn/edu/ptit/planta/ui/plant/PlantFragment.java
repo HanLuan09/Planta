@@ -23,8 +23,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentPlantBinding;
-import vn.edu.ptit.planta.model.Plant;
-import vn.edu.ptit.planta.ui.myplant.search.SearchMyPlantActivity;
+import vn.edu.ptit.planta.model.plant.Plant;
 import vn.edu.ptit.planta.ui.plant.chooseplant.ChoosePlantActivity;
 import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
 
@@ -48,9 +47,8 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         viewModel.setPlantNavigator(this);
 
         initRecyclerView();
-
         ///
-        binding.idPlantSearch.setOnClickListener(new View.OnClickListener() {
+        binding.idRcvPlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
@@ -66,7 +64,6 @@ public class PlantFragment extends Fragment implements PlantNavigator {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //if(plantAdapter != null) plantAdapter.release();
     }
 
     private void initRecyclerView() {
@@ -98,6 +95,15 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         intent.putExtras(bundle);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void handlePlantSearch() {
+        Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("is_search", true);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

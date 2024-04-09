@@ -1,14 +1,11 @@
 package vn.edu.ptit.planta.ui.schedule.notification;
 
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.Observer;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -16,10 +13,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.Plant;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
-import vn.edu.ptit.planta.utils.DateUtils;
 
 public class AddNotificationViewModel extends ViewModel {
 
@@ -164,7 +159,6 @@ public class AddNotificationViewModel extends ViewModel {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                busy.setValue(false); // == View.GONE
                 if(notificationNavigator != null) {
                     if(!edit) notificationNavigator.handleSummitNotification();
                     else {
@@ -172,6 +166,7 @@ public class AddNotificationViewModel extends ViewModel {
                         edit = false;
                     }
                 }
+                busy.setValue(false); // == View.GONE
 
             }
         }, 3000);
@@ -189,28 +184,30 @@ public class AddNotificationViewModel extends ViewModel {
     public void handleAddMySchedule(MyScheduleRequest request, boolean isAdd) {
 
         if(isAdd == true){
-            RetrofitClient.getMyScheduleService().createMyScheduleByPlant(request).enqueue(new Callback<MySchedule>() {
+            RetrofitClient.getMyScheduleService().createMyScheduleByPlant(request).enqueue(new Callback<ApiResponse<MySchedule>>() {
                 @Override
-                public void onResponse(Call<MySchedule> call, Response<MySchedule> response) {
-                    notificationNavigator.handleDialogScheduleSuccess("Xóa lịch trình không thành công");
+                public void onResponse(Call<ApiResponse<MySchedule>> call, Response<ApiResponse<MySchedule>> response) {
+                    if(response.isSuccessful()) notificationNavigator.handleDialogScheduleSuccess("Thêm lịch trình thành công");
+                    else notificationNavigator.handleDialogScheduleFail("Thêm lịch trình thất bại");
                 }
 
                 @Override
-                public void onFailure(Call<MySchedule> call, Throwable throwable) {
-                    notificationNavigator.handleDialogScheduleFail("Xóa lịch trình không thành công");
+                public void onFailure(Call<ApiResponse<MySchedule>> call, Throwable throwable) {
+                    notificationNavigator.handleDialogScheduleFail("Lỗi kết nối");
                 }
             });
         }else {
             if(idMySchedule != null && idMySchedule.getValue() != null) {
-                RetrofitClient.getMyScheduleService().updateMyScheduleByPlant(idMySchedule.getValue(), request).enqueue(new Callback<MySchedule>() {
+                RetrofitClient.getMyScheduleService().updateMyScheduleByPlant(idMySchedule.getValue(), request).enqueue(new Callback<ApiResponse<MySchedule>>() {
                     @Override
-                    public void onResponse(Call<MySchedule> call, Response<MySchedule> response) {
-                        notificationNavigator.handleDialogScheduleSuccess("Sửa lịch trình thành công");
+                    public void onResponse(Call<ApiResponse<MySchedule>> call, Response<ApiResponse<MySchedule>> response) {
+                        if(response.isSuccessful()) notificationNavigator.handleDialogScheduleSuccess("Sửa lịch trình thành công");
+                        else notificationNavigator.handleDialogScheduleFail("Sửa lịch trình thất bại");
                     }
 
                     @Override
-                    public void onFailure(Call<MySchedule> call, Throwable throwable) {
-                        notificationNavigator.handleDialogScheduleFail("Xóa lịch trình không thành công");
+                    public void onFailure(Call<ApiResponse<MySchedule>> call, Throwable throwable) {
+                        notificationNavigator.handleDialogScheduleFail("Lỗi kết nối");
                     }
                 });
             }
@@ -218,20 +215,18 @@ public class AddNotificationViewModel extends ViewModel {
     }
     public void handleDeleteMySchedule(){
         if(idMySchedule != null && idMySchedule.getValue() != null) {
-            RetrofitClient.getMyScheduleService().deleteMySchedule(idMySchedule.getValue()).enqueue(new Callback<MySchedule>() {
+            RetrofitClient.getMyScheduleService().deleteMySchedule(idMySchedule.getValue()).enqueue(new Callback<ApiResponse>() {
                 @Override
-                public void onResponse(Call<MySchedule> call, Response<MySchedule> response) {
-                    notificationNavigator.handleDialogScheduleSuccess("Xóa lịch trình thành công");
-                    notificationNavigator.handleResult();
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if(response.isSuccessful()) notificationNavigator.handleDialogScheduleSuccess("Xóa lịch trình thành công");
+                    else notificationNavigator.handleDialogScheduleFail("Xóa lịch trình thất bại");
                 }
 
                 @Override
-                public void onFailure(Call<MySchedule> call, Throwable throwable) {
-                    notificationNavigator.handleDialogScheduleFail("Xóa lịch trình không thành công");
+                public void onFailure(Call<ApiResponse> call, Throwable throwable) {
+                    notificationNavigator.handleDialogScheduleFail("Lỗi kết nối");
                 }
             });
-        }else{
-            Log.e("Delete", "faile");
         }
     }
 }

@@ -1,5 +1,6 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +24,6 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityMyPlantDetailBinding;
-import vn.edu.ptit.planta.model.Plant;
 import vn.edu.ptit.planta.ui.myplant.editmyplant.EditMyPlantActivity;
 
 public class MyPlantDetailActivity extends AppCompatActivity {
@@ -55,7 +55,19 @@ public class MyPlantDetailActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        });
+
+        // sự kiện trở về mặc định
+        getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -111,6 +123,4 @@ public class MyPlantDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

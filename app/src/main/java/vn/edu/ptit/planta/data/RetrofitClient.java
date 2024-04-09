@@ -26,6 +26,10 @@ public class RetrofitClient {
     public static PlantService getPlantService() {
         return retrofit.create(PlantService.class);
     }
+    @NonNull
+    public static MyPlantService getMyPlantService() {
+        return retrofit.create(MyPlantService.class);
+    }
 
     @NonNull
     public static MyScheduleService getMyScheduleService() { return retrofit.create(MyScheduleService.class); }

@@ -1,32 +1,42 @@
 package vn.edu.ptit.planta.ui.schedule.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.model.care.CareScheduleCategory;
+import vn.edu.ptit.planta.model.care.CareScheduleResponse;
 
 public class CareScheduleCategoryAdapter extends RecyclerView.Adapter<CareScheduleCategoryAdapter.CareScheduleCategoryViewHolder> {
 
-    private List<CareScheduleCategory> listCareScheduleCategorys;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private List<CareScheduleResponse> listCareScheduleCategorys;
+    private String selectDate;
     private Context mContext;
 
     public CareScheduleCategoryAdapter(Context mContext) {
         this.mContext = mContext;
     }
+    public void setActivityResultLauncher(ActivityResultLauncher<Intent> mActivityResultLauncher) {
+        this.activityResultLauncher = mActivityResultLauncher;
+    }
 
-    public void setListCareScheduleCategorys(List<CareScheduleCategory> listCareScheduleCategorys) {
+    public void setSelectDate(String selectDate) {
+        this.selectDate = selectDate;
+    }
+
+    public void setListCareScheduleCategorys(List<CareScheduleResponse> listCareScheduleCategorys) {
         this.listCareScheduleCategorys = listCareScheduleCategorys;
         notifyDataSetChanged();
     }
@@ -41,20 +51,21 @@ public class CareScheduleCategoryAdapter extends RecyclerView.Adapter<CareSchedu
     @Override
     public void onBindViewHolder(@NonNull CareScheduleCategoryViewHolder holder, int position) {
 
-        CareScheduleCategory category = listCareScheduleCategorys.get(position);
+        CareScheduleResponse category = listCareScheduleCategorys.get(position);
         if(category == null) return;
-        holder.textView.setText(category.getExercise());
+        holder.textView.setText(category.getName());
 
-        if(category.getExercise().trim().equals("Tưới cây")) holder.imageView.setImageResource(R.drawable.ic_water);
-        else if(category.getExercise().trim().equals("Bón phân")) holder.imageView.setImageResource(R.drawable.ico_fertilize);
-        else holder.imageView.setImageResource(R.drawable.icon_pl_leaf);
+        if(category.getName().trim().equals("Tưới nước")) holder.imageView.setImageResource(R.drawable.ic_water);
+        else if(category.getName().trim().equals("Bón phân")) holder.imageView.setImageResource(R.drawable.ico_fertilize);
+        else holder.imageView.setImageResource(R.drawable.ic_plant_fill);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         holder.recyclerView.setLayoutManager(linearLayoutManager);
 
-        CareScheduleAdapter careScheduleAdapter = new CareScheduleAdapter();
+        CareScheduleAdapter careScheduleAdapter = new CareScheduleAdapter(activityResultLauncher, mContext);
         careScheduleAdapter.setListCareSchedules(category.getCareSchedules());
-        careScheduleAdapter.setmContext(mContext);
+        careScheduleAdapter.setSelectDate(selectDate);
+        //careScheduleAdapter.setmContext(mContext);
 
         holder.recyclerView.setAdapter(careScheduleAdapter);
 
@@ -82,5 +93,6 @@ public class CareScheduleCategoryAdapter extends RecyclerView.Adapter<CareSchedu
 
     public void release() {
         mContext = null;
+        activityResultLauncher = null;
     }
 }

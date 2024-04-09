@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.plant.Plant;
 
 public class ChoosePlantViewModel extends ViewModel {
 

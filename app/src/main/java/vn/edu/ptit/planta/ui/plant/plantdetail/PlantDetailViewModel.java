@@ -8,7 +8,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.PlantDetail;
+import vn.edu.ptit.planta.model.plant.PlantDetail;
 
 public class PlantDetailViewModel extends ViewModel {
 

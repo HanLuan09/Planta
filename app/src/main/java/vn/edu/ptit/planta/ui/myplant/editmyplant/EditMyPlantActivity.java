@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.annotation.AttrRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +19,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.AttributeOfMyPlant;
-import vn.edu.ptit.planta.model.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 import vn.edu.ptit.planta.ui.MainActivity;
 
 public class EditMyPlantActivity extends AppCompatActivity {

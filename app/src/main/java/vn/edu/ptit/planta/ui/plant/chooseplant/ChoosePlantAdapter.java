@@ -14,7 +14,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.model.Plant;
+import vn.edu.ptit.planta.model.plant.Plant;
 
 public class ChoosePlantAdapter extends RecyclerView.Adapter<ChoosePlantAdapter.AddPlantViewHolder>{
 
