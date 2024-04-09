@@ -10,7 +10,6 @@ import vn.edu.ptit.planta.data.service.MyPlantService;
 import vn.edu.ptit.planta.data.service.MyScheduleService;
 import vn.edu.ptit.planta.data.service.PlantService;
 import vn.edu.ptit.planta.data.service.UserService;
-import vn.edu.ptit.planta.model.MyPlant;
 
 
 public class RetrofitClient {
@@ -37,8 +36,5 @@ public class RetrofitClient {
     public static UserService getUserService() {
         return retrofit.create(UserService.class);
     }
-
-    @NonNull
-    public static MyPlantService getMyPlantService() { return retrofit.create(MyPlantService.class); }
 }
 

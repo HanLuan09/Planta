@@ -26,7 +26,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentMyPlantBinding;
-import vn.edu.ptit.planta.model.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.MyPlantDetailActivity;
 import vn.edu.ptit.planta.ui.myplant.search.SearchMyPlantActivity;
 

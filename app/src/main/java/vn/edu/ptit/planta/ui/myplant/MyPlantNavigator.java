@@ -2,7 +2,7 @@ package vn.edu.ptit.planta.ui.myplant;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
-import vn.edu.ptit.planta.model.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 
 public interface MyPlantNavigator {
 
