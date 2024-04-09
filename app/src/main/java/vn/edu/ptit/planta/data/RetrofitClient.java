@@ -6,14 +6,16 @@ import androidx.annotation.NonNull;
 import retrofit2.Retrofit;
 
 import retrofit2.converter.gson.GsonConverterFactory;
+import vn.edu.ptit.planta.data.service.MyPlantService;
 import vn.edu.ptit.planta.data.service.MyScheduleService;
 import vn.edu.ptit.planta.data.service.PlantService;
 import vn.edu.ptit.planta.data.service.UserService;
+import vn.edu.ptit.planta.model.MyPlant;
 
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.125.222:8080/api/";;
+    private static final String BASE_URL = "http://192.168.193.222:8080/api/";;
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -31,5 +33,8 @@ public class RetrofitClient {
     public static UserService getUserService() {
         return retrofit.create(UserService.class);
     }
+
+    @NonNull
+    public static MyPlantService getMyPlantService() { return retrofit.create(MyPlantService.class); }
 }
 

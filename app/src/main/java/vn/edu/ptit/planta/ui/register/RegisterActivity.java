@@ -45,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnRegister.setEnabled(false);
+
                 tilUsername = (TextInputLayout) findViewById(R.id.til_username);
                 tilPassword = (TextInputLayout) findViewById(R.id.til_password);
                 tilConfirmPassword = (TextInputLayout) findViewById(R.id.til_confirm_password);
@@ -62,12 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
                     userSend.setUsername(username);
                     userSend.setPassword(password);
                     Log.e("Start send", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                    if (register(userSend)){
-                        Log.e("Send success", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+
+                    register(userSend);
+                    btnRegister.setEnabled(true);
                 }
                 else{
                     Toast.makeText(RegisterActivity.this, "Please confirm the correct password!", Toast.LENGTH_SHORT).show();
@@ -77,8 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private Boolean checkPassword(String password, String confirmPassword){
-        boolean checkPassword = true;
-        return checkPassword;
+        if(password.equals(confirmPassword))
+            return true;
+        return false;
     }
     private void toLoginView() {
         tvLogin = findViewById(R.id.tv_signup_to_login);
@@ -103,28 +103,48 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    public boolean register(User userSend){
+    public void register(User userSend){
         RetrofitClient.getUserService().register(userSend).enqueue(new Callback<ApiResponse<UserResponse>>() {
             @Override
             public void onResponse(Call<ApiResponse<UserResponse>> call, Response<ApiResponse<UserResponse>> response) {
                 if(response.isSuccessful()) {
                     check = true;
                     ApiResponse<UserResponse> apiResponse = response.body();
-                    UserResponse userResponse = apiResponse.getResult();
-                    String message = apiResponse.getMessage();
-                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                    if(apiResponse.isSuccess()) {
+                        UserResponse userResponse = apiResponse.getResult();
+                        String message = apiResponse.getMessage();
+                        registerSuccess(message);
+                    }
+                    else {
+                        String message = apiResponse.getMessage();
+                        registerFail(message);
+                    }
                 }
                 else{
-                    ApiResponse<UserResponse> apiResponse = response.body();
-                    String message = apiResponse.getMessage();
-                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                    String message = "Data is empty!";
+                    responseFail(message);
                 }
             }
             @Override
             public void onFailure(Call<ApiResponse<UserResponse>> call, Throwable throwable) {
-                check = false;
+                String message = "Fail connect to API";
+                connectFail(message);
             }
         });
-        return check;
+    }
+    private void registerSuccess(String message) {
+        Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private void registerFail(String message) {
+        Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+    private void responseFail(String message) {
+        Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+    private void connectFail(String message) {
+        Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

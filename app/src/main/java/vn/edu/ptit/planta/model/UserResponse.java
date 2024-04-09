@@ -1,6 +1,8 @@
 package vn.edu.ptit.planta.model;
 
-public class UserResponse {
+import java.io.Serializable;
+
+public class UserResponse implements Serializable {
     private int id;
     private String name;
     private String phone;

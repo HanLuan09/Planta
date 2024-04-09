@@ -15,15 +15,34 @@
         android:layout_height="match_parent"
         tools:context=".ui.myplant.MyPlantFragment"
         android:background="@color/colorBackground">
+
         <!--   Chưa có dữ liệu     -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:visibility="@{myPlantViewModel.isData == null || myPlantViewModel.isData? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_prof_bloom" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn chưa có cây trồng nào!"
+                    android:fontFamily="@font/tiktok_medium"/>
+
+            </LinearLayout>
         </RelativeLayout>
 
         <!--   Có dữ liệu     -->
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -31,9 +50,10 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -46,12 +66,13 @@
                         android:paddingBottom="60dp">
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:visibility="@{myPlantViewModel.isData? View.VISIBLE : View.GONE}"
                             android:id="@+id/id_rcv_myplant"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </androidx.core.widget.NestedScrollView>
 
@@ -93,5 +114,11 @@
 
         </RelativeLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{myPlantViewModel.isData == null ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>
