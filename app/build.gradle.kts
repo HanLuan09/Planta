@@ -47,8 +47,6 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:2.7.6")
     implementation("androidx.palette:palette:1.0.0")
     implementation ("androidx.work:work-runtime:2.7.0")
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation ("androidx.recyclerview:recyclerview:VERSION")
 
 
     testImplementation("junit:junit:4.13.2")
@@ -60,6 +58,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation ("com.google.code.gson:gson:2.10.0")
 
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation ("com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3")
 

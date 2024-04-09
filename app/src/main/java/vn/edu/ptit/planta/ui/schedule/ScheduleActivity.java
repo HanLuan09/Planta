@@ -1,6 +1,5 @@
 package vn.edu.ptit.planta.ui.schedule;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -43,7 +42,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule);
@@ -74,11 +72,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
     private void initOnBackPressedDispatcher() {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             private boolean isDialogShown = false;
-            //private boolean hasBackPressedOnce = false;
             @Override
             public void handleOnBackPressed() {
                 if (!isDialogShown) {
-                    showDialog(viewModel.getIsCheckBlack().getValue()? "Nhấn lần nữa để xác nhận hoàn thành" : "Nhấn lần nữa để thoát");
+                    if(viewModel.getIsCheckBlack() != null && viewModel.getIsCheckBlack().getValue() != null) showDialog(viewModel.getIsCheckBlack().getValue()? "Nhấn lần nữa để xác nhận hoàn thành" : "Nhấn lần nữa để thoát");
+                    else showDialog("Nhấn lần nữa để thoát");
                     isDialogShown = true;
                 } else {
                     Intent intent = new Intent(ScheduleActivity.this, MainActivity.class);
@@ -99,7 +97,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
                     public void run() {
                         alertDialog.dismiss();
                     }
-                }, 1000);
+                }, 600);
                 alertDialog.show();
             }
         });

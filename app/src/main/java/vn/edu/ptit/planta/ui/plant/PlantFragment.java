@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,9 @@ public class PlantFragment extends Fragment implements PlantNavigator {
     private RecyclerView recyclerView;
     private PlantAdapter plantAdapter;
 
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -46,18 +50,11 @@ public class PlantFragment extends Fragment implements PlantNavigator {
 
         viewModel.setPlantNavigator(this);
 
+        viewModel.fetchData();
+        listPlantObserve();
+
         initRecyclerView();
-        ///
-        binding.idRcvPlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("is_search", true);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+
         return binding.getRoot();
     }
 
@@ -70,7 +67,7 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         recyclerView = binding.idRcvPlant;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        // Quan sát dữ liệu thay đổi
+        
         viewModel.getListPlants().observe(requireActivity(), new Observer<List<Plant>>() {
             @Override
             public void onChanged(List<Plant> plants) {
@@ -86,6 +83,59 @@ public class PlantFragment extends Fragment implements PlantNavigator {
             }
         });
 
+    }
+
+
+
+    private void initRecyclerVi() {
+        recyclerView = binding.idRcvPlant;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        recyclerView.addOnScrollListener(new PaginationScrollListener( gridLayoutManager ) {
+            @Override
+            public void loadMoreItems() {
+                Log.e("Test Load", "Test ...    ");
+                isLoading = true;
+                loadNextPage();
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
+
+    }
+
+    private void loadNextPage(){
+        viewModel.fetchData();
+        listPlantObserve();
+        isLoading = false;
+    }
+
+    private void listPlantObserve() {
+        viewModel.getListPlants().observe(getViewLifecycleOwner(), new Observer<List<Plant>>() {
+            @Override
+            public void onChanged(List<Plant> plants) {
+                if (plantAdapter == null) {
+                    // Nếu adapter chưa được tạo
+                    plantAdapter = new PlantAdapter(plants);
+                    plantAdapter.setPlantNavigator(PlantFragment.this);
+                    recyclerView.setAdapter(plantAdapter);
+                } else {
+                    // Nếu adapter đã tồn tại, cập nhật dữ liệu mới
+                    plantAdapter.updateData(plants);
+                }
+
+                Log.e("T plant", plants.size()+"");
+            }
+        });
     }
 
     @Override

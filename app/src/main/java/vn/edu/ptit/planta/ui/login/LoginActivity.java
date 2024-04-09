@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Log.e("Start send", "Start send >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-                checkLogin(userSend);
+                //checkLogin(userSend);
                 btnLogin.setEnabled(true);
             }
         });

@@ -1,164 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    tools:context=".ui.test.TestActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <LinearLayout
-        android:background="@color/colorPrimary"
-        android:id="@+id/layout_add_1"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <ImageView
-            style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_backspace"
-            app:tint="@color/black"/>
-        <TextView
-            android:id="@+id/calendar_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:text="Calendar"
-            android:fontFamily="@font/tiktok_bold"
-            android:textSize="16sp"/>
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        tools:context=".ui.test.TestActivity"
+        android:gravity="center_horizontal">
 
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="wrap_content"
-        android:id="@+id/main_layout"
-        android:layout_width="match_parent">
-
-        <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+        <TimePicker
+            android:id="@+id/time"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:primaryColor="@color/colorPrimary"
-            app:textColor="@android:color/white"
-            app:selectedItem_textColor="@color/colorPrimary"
-            android:id="@+id/collapsibleCalendarView"
-            app:todayItem_textColor="@android:color/white"
-            app:todayItem_background="@drawable/circle_white_stroke_background"
-            app:selectedItem_background="@drawable/circle_white_solid_background"
-            app:buttonLeft_drawableTintColor="@android:color/white"
-            app:buttonRight_drawableTintColor="@android:color/white"
-            app:expandIconColor="@android:color/white"
-            app:eventColor="@android:color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--    -->
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+            android:layout_height="wrap_content" />
         <LinearLayout
+            android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_marginRight="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="26dp"
-                app:cardElevation="0dp">
+                android:text="Hủy đặt"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp"
-                        android:background="@color/colorPrimary">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tưới cây"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/tiktok_bold"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <include layout="@layout/item_my_plant_schedule"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginLeft="80dp"
-                            android:background="#CCCCCC"/>
-                        <include layout="@layout/item_my_plant_schedule"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="26dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp"
-                        android:background="@color/colorGreen">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Bón phân"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/tiktok_bold"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <include layout="@layout/item_my_plant_schedule"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginLeft="80dp"
-                            android:background="#CCCCCC"/>
-                        <include layout="@layout/item_my_plant_schedule"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
+                android:text="Đặt giờ"/>
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/text"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời gian"
+            android:textSize="18sp"/>
 
-</LinearLayout>
+
+    </LinearLayout>
+</layout>
