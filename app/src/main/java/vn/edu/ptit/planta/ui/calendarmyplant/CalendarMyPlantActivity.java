@@ -1,6 +1,5 @@
 package vn.edu.ptit.planta.ui.calendarmyplant;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,6 +30,7 @@ import android.widget.TextView;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,7 +44,6 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_calendar_my_plant);
@@ -72,6 +71,7 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
                 }
             }
         });
+        binding.calendarTextView.setText(dateSelected());
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDayChanged() {
@@ -89,7 +89,6 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
 
             @Override
             public void onDaySelect() {
-                TextView text = findViewById(R.id.calendar_text_view);
                 int day = collapsibleCalendar.getSelectedDay().getDay();
                 int month = collapsibleCalendar.getSelectedDay().getMonth()+1;
                 int year = collapsibleCalendar.getSelectedDay().getYear();
@@ -104,7 +103,7 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
                     }
                 });
 
-                text.setText("Ngày " +day+"/"+month+"/"+ year);
+                binding.calendarTextView.setText("Ngày " + String.format(Locale.getDefault(), "%02d-%02d-%04d",day,month,year));
             }
 
             @Override
@@ -154,5 +153,13 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
         adapter.setListCareScheduleCategorys(viewModel.getListCareSchedules().getValue());
         adapter.setSelectDate(viewModel.getDaySelect().getValue());
         recyclerView.setAdapter(adapter);
+    }
+
+    @NonNull
+    private String dateSelected() {
+        Calendar calendar = Calendar.getInstance();
+        String selectedDate = String.format(Locale.getDefault(), "%02d-%02d-%04d",
+                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+        return "Ngày " + selectedDate;
     }
 }

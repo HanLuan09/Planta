@@ -1,6 +1,5 @@
 package vn.edu.ptit.planta.model.myplant;
 
-import java.io.Serializable;
 
 import vn.edu.ptit.planta.model.PlantResponseOfMyPlant;
 

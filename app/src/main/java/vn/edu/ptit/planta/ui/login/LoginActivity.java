@@ -80,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                 userSend.setUsername(tietUsername.getText().toString());
                 userSend.setPassword(tietPassword.getText().toString());
 
+                Log.e("Start send", "Start send >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
                 checkLogin(userSend);
 
                 btnLogin.setText("Đăng nhập");
