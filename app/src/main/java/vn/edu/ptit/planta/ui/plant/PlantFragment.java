@@ -82,7 +82,6 @@ public class PlantFragment extends Fragment implements PlantNavigator {
                 }
             }
         });
-
     }
 
 

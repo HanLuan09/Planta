@@ -1,5 +1,6 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.about;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.AttributeOfMyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 import vn.edu.ptit.planta.model.Test;
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.AboutViewHolder> {
@@ -23,7 +25,10 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.AboutViewHol
     public AboutAdapter(List<AttributeOfMyPlant> attributeOfMyPlants) {
         this.attributeOfMyPlants = attributeOfMyPlants;
     }
-
+    public void updateData(List<AttributeOfMyPlant> newData) {
+        this.attributeOfMyPlants = newData;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public AboutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,6 +44,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.AboutViewHol
         holder.tvTitle.setText(attributeOfMyPlant.getTitle());
         holder.tvContent.setText(attributeOfMyPlant.getContent());
         holder.layout_content_myplanta.setVisibility(View.GONE);
+
         holder.layout_expand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

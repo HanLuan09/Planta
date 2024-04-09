@@ -1,25 +1,26 @@
 package vn.edu.ptit.planta.model.myplant;
 
 
-import vn.edu.ptit.planta.model.plant.Plant;
+import vn.edu.ptit.planta.model.PlantResponseOfMyPlant;
 
-public class MyPlant {
+public class MyPlant implements Serializable {
     private int id;
     private String name;
     private String image;
     private String kindOfLight;
     private String grownDate;
-    private Plant plant;
+    private PlantResponseOfMyPlant plantResponseOfMyPlant;
 
     public MyPlant() {
     }
 
-    public MyPlant(int id, String name, String image, String kindOfLight, String grownDate) {
+    public MyPlant(int id, String name, String image, String kindOfLight, String grownDate, PlantResponseOfMyPlant plantResponseOfMyPlant) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.kindOfLight = kindOfLight;
         this.grownDate = grownDate;
+        this.plantResponseOfMyPlant = plantResponseOfMyPlant;
     }
 
     public int getId() {
@@ -60,5 +61,13 @@ public class MyPlant {
 
     public void setGrownDate(String grownDate) {
         this.grownDate = grownDate;
+    }
+
+    public PlantResponseOfMyPlant getPlantDetailOfMyPlant() {
+        return plantResponseOfMyPlant;
+    }
+
+    public void setPlantDetailOfMyPlant(PlantResponseOfMyPlant plantResponseOfMyPlant) {
+        this.plantResponseOfMyPlant = plantResponseOfMyPlant;
     }
 }

@@ -56,7 +56,8 @@ public class EditMyPlantActivity extends AppCompatActivity {
     }
 
     private MyPlant getMyPlant() {
-        return new MyPlant(1, "Hoa hướng dương", "https://cdn.tgdd.vn/Files/2021/08/03/1372812/dac-diem-nguon-goc-va-y-nghia-dac-biet-cua-hoa-huong-duong-202206031122479117.jpeg","Sáng", "2024/03/21");
+        return null;
+//        return new MyPlant(1, "Hoa hướng dương", "https://cdn.tgdd.vn/Files/2021/08/03/1372812/dac-diem-nguon-goc-va-y-nghia-dac-biet-cua-hoa-huong-duong-202206031122479117.jpeg","Sáng", "2024/03/21");
     }
 
     private List<AttributeOfMyPlant> getListAttributeOfMyPlant(MyPlant myPlant) {

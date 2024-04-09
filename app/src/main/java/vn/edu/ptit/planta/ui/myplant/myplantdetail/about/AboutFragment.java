@@ -1,11 +1,17 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.about;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +22,20 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.databinding.FragmentAboutBinding;
 import vn.edu.ptit.planta.model.AttributeOfMyPlant;
 import vn.edu.ptit.planta.model.myplant.MyPlant;
 
 public class AboutFragment extends Fragment {
+    private FragmentAboutBinding binding;
     private RecyclerView recyclerView;
     private AboutAdapter aboutAdapter;
+    private AboutViewModel aboutViewModel;
+    private Bundle bundle;
     private LinearLayout layoutExpandImageMyPlant, layoutContentImageMyPlant;
     private ImageView ivImageMyPlant;
     private CheckBox cbImageMyPlant;
@@ -32,42 +43,69 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_about, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_about, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerview_about);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int idUser = sharedPreferences.getInt("id",0);
+
+        bundle = getArguments();
+        MyPlant myPlant = null;
+        if(bundle.containsKey("myplant")){
+            myPlant = (MyPlant) bundle.getSerializable("myplant");
+        }
+
+        aboutViewModel = new ViewModelProvider(this).get(AboutViewModel.class);
+        aboutViewModel.setIdUserAndMyPlant(idUser,myPlant.getId());
+
+        binding.setAboutViewModel(aboutViewModel);
+        binding.setLifecycleOwner(this);
+
+        initRecycleView();
+        return binding.getRoot();
+    }
+    private void initRecycleView(){
+        recyclerView = binding.recyclerviewAbout;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        MyPlant myPlant = getMyPlant();
-        List<AttributeOfMyPlant> attributeOfMyPlants = getListAttributeOfMyPlant(myPlant);
-        aboutAdapter = new AboutAdapter(attributeOfMyPlants);
-        recyclerView.setAdapter(aboutAdapter);
-
-        layoutExpandImageMyPlant = view.findViewById(R.id.layout_expand_image);
-        layoutContentImageMyPlant = view.findViewById(R.id.layout_content_myplanta);
-        ivImageMyPlant = view.findViewById(R.id.iv_image_myplanta);
-        cbImageMyPlant = view.findViewById(R.id.checkbox);
-
-        Glide.with(requireContext())
-                .load(myPlant.getImage())
-                .placeholder(R.drawable.icon_no_image)
-                .into(ivImageMyPlant);
-        layoutContentImageMyPlant.setVisibility(View.GONE);
-        layoutExpandImageMyPlant.setOnClickListener(new View.OnClickListener() {
+        aboutViewModel.getMyPlant().observe(requireActivity(), new Observer<MyPlant>() {
             @Override
-            public void onClick(View view) {
-                expand(layoutContentImageMyPlant, cbImageMyPlant);
+            public void onChanged(MyPlant myPlant) {
+                List<AttributeOfMyPlant> attributeOfMyPlants = getListAttributeOfMyPlant(myPlant);
+
+                if(aboutAdapter == null){
+                    aboutAdapter = new AboutAdapter(attributeOfMyPlants);
+                    recyclerView.setAdapter(aboutAdapter);
+                }
+                else{
+                    aboutAdapter.updateData(attributeOfMyPlants);
+                }
+
+                layoutExpandImageMyPlant = binding.layoutExpandImage;
+                layoutContentImageMyPlant = binding.layoutContentMyplanta;
+                ivImageMyPlant = binding.ivImageMyplanta;
+                cbImageMyPlant = binding.checkbox;
+
+                Glide.with(requireContext())
+                        .load(myPlant.getImage())
+                        .placeholder(R.drawable.icon_no_image)
+                        .into(ivImageMyPlant);
+                layoutContentImageMyPlant.setVisibility(View.GONE);
+                layoutExpandImageMyPlant.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        expand(layoutContentImageMyPlant, cbImageMyPlant);
+                    }
+                });
+                cbImageMyPlant.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        expand(layoutContentImageMyPlant, cbImageMyPlant);
+                    }
+                });
             }
         });
-        cbImageMyPlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                expand(layoutContentImageMyPlant, cbImageMyPlant);
-            }
-        });
-        return view;
     }
-
     public void expand(LinearLayout layout, CheckBox checkBox){
         if(layout.getVisibility() == View.GONE) {
             layout.setVisibility(View.VISIBLE);
@@ -78,17 +116,15 @@ public class AboutFragment extends Fragment {
             checkBox.setChecked(false);
         }
     }
-    private MyPlant getMyPlant() {
-        return new MyPlant(1, "Hoa hướng dương", "https://cdn.tgdd.vn/Files/2021/08/03/1372812/dac-diem-nguon-goc-va-y-nghia-dac-biet-cua-hoa-huong-duong-202206031122479117.jpeg","Sáng", "2024/03/21");
-    }
     private List<AttributeOfMyPlant> getListAttributeOfMyPlant(MyPlant myPlant) {
         List<AttributeOfMyPlant> attributeOfMyPlants = new ArrayList<>();
         attributeOfMyPlants.add(new AttributeOfMyPlant("Tên thực vật",myPlant.getName()));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Loại cây",myPlant.getPlantDetailOfMyPlant().getTypePlant()));
         attributeOfMyPlants.add(new AttributeOfMyPlant("Ngày trồng",myPlant.getGrownDate()));
         attributeOfMyPlants.add(new AttributeOfMyPlant("Loại ánh sáng",myPlant.getKindOfLight()));
-//        attributeOfMyPlants.add(new AttributeOfMyPlant("Kích thước trưởng thành",myPlant.getName()));
-//        attributeOfMyPlants.add(new AttributeOfMyPlant("Thời gian trưởng thành",myPlant.getName()));
-//        attributeOfMyPlants.add(new AttributeOfMyPlant("Mô tả",myPlant.getName()));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Kích thước trưởng thành",myPlant.getPlantDetailOfMyPlant().getMatureSize()));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Thời gian trưởng thành",myPlant.getPlantDetailOfMyPlant().getMatureTime()));
+        attributeOfMyPlants.add(new AttributeOfMyPlant("Mô tả",myPlant.getPlantDetailOfMyPlant().getDescription()));
 
         return attributeOfMyPlants;
     }
