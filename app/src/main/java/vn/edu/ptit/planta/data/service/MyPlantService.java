@@ -18,8 +18,8 @@ public interface MyPlantService {
     @GET("my_plant/{idUser}/{idMyPlant}")
     Call<ApiResponse<MyPlant>> getMyPlant(@Path("idUser") int id, @Path("idMyPlant") int idMyPlant);
 
-    @GET("my_plant/today/{id}")
-    Call<ApiResponse<List<CareScheduleResponse>>> getMyPlantToDayByUser(@Path("id") int userId);
+    @GET("my_plant/schedule/{id}")
+    Call<ApiResponse<List<MyPlantScheduleResponse>>> getMyPlantScheduleByUser(@Path("id") int userId);
 
     @GET("my_plant/calendar/{id}")
     Call<ApiResponse<List<MyPlantScheduleResponse>>> getAllMyPlantCalendarByUser(@Path("id") int userId);

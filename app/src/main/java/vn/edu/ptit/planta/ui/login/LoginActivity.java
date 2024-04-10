@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
@@ -55,14 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                edUsername = findViewById(R.id.edUsername);
-//                edPassword = findViewById(R.id.edPassword);
-//                User userSend = new User();
-//                userSend.setUsername(edUsername.getText().toString());
-//                userSend.setPassword(edPassword.getText().toString());
-//                checkLogin(userSend);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+
+//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent);
 //                finish();
                 btnLogin.setEnabled(false);
 
@@ -140,13 +136,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void loginSuccess(String message, UserResponse userResponse) {
+    private void loginSuccess(String message, @NonNull UserResponse userResponse) {
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("id", userResponse.getId());
         editor.apply();
-
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
