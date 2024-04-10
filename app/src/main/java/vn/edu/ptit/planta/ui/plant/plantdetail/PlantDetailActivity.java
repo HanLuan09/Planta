@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import vn.edu.ptit.planta.databinding.ActivityPlantDetailBinding;
 
@@ -32,6 +33,7 @@ public class PlantDetailActivity extends AppCompatActivity {
         binding = ActivityPlantDetailBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(PlantDetailViewModel.class);
         binding.setPlantDetailViewModel(viewModel);
+        binding.setLifecycleOwner(this);
         setContentView(binding.getRoot());
 
         toolbar = binding.toolbar;
@@ -61,14 +63,23 @@ public class PlantDetailActivity extends AppCompatActivity {
             public void onChanged(PlantDetail plantDetail) {
                 binding.collapsingToolbar.setTitle(viewModel.getPlantDetail().getValue().getName());
 
-                Glide.with(PlantDetailActivity.this)
-                        .load(viewModel.getPlantDetail().getValue().getMainImage())
-                        .placeholder(R.drawable.icon_no_mob)
-                        .override(400,400)
-                        .into(binding.idImgPlant);
+                imageGlide(viewModel.getPlantDetail().getValue().getMainImage(), binding.idImgPlant);
 
                 binding.tvContentNameMyplanta.setText(viewModel.getPlantDetail().getValue().getTypePlant());
+
+                imageGlide(viewModel.getPlantDetail().getValue().getMainImage(), binding.imageViewOne);
+
+                imageGlide(viewModel.getPlantDetail().getValue().getSecondaryImage(), binding.imageViewTwo);
             }
         });
     }
+
+    private void imageGlide(String image, ShapeableImageView shapeableImageView){
+        Glide.with(PlantDetailActivity.this)
+                .load(image)
+                .placeholder(R.drawable.icon_no_mob)
+                .override(400,400)
+                .into(shapeableImageView);
+    }
+
 }

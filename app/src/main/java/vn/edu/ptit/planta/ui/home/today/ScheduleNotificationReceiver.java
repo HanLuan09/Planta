@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -20,12 +19,11 @@ public class ScheduleNotificationReceiver extends BroadcastReceiver {
     private final String CHANNEL_ID = "LH1001";
 
     @Override
-    public void onReceive(Context context, @NonNull Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         // Lấy dữ liệu lịch trình từ intent
+        String myPlantName = intent.getStringExtra("myPlantName");
         String scheduleName = intent.getStringExtra("scheduleName");
         int scheduleId = intent.getIntExtra("scheduleId", 0);
-
-        Log.e("Noti", "Msesss "+ scheduleId);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -41,10 +39,10 @@ public class ScheduleNotificationReceiver extends BroadcastReceiver {
         // Tạo thông báo
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon_alarm_2)
-                .setContentTitle(scheduleName)
-                .setContentText("Đến giờ "+ scheduleName+ " của bạn rồi")
+                .setContentTitle(myPlantName + ": " + scheduleName)
+                .setContentText("Đến giờ chăm sóc cây của bạn rồi")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Đến giờ "+ scheduleName+ " của bạn rồi"))
+                        .bigText("Đến giờ chăm sóc cây của bạn rồi"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
@@ -52,5 +50,4 @@ public class ScheduleNotificationReceiver extends BroadcastReceiver {
         // Hiển thị thông báo
         notificationManager.notify(scheduleId, builder.build());
     }
-
 }

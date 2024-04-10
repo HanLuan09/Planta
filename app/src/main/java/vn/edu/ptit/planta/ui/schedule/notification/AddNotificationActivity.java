@@ -133,8 +133,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
                 String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
                 viewModel.getTime().setValue(selectedTime);
             }
-        },
-                hour, minute, true);
+        }, hour, minute, true);
 
         timePickerDialog.show();
     }

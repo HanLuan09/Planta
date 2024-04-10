@@ -39,6 +39,7 @@ import java.util.Locale;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentTodayBinding;
 import vn.edu.ptit.planta.model.care.CareScheduleResponse;
+import vn.edu.ptit.planta.model.myplant.MyPlantScheduleResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.ui.schedule.adapter.CareScheduleCategoryAdapter;
 import vn.edu.ptit.planta.utils.DateUtils;
@@ -72,7 +73,10 @@ public class TodayFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        setAdapterSchedules();
+        observeAdapterSchedules();
+
+        observeMyPlantSchedule();
+
 
         //setNotification();
 
@@ -90,12 +94,12 @@ public class TodayFragment extends Fragment {
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode() == Activity.RESULT_OK){
                 viewModel.initData();
-                setAdapterSchedules();
+                observeAdapterSchedules();
             }
         }
     });
 
-    private void setAdapterSchedules() {
+    private void observeAdapterSchedules() {
         viewModel.getListCareSchedules().observe(requireActivity(), new Observer<List<CareScheduleResponse>>() {
             @Override
             public void onChanged(List<CareScheduleResponse> careScheduleResponses) {
@@ -105,32 +109,28 @@ public class TodayFragment extends Fragment {
             }
         });
     }
-    @NonNull
-    private String dateToday() {
-        Calendar calendar = Calendar.getInstance();
-        String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d",
-                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        return selectedDate;
+
+    private void observeMyPlantSchedule() {
+        viewModel.getListMyPlantSchedules().observe(requireActivity(), new Observer<List<MyPlantScheduleResponse>>() {
+            @Override
+            public void onChanged(List<MyPlantScheduleResponse> myPlantScheduleResponses) {
+                for(MyPlantScheduleResponse myPlant : myPlantScheduleResponses){
+                    for(MySchedule mySchedule : myPlant.getMySchedules()){
+                        scheduleNotification(mySchedule, myPlant.getName());
+                    }
+                }
+
+            }
+        });
     }
 
+    private void scheduleNotification(@NonNull MySchedule schedule, String name) {
 
-    private void setNotification() {
+        String uniqueId = name + "_" + schedule.getName();
+        int requestCode = uniqueId.hashCode();
 
-        List<MySchedule> mySchedules = new ArrayList<>();
-
-        mySchedules.add(new MySchedule(1,"Bón phân", DateUtils.stringToDate("2024-04-05"), DateUtils.stringToDate("2024-06-01"), TimeUtils.stringToTime("17:42:00"), 1));
-        mySchedules.add(new MySchedule(2,"Tưới nước", DateUtils.stringToDate("2024-04-01"), DateUtils.stringToDate("2024-06-01"), TimeUtils.stringToTime("17:45:00"), 1));
-        mySchedules.add(new MySchedule(3,"Tưới nước", DateUtils.stringToDate("2024-04-01"), DateUtils.stringToDate("2024-06-01"), TimeUtils.stringToTime("08:30:00"), 1));
-        mySchedules.add(new MySchedule(4,"Bón phân", DateUtils.stringToDate("2024-04-01"), DateUtils.stringToDate("2024-06-01"), TimeUtils.stringToTime("09:00:00"), 1));
-        mySchedules.add(new MySchedule(5,"Bón phân", DateUtils.stringToDate("2024-04-01"), DateUtils.stringToDate("2024-06-01"), TimeUtils.stringToTime("17:44:00"), 1));
-
-        for(int i=0; i< mySchedules.size(); i++) {
-            scheduleNotification(mySchedules.get(i), i+1);
-        }
-    }
-    private void scheduleNotification(@NonNull MySchedule schedule, int requestCode) {
-        // Tạo intent để gửi đến ScheduleNotificationService
         Intent intent = new Intent(requireContext(), ScheduleNotificationReceiver.class);
+        intent.putExtra("myPlantName", name);
         intent.putExtra("scheduleName", schedule.getName());
         intent.putExtra("scheduleId", requestCode);
 
@@ -163,5 +163,13 @@ public class TodayFragment extends Fragment {
         // Chuyển đổi frequency từ ngày sang milliseconds
         long oneDayInMillis = 24 * 60 * 60 * 1000; // 1 ngày trong milliseconds
         return frequency * oneDayInMillis;
+    }
+
+    @NonNull
+    private String dateToday() {
+        Calendar calendar = Calendar.getInstance();
+        String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d",
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        return selectedDate;
     }
 }

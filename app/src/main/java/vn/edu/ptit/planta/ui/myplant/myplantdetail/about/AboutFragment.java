@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -116,6 +117,7 @@ public class AboutFragment extends Fragment {
             checkBox.setChecked(false);
         }
     }
+    @NonNull
     private List<AttributeOfMyPlant> getListAttributeOfMyPlant(MyPlant myPlant) {
         List<AttributeOfMyPlant> attributeOfMyPlants = new ArrayList<>();
         attributeOfMyPlants.add(new AttributeOfMyPlant("Tên thực vật",myPlant.getName()));
