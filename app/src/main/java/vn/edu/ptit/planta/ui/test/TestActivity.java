@@ -1,19 +1,25 @@
 package vn.edu.ptit.planta.ui.test;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.databinding.ActivityTestBinding;
-import vn.edu.ptit.planta.ui.home.today.ScheduleNotificationReceiver;
+import vn.edu.ptit.planta.utils.ImageUtils;
 
+import android.util.Log;
 import android.view.View;
 
-import java.util.Calendar;
+import com.bumptech.glide.Glide;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -33,6 +39,22 @@ public class TestActivity extends AppCompatActivity {
                 if(pendingIntent != null) pendingIntent.cancel();
             }
         });
+
+        Uri imageUri = getDrawableUri(this, R.drawable.plant_img);
+//        Uri imageUri = Uri.parse("content://media/external/images/media/1234");
+        String mimeType = ImageUtils.getMimeType(this, imageUri);
+        String base64Image = ImageUtils.imageToBase64(this, imageUri);
+
+        if (!base64Image.isEmpty()) {
+            Log.e("Base64 Image", ImageUtils.formattedBase64(mimeType, base64Image));
+        }
+        Glide.with(this)
+                .load(ImageUtils.formattedBase64(mimeType, base64Image))
+                .placeholder(R.drawable.icon_no_mob)
+                .override(300,300)
+                .into(binding.testIv);
+
+
 //        binding.btn2.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -63,5 +85,9 @@ public class TestActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if ((pendingIntent != null)) pendingIntent.cancel();
+    }
+
+    public static Uri getDrawableUri(@NonNull Context context, int drawableId) {
+        return Uri.parse("android.resource://" + context.getPackageName() + "/" + drawableId);
     }
 }
