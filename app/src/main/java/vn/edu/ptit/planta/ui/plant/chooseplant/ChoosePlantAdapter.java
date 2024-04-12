@@ -28,8 +28,6 @@ public class ChoosePlantAdapter extends RecyclerView.Adapter<ChoosePlantAdapter.
         this.choosePlantNavigator = choosePlantNavigator;
     }
 
-    public void setAddPlantNavigator(ChoosePlantNavigator plantNavigator){this.choosePlantNavigator = plantNavigator;}
-
     public void updateData(List<Plant> newData){
         this.plants = newData;
         notifyDataSetChanged();
@@ -50,12 +48,13 @@ public class ChoosePlantAdapter extends RecyclerView.Adapter<ChoosePlantAdapter.
         }
 
         holder.tvName.setText(plant.getName());
-        holder.tvDescription.setText("10/12/2023");
+        holder.tvTypePlant.setText(plant.getTypePlant());
+        choosePlantNavigator.glideImage(plant.getMainImage(), holder.shapeableImageView);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(choosePlantNavigator != null) choosePlantNavigator.handleAddPlant(plant);
+                if(choosePlantNavigator != null) choosePlantNavigator.handleChoosePlant(plant);
             }
         });
     }
@@ -72,13 +71,13 @@ public class ChoosePlantAdapter extends RecyclerView.Adapter<ChoosePlantAdapter.
 
         private CardView cardView;
         private ShapeableImageView shapeableImageView;
-        private TextView tvName, tvDescription;
+        private TextView tvName, tvTypePlant;
         public AddPlantViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.id_cardview_plant);
             shapeableImageView = itemView.findViewById(R.id.circle_img_plant);
             tvName = itemView.findViewById(R.id.tv_name_plant);
-            tvDescription = itemView.findViewById(R.id.tv_desc_plant);
+            tvTypePlant = itemView.findViewById(R.id.tv_type_plant);
         }
     }
 }

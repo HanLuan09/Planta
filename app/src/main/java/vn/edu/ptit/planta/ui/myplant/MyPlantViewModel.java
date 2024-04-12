@@ -48,6 +48,7 @@ public class MyPlantViewModel extends ViewModel {
                     ApiResponse<List<MyPlant>> apiResponse = response.body();
                     if (apiResponse.isSuccess()){
                         myPlants = apiResponse.getResult();
+//                        Log.e("NAME MY PLANT", myPlants.get(0).getId()+"");
                         listMyPlants.setValue(myPlants);
 
                         if(myPlants.size() == 0){

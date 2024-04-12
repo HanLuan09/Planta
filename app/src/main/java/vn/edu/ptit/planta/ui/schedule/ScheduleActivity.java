@@ -43,7 +43,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule);

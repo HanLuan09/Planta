@@ -3,6 +3,8 @@ package vn.edu.ptit.planta.ui.myplant;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +45,8 @@ public class MyPlantFragment extends Fragment implements MyPlantNavigator {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_plant, container, false);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int idUser = sharedPreferences.getInt("id",0);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+        int idUser = sharedPreferences.getInt("idUser",0);
 
         myPlantViewModel = new ViewModelProvider(this).get(MyPlantViewModel.class);
 
@@ -99,13 +102,19 @@ public class MyPlantFragment extends Fragment implements MyPlantNavigator {
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
     @Override
     public void glideImage(String image, ShapeableImageView shapeableImageView) {
-        Glide.with(requireContext())
-                .load(image)
-                .placeholder(R.drawable.icon_no_mob)
-                .override(70,70)
-                .into(shapeableImageView);
+        if (image != null) {
+            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            Glide.with(requireContext())
+                    .load(bitmap)
+                    .placeholder(R.drawable.icon_no_mob)
+                    .override(70, 70)
+                    .into(shapeableImageView);
+        } else {
+            shapeableImageView.setImageResource(R.drawable.icon_no_image);
+        }
     }
 }

@@ -55,15 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                edUsername = findViewById(R.id.edUsername);
-//                edPassword = findViewById(R.id.edPassword);
-//                User userSend = new User();
-//                userSend.setUsername(edUsername.getText().toString());
-//                userSend.setPassword(edPassword.getText().toString());
-//                checkLogin(userSend);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-//                finish();
                 btnLogin.setEnabled(false);
 
                 progressBar = findViewById(R.id.progressBar);
@@ -127,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    String message = "Data is empty!";
+                    String message = "Invalid response!";
                     responseFail(message);
                 }
             }
@@ -140,9 +131,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void loginSuccess(String message, UserResponse userResponse) {
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("id", userResponse.getId());
+        editor.putInt("idUser", userResponse.getId());
         editor.apply();
 
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();

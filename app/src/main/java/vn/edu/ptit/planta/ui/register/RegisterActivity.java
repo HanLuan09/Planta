@@ -1,6 +1,8 @@
 package vn.edu.ptit.planta.ui.register;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -63,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
                     User userSend = new User();
                     userSend.setUsername(username);
                     userSend.setPassword(password);
-                    Log.e("Start send", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
                     register(userSend);
                     btnRegister.setEnabled(true);
@@ -113,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(apiResponse.isSuccess()) {
                         UserResponse userResponse = apiResponse.getResult();
                         String message = apiResponse.getMessage();
-                        registerSuccess(message);
+                        registerSuccess(message, userResponse);
                     }
                     else {
                         String message = apiResponse.getMessage();
@@ -121,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    String message = "Data is empty!";
+                    String message = "Invalid response!";
                     responseFail(message);
                 }
             }
@@ -132,7 +133,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    private void registerSuccess(String message) {
+    private void registerSuccess(String message, UserResponse userResponse) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("idUser", userResponse.getId());
+        editor.apply();
+
         Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);

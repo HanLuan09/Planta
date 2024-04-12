@@ -68,7 +68,7 @@
                     android:id="@+id/search_my_plant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search my plant"
+                    android:hint="Search plant"
                     android:textSize="20dp"
                     android:inputType="text"
                     android:layout_marginLeft="10dp"
@@ -159,9 +159,9 @@
                         android:paddingTop="10dp"
                         android:paddingRight="30dp"
                         android:paddingBottom="75dp">
-                        
+
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rcv_add_my_plant"
+                            android:id="@+id/rcv_choose_plant"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                     </LinearLayout>

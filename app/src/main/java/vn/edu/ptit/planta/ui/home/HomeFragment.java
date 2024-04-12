@@ -75,8 +75,8 @@ public class HomeFragment extends Fragment implements HomeNavigator {
 
     @Override
     public void handleAddMyGarden() {
-//        Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
-        Intent intent = new Intent(requireContext(), ScheduleActivity.class);
+        Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
+//        Intent intent = new Intent(requireContext(), ScheduleActivity.class);
         startActivity(intent);
         requireActivity().overridePendingTransition(0, 0);
     }

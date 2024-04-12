@@ -2,6 +2,8 @@ package vn.edu.ptit.planta.ui.myplant.myplantdetail.about;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -11,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentAboutBinding;
 import vn.edu.ptit.planta.model.AttributeOfMyPlant;
 import vn.edu.ptit.planta.model.myplant.MyPlant;
+import vn.edu.ptit.planta.ui.myplant.editmyplant.EditMyPlantActivity;
 
 public class AboutFragment extends Fragment {
     private FragmentAboutBinding binding;
@@ -86,10 +90,7 @@ public class AboutFragment extends Fragment {
                 ivImageMyPlant = binding.ivImageMyplanta;
                 cbImageMyPlant = binding.checkbox;
 
-                Glide.with(requireContext())
-                        .load(myPlant.getImage())
-                        .placeholder(R.drawable.icon_no_image)
-                        .into(ivImageMyPlant);
+                glideImage(myPlant.getImage(), ivImageMyPlant);
                 layoutContentImageMyPlant.setVisibility(View.GONE);
                 layoutExpandImageMyPlant.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -116,6 +117,21 @@ public class AboutFragment extends Fragment {
             checkBox.setChecked(false);
         }
     }
+
+    public void glideImage(String image, ImageView imageView) {
+        if (image != null) {
+            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            Glide.with(AboutFragment.this)
+                    .load(bitmap)
+                    .placeholder(R.drawable.icon_no_mob)
+                    .into(imageView);
+        } else {
+            imageView.setImageResource(R.drawable.icon_no_image);
+        }
+    }
+
     private List<AttributeOfMyPlant> getListAttributeOfMyPlant(MyPlant myPlant) {
         List<AttributeOfMyPlant> attributeOfMyPlants = new ArrayList<>();
         attributeOfMyPlants.add(new AttributeOfMyPlant("Tên thực vật",myPlant.getName()));
