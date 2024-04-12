@@ -80,6 +80,8 @@ public class CalendarMyPlantViewModel extends ViewModel {
 
     public List<CareScheduleResponse> myPlantToDayByUser(@NonNull List<MyPlantScheduleResponse> myPlants, String dateCalendar) {
 
+        if(myPlants == null) return null;
+
         Date currentDate = DateUtils.stringToDate(dateCalendar);
 
         Map<String, List<CareSchedule>> groupedSchedules = new HashMap<>();
@@ -91,7 +93,7 @@ public class CalendarMyPlantViewModel extends ViewModel {
 
                 if ((currentDate.after(mySchedule.getStartDate()) || currentDate.equals(mySchedule.getStartDate())) &&
                         (currentDate.before(mySchedule.getEndDate()) || currentDate.equals(mySchedule.getEndDate()))) {
-                    if(diffDays(mySchedule.getStartDate(), currentDate) % mySchedule.getFrequency() == 0) {
+                    if(DateUtils.diffDays(mySchedule.getStartDate(), currentDate) % mySchedule.getFrequency() == 0) {
                         String scheduleName = mySchedule.getName();
                         CareSchedule careSchedule = new CareSchedule(
                                 myPlant.getId(),
@@ -121,21 +123,6 @@ public class CalendarMyPlantViewModel extends ViewModel {
         return scheduleResponses;
     }
 
-    private long diffDays(@NonNull Date startDate, @NonNull Date currentDate) {
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTimeInMillis(startDate.getTime());
-
-        Calendar currentCalendar = Calendar.getInstance();
-        currentCalendar.setTimeInMillis(currentDate.getTime());
-
-        long startTimeInMillis = startCalendar.getTimeInMillis();
-        long currentTimeInMillis = currentCalendar.getTimeInMillis();
-
-        // Số lượng mili giây trong một ngày
-        long millisecondsPerDay = 24 * 60 * 60 * 1000;
-
-        return Math.abs((currentTimeInMillis - startTimeInMillis) / millisecondsPerDay);
-    }
 
     public void onBackClick() {
         if(navigator != null) navigator.handelBlack();

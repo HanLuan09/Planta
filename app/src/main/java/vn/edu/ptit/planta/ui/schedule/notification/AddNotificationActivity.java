@@ -1,6 +1,5 @@
 package vn.edu.ptit.planta.ui.schedule.notification;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -46,7 +45,6 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_notification);
 
@@ -135,8 +133,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
                 String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
                 viewModel.getTime().setValue(selectedTime);
             }
-        },
-                hour, minute, true);
+        }, hour, minute, true);
 
         timePickerDialog.show();
     }

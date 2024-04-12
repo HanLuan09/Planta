@@ -15,39 +15,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment"
-        android:background="@color/colorBackground">
-        <LinearLayout
+        android:background="@color/white">
+        <androidx.core.widget.NestedScrollView
             android:paddingTop="@dimen/top_end_to_end"
+            android:paddingBottom="20dp"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:elevation="6dp">
+            android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="325dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/colorGreen"
-                android:contentDescription="@string/add_planta"
-                android:src="@drawable/ic_plus"
-                app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay"
-                app:tint="@color/white" />
+                android:layout_height="wrap_content" />
 
 
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/colorGreen"
+            android:contentDescription="@string/add_planta"
+            android:src="@drawable/ic_plus"
+            app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay"
+            app:tint="@color/white" />
 
     </RelativeLayout>
 </layout>

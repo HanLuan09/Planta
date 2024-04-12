@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.Calendar;
 
 public class DateUtils {
     @NonNull
@@ -35,6 +36,22 @@ public class DateUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static long diffDays(@NonNull Date startDate, @NonNull Date currentDate) {
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTimeInMillis(startDate.getTime());
+
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.setTimeInMillis(currentDate.getTime());
+
+        long startTimeInMillis = startCalendar.getTimeInMillis();
+        long currentTimeInMillis = currentCalendar.getTimeInMillis();
+
+        // Số lượng mili giây trong một ngày
+        long millisecondsPerDay = 24 * 60 * 60 * 1000;
+
+        return Math.abs((currentTimeInMillis - startTimeInMillis) / millisecondsPerDay);
     }
 }
 

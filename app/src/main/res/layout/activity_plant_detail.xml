@@ -39,7 +39,7 @@
 
 
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/id_img_plant"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -81,14 +81,260 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
-<!--                -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+                    <!--       loại cây             -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        app:cardBackgroundColor="#A5D8C0"
+                        app:strokeColor="@null"
+                        app:strokeWidth="0dp">
+                        <LinearLayout
+                            android:padding="14dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="162dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="8dp"
+                                android:text="Loại cây:"
+                                android:textSize="@dimen/text_size_h7"
+                                android:textColor="@color/colorGreenText"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{plantDetailViewModel.plantDetail.typePlant}"
+                                android:fontFamily="@font/tiktok_bold"
+                                android:textSize="@dimen/text_size_h7"
+                                android:textColor="@color/colorGreenText"/>
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:padding="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="162dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:text="Kích thước trưởng thành:"
+                            android:textSize="@dimen/text_size_h7"
+                            android:textColor="@color/colorGreenText"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{plantDetailViewModel.plantDetail.matureSize}"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="@dimen/text_size_h7"
+                            android:textColor="@color/colorGreenText"/>
+                    </LinearLayout>
+
+                    <!--       loại cây             -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        app:cardBackgroundColor="#A5D8C0"
+                        app:strokeColor="@null"
+                        app:strokeWidth="0dp">
+                        <LinearLayout
+                            android:padding="14dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="162dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="8dp"
+                                android:text="Loại đất:"
+                                android:textSize="@dimen/text_size_h7"
+                                android:textColor="@color/colorGreenText"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{plantDetailViewModel.plantDetail.typeSoil}"
+                                android:fontFamily="@font/tiktok_bold"
+                                android:textSize="@dimen/text_size_h7"
+                                android:textColor="@color/colorGreenText"/>
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:padding="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="162dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:text="Thời gian trưởng thành:"
+                            android:textSize="@dimen/text_size_h7"
+                            android:textColor="@color/colorGreenText"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{plantDetailViewModel.plantDetail.matureTime}"
+                            android:fontFamily="@font/tiktok_bold"
+                            android:textSize="@dimen/text_size_h7"
+                            android:textColor="@color/colorGreenText"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_1"
+                    android:text="Thêm vào khu vườn của tôi"/>
+
+                <!-- ảnh-->
 
                 <RelativeLayout
-                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_marginTop="5dp"
+                        android:foreground="?android:attr/selectableItemBackground">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/rounder_background"
+                            android:gravity="center_vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="16dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/text_size_h7"
+                                        android:textColor="@color/colorGreenText"
+                                        android:fontFamily="@font/tiktok_bold"
+                                        android:text="Ảnh thực vật" />
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <CheckBox
+                                android:layout_margin="8dp"
+                                android:id="@+id/checkboxImage"
+                                android:checked="true"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:button="@null"
+                                android:background="@drawable/checkbox_icon"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:visibility="@{checkboxImage.checked ? View.VISIBLE : View.GONE}"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_below="@+id/layout_myplanta"
+                            android:layout_marginTop="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:paddingBottom="10dp">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/imageView_one"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/plant_img"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView_two"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/plant_img"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/white"/>
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <!--                -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="30dp">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView"
@@ -121,62 +367,56 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginLeft="20dp">
+                                    android:layout_marginLeft="16dp">
 
                                     <TextView
                                         android:id="@+id/tv_name_myplanta"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_h7"
+                                        android:textColor="@color/colorGreenText"
                                         android:fontFamily="@font/tiktok_bold"
-                                        android:text="Plant type"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
+                                        android:text="Mô tả" />
                                 </LinearLayout>
 
                             </RelativeLayout>
 
                             <CheckBox
-                                android:id="@+id/checkbox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:id="@+id/checkboxDesc"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:button="@null"
                                 android:background="@drawable/checkbox_icon"/>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:visibility="@{checkbox.checked ? View.VISIBLE : View.GONE}"
+                            android:visibility="@{checkboxDesc.checked ? View.VISIBLE : View.GONE}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/layout_myplanta"
                             android:layout_marginTop="40dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
                             android:paddingBottom="10dp">
 
                             <TextView
                                 android:id="@+id/tv_content_name_myplanta"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tên thực vật"
-                                android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:text="@{plantDetailViewModel.plantDetail.description}"
+                                android:textColor="@color/colorGreenText"
+                                android:textSize="@dimen/text_size_h7" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
-                <Button
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_button_1"
-                    android:text="Thêm vào khu vườn của tôi"/>
-
-
             </LinearLayout>
+
+
 
         </androidx.core.widget.NestedScrollView>
 
