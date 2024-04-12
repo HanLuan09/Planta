@@ -11,6 +11,7 @@ import android.os.Handler;
 
 import vn.edu.ptit.planta.ui.MainActivity;
 import vn.edu.ptit.planta.ui.guesthome.GuestHomeActivity;
+import vn.edu.ptit.planta.ui.test.TestActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,18 +21,20 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_splash);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int idUser = sharedPreferences.getInt("id",-1);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("User", Context.MODE_PRIVATE);
+        int idUser = sharedPreferences.getInt("idUser",0);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(idUser == -1) {// chưa đăng nhập
+                if(idUser == 0) {// chưa đăng nhập
                     Intent intent = new Intent(SplashActivity.this, GuestHomeActivity.class);
                     startActivity(intent);
                 }else {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
+//                Intent intent = new Intent(SplashActivity.this, TestActivity.class);
+//                startActivity(intent);
                 SplashActivity.this.overridePendingTransition(0, 0);
                 finish();
             }

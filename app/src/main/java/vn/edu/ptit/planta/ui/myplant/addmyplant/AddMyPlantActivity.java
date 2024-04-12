@@ -26,21 +26,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,13 +42,11 @@ import retrofit2.Response;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.AttributeOfMyPlant;
 import vn.edu.ptit.planta.model.PlantResponseOfMyPlant;
 import vn.edu.ptit.planta.model.myplant.MyPlant;
 import vn.edu.ptit.planta.model.plant.Plant;
-import vn.edu.ptit.planta.ui.MainActivity;
-import vn.edu.ptit.planta.ui.myplant.editmyplant.EditMyPlantActivity;
 import vn.edu.ptit.planta.ui.schedule.ScheduleActivity;
+import vn.edu.ptit.planta.utils.ImageUtils;
 
 public class AddMyPlantActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -68,6 +60,8 @@ public class AddMyPlantActivity extends AppCompatActivity {
     private Plant plant;
     private MyPlant myPlantRequest;
     private PlantResponseOfMyPlant plantResponseOfMyPlant;
+
+    private Uri imageUri;
 
 
     @Override
@@ -157,12 +151,11 @@ public class AddMyPlantActivity extends AppCompatActivity {
 
     private  void registerResult(){
         resultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            Uri imageUri = result.getData().getData();
+                            imageUri = result.getData().getData();
                             Glide.with(AddMyPlantActivity.this)
                                     .load(imageUri)
                                     .placeholder(R.drawable.icon_no_image)
@@ -176,7 +169,7 @@ public class AddMyPlantActivity extends AppCompatActivity {
     }
 
     private void chooseImage(){
-        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         resultLauncher.launch(intent);
     }
 
@@ -217,9 +210,20 @@ public class AddMyPlantActivity extends AppCompatActivity {
         myPlantRequest.setName(name);
         myPlantRequest.setGrownDate(grownDate);
         myPlantRequest.setKindOfLight(kindOfLight);
-        myPlantRequest.setImage(convertImageToString(ivImageMyplanta));
+
+        //Test Luân
+        String mimeType = ImageUtils.getMimeType(this, imageUri);
+        String base64Image = ImageUtils.imageToBase64(this, imageUri);
+
+        myPlantRequest.setImage(ImageUtils.formattedBase64(mimeType, base64Image));
+        //
         myPlantRequest.setPlantDetailOfMyPlant(plantResponseOfMyPlant);
         return true;
+    }
+
+    // Hàm không dùng nữa
+    public static Uri getDrawableUri(@NonNull Context context, int drawableId) {
+        return Uri.parse("android.resource://" + context.getPackageName() + "/" + drawableId);
     }
 
     private String convertImageToString(ImageView imageView){
@@ -249,6 +253,7 @@ public class AddMyPlantActivity extends AppCompatActivity {
     }
 
     private void addMyPlant() {
+        Log.e("MyPlant Image", myPlantRequest.getImage());
         RetrofitClient.getMyPlantService().addMyPlant(idUser, myPlantRequest).enqueue(new Callback<ApiResponse<Boolean>>() {
             @Override
             public void onResponse(Call<ApiResponse<Boolean>> call, Response<ApiResponse<Boolean>> response) {
