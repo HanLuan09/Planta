@@ -31,8 +31,8 @@ public interface MyPlantService {
     @DELETE("my_plant/delete/{idMyPlant}")
     Call<ApiResponse<Boolean>> deleteMyPlant(@Path("idMyPlant") int idMyPlant);
 
-    @GET("my_plant/today/{id}")
-    Call<ApiResponse<List<CareScheduleResponse>>> getMyPlantToDayByUser(@Path("id") int userId);
+    @GET("my_plant/schedule/{id}")
+    Call<ApiResponse<List<MyPlantScheduleResponse>>> getMyPlantScheduleByUser(@Path("id") int userId);
 
     @GET("my_plant/calendar/{id}")
     Call<ApiResponse<List<MyPlantScheduleResponse>>> getAllMyPlantCalendarByUser(@Path("id") int userId);
