@@ -2,16 +2,10 @@ package vn.edu.ptit.planta.ui.myplant.editmyplant;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,19 +20,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.imageview.ShapeableImageView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,9 +32,10 @@ import retrofit2.Response;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.AttributeOfMyPlant;
 import vn.edu.ptit.planta.model.myplant.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlantRequest;
 import vn.edu.ptit.planta.ui.MainActivity;
+import vn.edu.ptit.planta.utils.ImageUtils;
 
 public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlantNavigator{
     private Toolbar toolbar;
@@ -56,7 +43,9 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
     private ImageView ivChooseDate, ivChooseImage, ivImageMyplanta;
     private Button btnDelete, btnSave;
     private ActivityResultLauncher resultLauncher;
-    private MyPlant myPlant, myPlantRequest;
+    private MyPlant myPlant;
+    private MyPlantRequest myPlantRequest;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -151,7 +140,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            Uri imageUri = result.getData().getData();
+                            imageUri = result.getData().getData();
                             Glide.with(EditMyPlantActivity.this)
                                     .load(imageUri)
                                     .placeholder(R.drawable.icon_no_image)
@@ -165,7 +154,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
     }
 
     private void chooseImage(){
-        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         resultLauncher.launch(intent);
     }
 
@@ -202,34 +191,16 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
             return false;
         }
 
-        myPlantRequest = new MyPlant();
+        myPlantRequest = new MyPlantRequest();
         myPlantRequest.setName(name);
         myPlantRequest.setGrownDate(grownDate);
         myPlantRequest.setKindOfLight(kindOfLight);
-//        myPlantRequest.setImage(convertImageToBase64(ivImageMyplanta));
-        myPlantRequest.setImage(ivImageMyplanta.toString());
+
+        String mimeType = ImageUtils.getMimeType(this, imageUri);
+        String base64Image = ImageUtils.imageToBase64(this, imageUri);
+        myPlantRequest.setImage(ImageUtils.formattedBase64(mimeType, base64Image));
+
         return true;
-    }
-
-    private String convertImageToBase64(ImageView imageView){
-        // Lấy bitmap từ ImageView
-        Bitmap bitmap = ((BitmapDrawable) ivImageMyplanta.getDrawable()).getBitmap();
-        // Tạo mảng lưu trữ bit map
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        // Thay đổi định dạng nén theo định dạng của ảnh ban đầu
-        Bitmap.CompressFormat compressFormat;
-        if (bitmap.hasAlpha()) {
-            compressFormat = Bitmap.CompressFormat.PNG; // Giữ nguyên định dạng PNG nếu có kênh alpha
-        } else {
-            compressFormat = Bitmap.CompressFormat.JPEG; // Nén về JPEG nếu không có kênh alpha
-        }
-        // Nén bitmap với định dạng và chất lượng tương ứng
-        bitmap.compress(compressFormat, 100, byteArrayOutputStream);
-        // Chuyển đổi ByteArrayOutputStream thành mảng byte
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        // Sử dụng mã hóa Base64 để chuyển đổi mảng byte thành chuỗi Base64
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     private void updateMyPlant() {
@@ -308,17 +279,10 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
 
     @Override
     public void glideImage(String image, ImageView imageView) {
-        if (image != null) {
-            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            Glide.with(EditMyPlantActivity.this)
-                    .load(bitmap)
-                    .placeholder(R.drawable.icon_no_mob)
-                    .into(imageView);
-        } else {
-            imageView.setImageResource(R.drawable.icon_no_image);
-        }
+        Glide.with(EditMyPlantActivity.this)
+                .load(image)
+                .placeholder(R.drawable.icon_no_image)
+                .into(imageView);
     }
 
     public void back(){

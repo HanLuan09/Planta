@@ -55,6 +55,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             int myPlantId = bundle.getInt("my_plant_id");
+            Log.e("ID MY PLANT", myPlantId + ">>>>>>>>>>>>>>>>>>>");
             viewModel.getIdMyPlant().setValue(myPlantId);
         }else{
             viewModel.getIdMyPlant().setValue(1);

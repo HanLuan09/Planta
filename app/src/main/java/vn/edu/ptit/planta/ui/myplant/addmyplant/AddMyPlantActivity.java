@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -42,8 +40,7 @@ import retrofit2.Response;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.model.PlantResponseOfMyPlant;
-import vn.edu.ptit.planta.model.myplant.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlantRequest;
 import vn.edu.ptit.planta.model.plant.Plant;
 import vn.edu.ptit.planta.ui.schedule.ScheduleActivity;
 import vn.edu.ptit.planta.utils.ImageUtils;
@@ -58,9 +55,7 @@ public class AddMyPlantActivity extends AppCompatActivity {
     private ActivityResultLauncher resultLauncher;
     private int idUser;
     private Plant plant;
-    private MyPlant myPlantRequest;
-    private PlantResponseOfMyPlant plantResponseOfMyPlant;
-
+    private MyPlantRequest myPlantRequest;
     private Uri imageUri;
 
 
@@ -128,9 +123,6 @@ public class AddMyPlantActivity extends AppCompatActivity {
         idUser = sharedPreferences.getInt("idUser", 0);
 
         getPlant();
-        Log.e("NAME PLANT", plant.getName() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        plantResponseOfMyPlant = new PlantResponseOfMyPlant();
-        plantResponseOfMyPlant.setId(plant.getId());
     }
 
     private void chooseDate(){
@@ -206,18 +198,16 @@ public class AddMyPlantActivity extends AppCompatActivity {
             return false;
         }
 
-        myPlantRequest = new MyPlant();
+        myPlantRequest = new MyPlantRequest();
         myPlantRequest.setName(name);
         myPlantRequest.setGrownDate(grownDate);
         myPlantRequest.setKindOfLight(kindOfLight);
 
-        //Test Luân
         String mimeType = ImageUtils.getMimeType(this, imageUri);
         String base64Image = ImageUtils.imageToBase64(this, imageUri);
-
         myPlantRequest.setImage(ImageUtils.formattedBase64(mimeType, base64Image));
-        //
-        myPlantRequest.setPlantDetailOfMyPlant(plantResponseOfMyPlant);
+
+        myPlantRequest.setIdPlant(plant.getId());
         return true;
     }
 
@@ -254,14 +244,15 @@ public class AddMyPlantActivity extends AppCompatActivity {
 
     private void addMyPlant() {
         Log.e("MyPlant Image", myPlantRequest.getImage());
-        RetrofitClient.getMyPlantService().addMyPlant(idUser, myPlantRequest).enqueue(new Callback<ApiResponse<Boolean>>() {
+        RetrofitClient.getMyPlantService().addMyPlant(idUser, myPlantRequest).enqueue(new Callback<ApiResponse<MyPlantRequest>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Boolean>> call, Response<ApiResponse<Boolean>> response) {
+            public void onResponse(Call<ApiResponse<MyPlantRequest>> call, Response<ApiResponse<MyPlantRequest>> response) {
                 if(response.isSuccessful()){
-                    ApiResponse<Boolean> apiResponse = response.body();
+                    ApiResponse<MyPlantRequest> apiResponse = response.body();
                     if(apiResponse.isSuccess()){
+                        MyPlantRequest myPlantResponse = apiResponse.getResult();
                         String message = apiResponse.getMessage();
-                        responseTrue(message);
+                        responseTrue(message, myPlantResponse);
                     }
                     else{
                         String message = apiResponse.getMessage();
@@ -274,16 +265,20 @@ public class AddMyPlantActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<ApiResponse<Boolean>> call, Throwable throwable) {
+            public void onFailure(Call<ApiResponse<MyPlantRequest>> call, Throwable throwable) {
                 String message = "Fail connect to server";
                 connectFail(message);
             }
         });
     }
 
-    private void responseTrue(String message) {
+    private void responseTrue(String message, MyPlantRequest myPlantResponse) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("my_plant_id",myPlantResponse.getId());
+
         Toast.makeText(this, message + " Continue set schedule!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AddMyPlantActivity.this, ScheduleActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

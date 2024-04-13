@@ -12,6 +12,7 @@ import retrofit2.http.Path;
 import vn.edu.ptit.planta.model.ApiResponse;
 import vn.edu.ptit.planta.model.care.CareScheduleResponse;
 import vn.edu.ptit.planta.model.myplant.MyPlant;
+import vn.edu.ptit.planta.model.myplant.MyPlantRequest;
 import vn.edu.ptit.planta.model.myplant.MyPlantScheduleResponse;
 
 public interface MyPlantService {
@@ -23,10 +24,10 @@ public interface MyPlantService {
     Call<ApiResponse<MyPlant>> getMyPlant(@Path("idUser") int id, @Path("idMyPlant") int idMyPlant);
 
     @POST("my_plant/{idUser}/add")
-    Call<ApiResponse<Boolean>> addMyPlant(@Path("idUser") int id, @Body MyPlant myPlant);
+    Call<ApiResponse<MyPlantRequest>> addMyPlant(@Path("idUser") int id, @Body MyPlantRequest myPlantRequest);
 
     @PUT("my_plant/update/{idMyPlant}")
-    Call<ApiResponse<Boolean>> updateMyPlant(@Path("idMyPlant") int idMyPlant, @Body MyPlant myPlant);
+    Call<ApiResponse<Boolean>> updateMyPlant(@Path("idMyPlant") int idMyPlant, @Body MyPlantRequest myPlantRequest);
 
     @DELETE("my_plant/delete/{idMyPlant}")
     Call<ApiResponse<Boolean>> deleteMyPlant(@Path("idMyPlant") int idMyPlant);

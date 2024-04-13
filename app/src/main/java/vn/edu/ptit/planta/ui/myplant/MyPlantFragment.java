@@ -48,10 +48,6 @@ public class MyPlantFragment extends Fragment implements MyPlantNavigator {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
         int idUser = sharedPreferences.getInt("idUser",0);
 
-        if(idUser == 0) {
-            Log.e("User null", "User null");
-        }
-
         myPlantViewModel = new ViewModelProvider(this).get(MyPlantViewModel.class);
 
         binding.setMyPlantViewModel(myPlantViewModel);
