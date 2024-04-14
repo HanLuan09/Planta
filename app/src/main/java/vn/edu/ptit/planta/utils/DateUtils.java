@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class DateUtils {
     @NonNull
@@ -53,5 +54,33 @@ public class DateUtils {
 
         return Math.abs((currentTimeInMillis - startTimeInMillis) / millisecondsPerDay);
     }
+
+    public static long daysBetweenTodayAndStartDate(String startDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        todayCalendar.set(Calendar.MINUTE, 0);
+        todayCalendar.set(Calendar.SECOND, 0);
+        todayCalendar.set(Calendar.MILLISECOND, 0);
+        java.util.Date todayDate = todayCalendar.getTime();
+
+        java.util.Date startDateDate = null;
+        Calendar startCalendar = Calendar.getInstance();
+        try {
+            startDateDate = sdf.parse(startDate);
+            startCalendar.setTime(startDateDate);
+            startCalendar.set(Calendar.HOUR_OF_DAY, 0);
+            startCalendar.set(Calendar.MINUTE, 0);
+            startCalendar.set(Calendar.SECOND, 0);
+            startCalendar.set(Calendar.MILLISECOND, 0);
+            startDateDate = startCalendar.getTime();
+
+            long diffInMillis = todayDate.getTime() - startDateDate.getTime();
+            return diffInMillis / (1000 * 60 * 60 * 24);
+        } catch (ParseException e) {
+            return -1;
+        }
+    }
+
 }
 

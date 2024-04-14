@@ -39,8 +39,8 @@ public class ImageUtils {
     @Nullable
     public static String imageToBase64(@NonNull Context context, Uri uri) {
 
-        int maxWidth = 500;
-        int maxHeight = 500;
+        int maxWidth = 400;
+        int maxHeight = 400;
         try {
             // Đọc ảnh từ Uri vào một đối tượng Bitmap
             InputStream inputStream = context.getContentResolver().openInputStream(uri);
@@ -59,13 +59,6 @@ public class ImageUtils {
                 bitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true);
             }
 
-//            // Chuyển đổi Bitmap thành mảng byte[]
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//
-//            if (bitmap != null) {
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream); // Nén ảnh với chất lượng 80%
-//            }
-
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
             // Thay đổi định dạng nén theo định dạng của ảnh ban đầu
@@ -77,7 +70,7 @@ public class ImageUtils {
             }
 
             // Nén bitmap với định dạng và chất lượng tương ứng
-            bitmap.compress(compressFormat, 100, byteArrayOutputStream);
+            bitmap.compress(compressFormat, 90, byteArrayOutputStream);
 
             byte[] bytes = byteArrayOutputStream.toByteArray();
             byteArrayOutputStream.close();

@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
@@ -54,11 +56,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            int myPlantId = bundle.getInt("my_plant_id");
-            Log.e("ID MY PLANT", myPlantId + ">>>>>>>>>>>>>>>>>>>");
+            int myPlantId = bundle.getInt("my_plant_id_page_add");
             viewModel.getIdMyPlant().setValue(myPlantId);
-        }else{
-            viewModel.getIdMyPlant().setValue(1);
+
+            Glide.with(this)
+                    .load(bundle.getString("my_plant_image_page_add"))
+                    .placeholder(R.drawable.icon_no_mob)
+                    .override(300,300)
+                    .into(binding.circleImgMyplanta);
         }
 
         if(viewModel.getIdMyPlant()!= null && viewModel.getIdMyPlant().getValue()!= null) {

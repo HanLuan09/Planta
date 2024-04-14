@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import vn.edu.ptit.planta.R;
@@ -46,6 +48,9 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences sharedPreferences = this.getSharedPreferences("User", Context.MODE_PRIVATE);
+        int idUser = sharedPreferences.getInt("idUser",0);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_calendar_my_plant);
 
         viewModel = new ViewModelProvider(this).get(CalendarMyPlantViewModel.class);
@@ -53,25 +58,33 @@ public class CalendarMyPlantActivity extends AppCompatActivity implements Calend
         binding.setCalendarMyPlantViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        viewModel.setCalendarMyPlantNavigator(this);
-        viewModel.initData();
-
-        collapsibleCalendar = binding.collapsibleCalendarView;
-
-        recyclerView = binding.rcvCalendarMyPlant;
-        adapter = new CareScheduleCategoryAdapter(this);
-        adapter.setActivityResultLauncher(mActivityResultLauncher);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        viewModel.getListCareSchedules().observe(this, new Observer<List<CareScheduleResponse>>() {
-            @Override
-            public void onChanged(List<CareScheduleResponse> careSchedules) {
-                if (careSchedules != null) {
-                    setAdapterSchedules();
-                }
-            }
-        });
         binding.calendarTextView.setText(dateSelected());
+        collapsibleCalendar = binding.collapsibleCalendarView;
+        recyclerView = binding.rcvCalendarMyPlant;
+        if(idUser != 0) {
+            viewModel.getUserId().setValue(idUser);
+            viewModel.setCalendarMyPlantNavigator(this);
+            viewModel.initData();
+
+            adapter = new CareScheduleCategoryAdapter(this);
+            adapter.setActivityResultLauncher(mActivityResultLauncher);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            viewModel.getListCareSchedules().observe(this, new Observer<List<CareScheduleResponse>>() {
+                @Override
+                public void onChanged(List<CareScheduleResponse> careSchedules) {
+                    if (careSchedules != null) {
+                        setAdapterSchedules();
+                    }
+                }
+            });
+
+            initCollapsibleCalendar();
+        }
+
+    }
+
+    private void initCollapsibleCalendar() {
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDayChanged() {

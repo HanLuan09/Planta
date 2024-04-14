@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="userViewModel"
+            type="vn.edu.ptit.planta.ui.user.UserViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -386,8 +389,7 @@
                     app:cardElevation="0dp">
 
                     <RelativeLayout
-                        android:clickable="true"
-                        android:focusable="true"
+                        android:onClick="@{() -> userViewModel.onLogoutClick()}"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">

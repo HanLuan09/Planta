@@ -50,7 +50,6 @@ public class PlantFragment extends Fragment implements PlantNavigator {
 
         viewModel.setPlantNavigator(this);
 
-        viewModel.fetchData();
         listPlantObserve();
 
         initRecyclerView();
@@ -131,8 +130,6 @@ public class PlantFragment extends Fragment implements PlantNavigator {
                     // Nếu adapter đã tồn tại, cập nhật dữ liệu mới
                     plantAdapter.updateData(plants);
                 }
-
-                Log.e("T plant", plants.size()+"");
             }
         });
     }
