@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -24,6 +25,8 @@ public class ScheduleNotificationReceiver extends BroadcastReceiver {
         String myPlantName = intent.getStringExtra("myPlantName");
         String scheduleName = intent.getStringExtra("scheduleName");
         int scheduleId = intent.getIntExtra("scheduleId", 0);
+
+        //Log.e("Test Noti", scheduleId+ "");
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -155,7 +155,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     @Override
     public void handleDeleteNotification() {
         final Dialog dialog = new Dialog(this);
-        openDialog(dialog, "Cảnh báo", "Bạn có muốn xóa lịch trình này không?");
+        openDialog(dialog, "Thông báo", "Bạn có chắc chắn muốn xóa lịch trình này không?");
         dialog.show();
     }
 

@@ -1,6 +1,5 @@
 package vn.edu.ptit.planta.ui.calendarmyplant;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -29,12 +28,15 @@ public class CalendarMyPlantViewModel extends ViewModel {
 
     private CalendarMyPlantNavigator navigator;
 
+    private MutableLiveData<Integer> userId;
+
     private MutableLiveData<List<CareScheduleResponse>> listCareSchedules;
 
     private MutableLiveData<List<MyPlantScheduleResponse>> listMyPlantSchedules;
     private MutableLiveData<String> daySelect;
 
     public CalendarMyPlantViewModel() {
+        userId = new MutableLiveData<>();
         listCareSchedules = new MutableLiveData<>();
         listMyPlantSchedules = new MutableLiveData<>();
         daySelect = new MutableLiveData<>();
@@ -46,6 +48,10 @@ public class CalendarMyPlantViewModel extends ViewModel {
 
     public void setCalendarMyPlantNavigator(CalendarMyPlantNavigator navigator) {
         this.navigator = navigator;
+    }
+
+    public MutableLiveData<Integer> getUserId() {
+        return userId;
     }
 
     public MutableLiveData<List<MyPlantScheduleResponse>> getListMyPlantSchedules() {
@@ -60,7 +66,7 @@ public class CalendarMyPlantViewModel extends ViewModel {
         return daySelect;
     }
     public void initData() {
-        RetrofitClient.getMyPlantService().getAllMyPlantCalendarByUser(1).enqueue(new Callback<ApiResponse<List<MyPlantScheduleResponse>>>() {
+        RetrofitClient.getMyPlantService().getAllMyPlantCalendarByUser(userId.getValue()).enqueue(new Callback<ApiResponse<List<MyPlantScheduleResponse>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<MyPlantScheduleResponse>>> call, Response<ApiResponse<List<MyPlantScheduleResponse>>> response) {
                 if(response.isSuccessful()) {

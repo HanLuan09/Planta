@@ -26,15 +26,20 @@ import vn.edu.ptit.planta.utils.DateUtils;
 
 public class TodayViewModel extends ViewModel {
 
+    private MutableLiveData<Integer> userId;
     private MutableLiveData<List<MyPlantScheduleResponse>> listMyPlantSchedules;
     private MutableLiveData<List<CareScheduleResponse>> listCareSchedules;
     private List<CareScheduleResponse> careSchedules;
     private MutableLiveData<DataStatus> dataStatus;
 
     public TodayViewModel() {
+        userId = new MutableLiveData<>();
         listMyPlantSchedules = new MutableLiveData<>();
         listCareSchedules = new MutableLiveData<>();
-        initData();
+    }
+
+    public MutableLiveData<Integer> getUserId() {
+        return userId;
     }
 
     public MutableLiveData<List<MyPlantScheduleResponse>> getListMyPlantSchedules() {
@@ -53,8 +58,8 @@ public class TodayViewModel extends ViewModel {
         return dataStatus;
     }
 
-    public void initData() {
-        RetrofitClient.getMyPlantService().getMyPlantScheduleByUser(1).enqueue(new Callback<ApiResponse<List<MyPlantScheduleResponse>>>() {
+    public void initDataMyPlantSchedule() {
+        RetrofitClient.getMyPlantService().getMyPlantScheduleByUser(userId.getValue()).enqueue(new Callback<ApiResponse<List<MyPlantScheduleResponse>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<MyPlantScheduleResponse>>> call, Response<ApiResponse<List<MyPlantScheduleResponse>>> response) {
                 if (response.isSuccessful()) {

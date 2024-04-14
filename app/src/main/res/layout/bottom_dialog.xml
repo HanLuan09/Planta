@@ -11,26 +11,25 @@
         android:id="@+id/dialog_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Cảnh báo"
-        android:fontFamily="@font/tiktok_medium"
+        android:layout_marginTop="18dp"
+        android:text="Thông báo"
+        android:fontFamily="@font/tiktok_bold"
         android:textColor="@color/colorGreenText"
         android:textSize="@dimen/text_size_h5" />
 
     <LinearLayout
-        android:layout_width="220dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="20dp">
+        android:padding="18dp">
 
         <TextView
             android:gravity="center"
             android:id="@+id/dialog_text_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bạn có muốn xóa lịch trình này không?"
+            android:text="Bạn có chắc chắn muốn xóa lịch trình này không?"
             android:textColor="@color/red"
             android:textSize="@dimen/text_size_h6" />
     </LinearLayout>
@@ -51,7 +50,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Thoát"
+            android:text="Hủy bỏ"
             android:fontFamily="@font/tiktok_medium"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_h6" />
@@ -67,7 +66,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="OK"
+            android:text="Đồng ý"
             android:fontFamily="@font/tiktok_medium"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_h6" />
