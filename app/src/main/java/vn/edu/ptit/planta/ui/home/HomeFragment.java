@@ -69,7 +69,6 @@ public class HomeFragment extends Fragment implements HomeNavigator {
     @Override
     public void handleCalendarMyPlant() {
         Intent intent = new Intent(requireContext(), CalendarMyPlantActivity.class);
-//        Intent intent = new Intent(requireContext(), TestActivity.class);
         startActivity(intent);
     }
 

@@ -67,7 +67,7 @@
                             android:id="@+id/fullName_user"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Hán Văn Luân"
+                            android:text="User 1231"
                             android:textSize="@dimen/text_size_h4"
                             android:fontFamily="@font/tiktok_bold"
                             android:textColor="@color/white" />
@@ -80,7 +80,7 @@
                             android:textSize="@dimen/text_size_h8"
                             android:textColor="@color/white"
                             android:fontFamily="@font/tiktok_medium"
-                            android:text="Nam - 04/10/2002" />
+                            android:text="Nam" />
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
