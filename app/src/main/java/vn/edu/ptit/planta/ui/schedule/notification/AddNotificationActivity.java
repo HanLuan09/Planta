@@ -19,11 +19,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -247,42 +249,38 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
 
     @Override
     public void handleDialogScheduleSuccess(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-        builder.setTitle("Thành công")
-                .setMessage(message)
-                .setCancelable(false);
 
-        final AlertDialog alertDialog = builder.create();
+        Toast toast = new Toast(AddNotificationActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.layout_custom_toast, (ViewGroup) findViewById(R.id.layout_custom_toast));
+        TextView tvMessage = view.findViewById(R.id.toast_text_message);
+        TextView tvTitle = view.findViewById(R.id.toast_text_title);
+        tvTitle.setText("Thành công");
+        tvMessage.setText(message);
+        toast.setView(view);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                alertDialog.dismiss();
                 Intent intent = new Intent();
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
-        }, 2000);
-        alertDialog.show();
+        }, 3000);
     }
 
     @Override
     public void handleDialogScheduleFail(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-        builder.setTitle("Thất bại")
-                .setMessage(message)
-                .setCancelable(false);
-
-        final AlertDialog alertDialog = builder.create();
-
-        // Đóng AlertDialog sau 2 giây
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                alertDialog.dismiss();
-            }
-        }, 2000);
-
-        // Hiển thị AlertDialog
-        alertDialog.show();
+        Toast toast = new Toast(AddNotificationActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.layout_custom_toast, (ViewGroup) findViewById(R.id.layout_custom_toast));
+        TextView tvMessage = view.findViewById(R.id.toast_text_message);
+        TextView tvTitle = view.findViewById(R.id.toast_text_title);
+        tvTitle.setText("Thất bại");
+        tvMessage.setText(message);
+        toast.setView(view);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
     }
 }

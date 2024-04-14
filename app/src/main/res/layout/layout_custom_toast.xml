@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_custom_toast"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_toast_background"
+    android:gravity="center"
+    android:layout_margin="50dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="22dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_marginTop="-4dp"
+            android:id="@+id/toast_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông báo"
+            android:textColor="@color/white"
+            android:fontFamily="@font/tiktok_bold"
+            android:textSize="@dimen/text_size_h5"/>
+
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:id="@+id/toast_text_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ấn phím back thêm lần nữa để thoát ứng dụng"
+            android:textColor="@color/white"
+            android:fontFamily="@font/tiktok_medium"
+            android:textSize="@dimen/text_size_h5" />
+    </LinearLayout>
+
+</LinearLayout>
