@@ -1,7 +1,10 @@
 package vn.edu.ptit.planta.ui.myplant.myplantdetail.care;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -17,9 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,6 +40,8 @@ import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareCalendarAdapter;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareScheduleCalendarAdapter;
 import vn.edu.ptit.planta.ui.schedule.notification.AddNotificationActivity;
+import vn.edu.ptit.planta.utils.DateUtils;
+import vn.edu.ptit.planta.utils.TimeUtils;
 
 public class CareFragment extends Fragment implements CareNavigator {
 
@@ -120,6 +130,7 @@ public class CareFragment extends Fragment implements CareNavigator {
                 careCalendarAdapter.setOnItemClickListener(new CareCalendarAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(List<CareCalendar> schedules, String date) {
+                        careScheduleCalendarAdapter.setCareNavigator(CareFragment.this);
                         careScheduleCalendarAdapter.setListCareScheduleCalendars(schedules);
                         rcvScheduleCalendar.setAdapter(careScheduleCalendarAdapter);
                         binding.tvScheduleNote.setText(date);
@@ -150,6 +161,13 @@ public class CareFragment extends Fragment implements CareNavigator {
         mActivityResultLauncher.launch(intent);
     }
 
+    @Override
+    public void handleNotificationDetail(CareCalendar careCalendar){
+        final Dialog dialog = new Dialog(requireContext());
+        openDialog(dialog, careCalendar);
+        dialog.show();
+    }
+
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -161,4 +179,37 @@ public class CareFragment extends Fragment implements CareNavigator {
             }
         }
     });
+
+    private void openDialog(@NonNull Dialog dialog, CareCalendar careCalendar) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_dialog_care);
+        Window window = dialog.getWindow();
+        if(window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(false);
+
+        ImageView tvCancel = dialog.findViewById(R.id.dialog_care_close);
+        TextView tvName = dialog.findViewById(R.id.dialog_care_name);
+        TextView tvStartDate = dialog.findViewById(R.id.dialog_care_start_date);
+        TextView tvEndDate = dialog.findViewById(R.id.dialog_care_end_date);
+        TextView tvTime = dialog.findViewById(R.id.dialog_care_time);
+        TextView tvFrequency = dialog.findViewById(R.id.dialog_care_frequency);
+
+        tvName.setText(careCalendar.getName());
+        tvStartDate.setText(DateUtils.formatToDDMMYYYY(careCalendar.getStartDate()));
+        tvEndDate.setText(DateUtils.formatToDDMMYYYY(careCalendar.getEndDate()));
+        tvTime.setText(TimeUtils.formatToHHMM(careCalendar.getTime()));
+        tvFrequency.setText("Định kỳ " +careCalendar.getFrequency() + " ngày một lần");
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+    }
 }

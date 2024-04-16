@@ -13,4 +13,8 @@ public class UserViewModel extends ViewModel {
     public void onLogoutClick(){
         userNavigator.handleLogout();
     }
+
+    public void onClick(){
+        userNavigator.handle();
+    }
 }
