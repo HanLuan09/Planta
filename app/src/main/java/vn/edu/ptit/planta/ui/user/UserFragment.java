@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -62,6 +63,11 @@ public class UserFragment extends Fragment implements UserNavigator {
         final Dialog dialog = new Dialog(requireContext());
         openDialog(dialog, "Thông báo", "Bạn có chắc chắn muốn thoát phiên đăng nhập?");
         dialog.show();
+    }
+
+    @Override
+    public void handle() {
+        Toast.makeText(requireContext(), "Tính năng chưa phát triển", Toast.LENGTH_SHORT).show();
     }
 
     private void openDialog(@NonNull Dialog dialog, String name, String message) {

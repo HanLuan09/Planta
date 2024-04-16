@@ -9,18 +9,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.model.care.CareCalendar;
+import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareNavigator;
 
 public class CareScheduleCalendarAdapter extends RecyclerView.Adapter<CareScheduleCalendarAdapter.CareScheduleCalendarViewHolder> {
 
     private List<CareCalendar> listCareScheduleCalendars;
 
+    private CareNavigator careNavigator;
+
     public void setListCareScheduleCalendars(List<CareCalendar> listCareScheduleCalendars) {
         this.listCareScheduleCalendars = listCareScheduleCalendars;
         notifyDataSetChanged();
+    }
+
+    public void setCareNavigator(CareNavigator careNavigator) {
+        this.careNavigator = careNavigator;
     }
 
     @NonNull
@@ -44,6 +53,13 @@ public class CareScheduleCalendarAdapter extends RecyclerView.Adapter<CareSchedu
         }else {
             holder.imageView.setImageResource(R.drawable.ic_plant_fill);
         }
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(careCalendar != null) careNavigator.handleNotificationDetail(careCalendar);
+            }
+        });
     }
 
     @Override
@@ -56,10 +72,13 @@ public class CareScheduleCalendarAdapter extends RecyclerView.Adapter<CareSchedu
 
         private TextView tvName;
         private ImageView imageView;
+
+        private MaterialCardView cardView;
         public CareScheduleCalendarViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name_care);
             imageView = itemView.findViewById(R.id.img_item_noti);
+            cardView = itemView.findViewById(R.id.id_cv_care_note);
         }
     }
 }

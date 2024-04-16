@@ -70,7 +70,7 @@ public class ImageUtils {
             }
 
             // Nén bitmap với định dạng và chất lượng tương ứng
-            bitmap.compress(compressFormat, 90, byteArrayOutputStream);
+            bitmap.compress(compressFormat, 80, byteArrayOutputStream);
 
             byte[] bytes = byteArrayOutputStream.toByteArray();
             byteArrayOutputStream.close();
