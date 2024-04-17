@@ -24,6 +24,7 @@ import vn.edu.ptit.planta.model.care.CareCalendar;
 import vn.edu.ptit.planta.model.care.CareCalendarResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.utils.DateUtils;
+import vn.edu.ptit.planta.utils.MyPlantCalendarUtils;
 
 public class CareViewModel extends ViewModel {
 
@@ -62,7 +63,7 @@ public class CareViewModel extends ViewModel {
                 if(response.isSuccessful()){
                     ApiResponse<List<MySchedule>> apiResponse = response.body();
                     listSchedules.setValue(apiResponse.getResult());
-                    listCareCalendars.setValue(getMyCareCalendar(apiResponse.getResult()));
+                    listCareCalendars.setValue(MyPlantCalendarUtils.myCareCalendar(apiResponse.getResult()));
                 }else{
 
                 }
@@ -99,91 +100,5 @@ public class CareViewModel extends ViewModel {
     public void onAddNotificationClick(){
         if(careNavigator != null) careNavigator.handleAddNotification();
     }
-
-
-    public List<CareCalendarResponse> getMyCareCalendar(@NonNull List<MySchedule> mySchedules) {
-
-        // Sử dụng một Map để nhóm CareCalendar theo ngày chăm sóc
-        Map<Date, List<CareCalendar>> careCalendarMap = new HashMap<>();
-
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
-        Date currentDate = DateUtils.stringToDate(selectedDate);
-
-        for (MySchedule mySchedule : mySchedules) {
-            Date startDate = mySchedule.getStartDate();
-            Date endDate = mySchedule.getEndDate();
-            int frequency = mySchedule.getFrequency();
-
-            // Tính toán các ngày chăm sóc từ ngày bắt đầu đến ngày kết thúc với tần suất
-            List<Date> scheduledDates = calculateScheduledDates(startDate, endDate, frequency);
-
-            // Tạo CareCalendar cho mỗi ngày chăm sóc và thêm vào Map
-            for (Date date : scheduledDates) {
-                if(!date.before(currentDate)) {
-                    List<CareCalendar> careCalendars = careCalendarMap.getOrDefault(date, new ArrayList<>());
-
-                    CareCalendar careCalendar = new CareCalendar();
-                    careCalendar.setMyScheduleId(mySchedule.getId());
-                    careCalendar.setName(mySchedule.getName());
-                    careCalendar.setStartDate(startDate);
-                    careCalendar.setEndDate(endDate);
-                    careCalendar.setTime(mySchedule.getTime());
-                    careCalendar.setFrequency(frequency);
-
-                    careCalendars.add(careCalendar);
-                    careCalendarMap.put(date, careCalendars);
-                }
-            }
-        }
-
-        boolean checkToDay = false;
-        // Tạo danh sách MyCareCalendarResponse từ Map
-        List<CareCalendarResponse> calendarResponses = new ArrayList<>();
-        for (Map.Entry<Date, List<CareCalendar>> entry : careCalendarMap.entrySet()) {
-            Date date = entry.getKey();
-
-            Calendar calendarTest = Calendar.getInstance();
-            calendarTest.setTime(date);
-            //Log.e("Test2", DateUtils.formatToDDMMYYYY(date) + " " +(DateUtils.formatToDDMMYYYY(currentDate)));
-            if(date.compareTo(currentDate) == 0) checkToDay = true;
-
-            List<CareCalendar> careCalendars = entry.getValue();
-
-            CareCalendarResponse calendarResponse = new CareCalendarResponse();
-            calendarResponse.setDateCare(date);
-            calendarResponse.setCareCalendars(careCalendars);
-
-            calendarResponses.add(calendarResponse);
-        }
-        if(!checkToDay) {
-            calendarResponses.add(new CareCalendarResponse(currentDate, null));
-        }
-        Collections.sort(calendarResponses);
-
-        return calendarResponses;
-    }
-
-    // Phương thức để tính toán các ngày chăm sóc từ ngày bắt đầu đến ngày kết thúc với tần suất
-    @NonNull
-    private List<Date> calculateScheduledDates(Date startDate, Date endDate, int frequency) {
-        List<Date> scheduledDates = new ArrayList<>();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
-
-        while (!calendar.getTime().after(endDate)) {
-            java.util.Date setUtilDate = calendar.getTime();
-            Date sqlDate = new Date(setUtilDate.getTime());
-            scheduledDates.add(new Date(sqlDate.getTime()));
-            calendar.add(Calendar.DAY_OF_MONTH, frequency);
-        }
-
-        return scheduledDates;
-    }
-
 
 }
