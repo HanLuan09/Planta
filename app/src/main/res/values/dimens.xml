@@ -26,7 +26,7 @@
     <dimen name="small_view_height">70dp</dimen>
 
     <dimen name="text_size_h1">27sp</dimen>
-    <dimen name="text_size_h2">21sp</dimen>
+    <dimen name="text_size_h2">22sp</dimen>
     <dimen name="text_size_h3">19sp</dimen>
     <dimen name="text_size_h4">18sp</dimen>
     <dimen name="text_size_h5">16sp</dimen>

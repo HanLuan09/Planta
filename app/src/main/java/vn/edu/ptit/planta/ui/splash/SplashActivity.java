@@ -8,11 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import vn.edu.ptit.planta.ui.MainActivity;
 import vn.edu.ptit.planta.ui.guesthome.GuestHomeActivity;
-import vn.edu.ptit.planta.ui.test.TestActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

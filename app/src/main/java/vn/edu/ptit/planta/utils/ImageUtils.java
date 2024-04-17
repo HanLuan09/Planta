@@ -19,23 +19,6 @@ import java.io.InputStream;
 
 public class ImageUtils {
 
-    // Chuyển đổi hình ảnh từ URI sang chuỗi Base64
-//    @Nullable
-//    public static String imageToBase64(@NonNull Context context, Uri uri) {
-//        try {
-//            InputStream inputStream = context.getContentResolver().openInputStream(uri);
-//            byte[] bytes = new byte[inputStream.available()];
-//            inputStream.read(bytes);
-//            inputStream.close();
-//            return Base64.encodeToString(bytes, Base64.DEFAULT);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//
-//    }
-
     @Nullable
     public static String imageToBase64(@NonNull Context context, Uri uri) {
 

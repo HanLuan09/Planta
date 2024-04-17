@@ -1,4 +1,4 @@
-package vn.edu.ptit.planta.ui.careoptions;
+package vn.edu.ptit.planta.ui.tip;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import vn.edu.ptit.planta.R;
 
-public class CareOptionsFragment extends Fragment {
+public class TipFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,6 @@ public class CareOptionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_care_options, container, false);
+        return inflater.inflate(R.layout.fragment_tip, container, false);
     }
 }
