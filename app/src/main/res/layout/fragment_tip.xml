@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.careoptions.CareOptionsFragment">
+    tools:context=".ui.tip.TipFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/id_main_utilities"
-        android:title="Tùy chọn"
+        android:title="Gợi ý"
         android:icon="@drawable/selector_menu_utilities"
         app:contentDescription="@string/app_name" />
 

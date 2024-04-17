@@ -38,21 +38,14 @@
                     android:fontFamily="@font/tiktok_bold"
                     android:textColor="@color/colorGreenText"
                     android:textSize="@dimen/text_size_h2"
-                    android:layout_marginStart="22.5dp"
+                    android:layout_marginStart="16dp"
                     android:layout_centerVertical="true"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="8dp">
-
-                    <ImageView
-                        style="@style/Widget.AppCompat.ActionButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_search" />
+                    android:layout_centerVertical="true">
 
                     <ImageView
                         style="@style/Widget.AppCompat.ActionButton"
@@ -60,14 +53,22 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_notification"
                         android:contentDescription="Notifications" />
+
+                    <ImageView
+                        style="@style/Widget.AppCompat.ActionButton"
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_calendar"
+                        android:onClick="@{() -> homeViewModel.onCalendarMyPlantClick()}"
+                        android:contentDescription="click calendar"/>
                 </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_below="@id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -78,7 +79,7 @@
                         android:id="@+id/tabLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:tabPaddingEnd="6dp"
+                        app:tabPaddingEnd="0dp"
                         app:tabIndicatorHeight="0dp"
                         app:tabMode="fixed"
                         app:tabGravity="center"
@@ -92,15 +93,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true">
-
-                    <ImageView
-                        style="@style/Widget.AppCompat.ActionButton"
-                        android:id="@+id/imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_calendar"
-                        android:onClick="@{() -> homeViewModel.onCalendarMyPlantClick()}"
-                        android:contentDescription="click calendar"/>
 
                 </LinearLayout>
 
