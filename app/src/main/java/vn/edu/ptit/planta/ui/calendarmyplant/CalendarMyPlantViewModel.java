@@ -23,6 +23,7 @@ import vn.edu.ptit.planta.model.care.CareSchedule;
 import vn.edu.ptit.planta.model.care.CareScheduleResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.utils.DateUtils;
+import vn.edu.ptit.planta.utils.MyPlantCalendarUtils;
 
 public class CalendarMyPlantViewModel extends ViewModel {
 
@@ -73,7 +74,7 @@ public class CalendarMyPlantViewModel extends ViewModel {
                     ApiResponse<List<MyPlantScheduleResponse>> apiResponse = response.body();
                     List<MyPlantScheduleResponse> myPlantScheduleResponses = apiResponse.getResult();
                     listMyPlantSchedules.setValue(myPlantScheduleResponses);
-                    listCareSchedules.setValue(myPlantToDayByUser(myPlantScheduleResponses, daySelect.getValue()));
+                    listCareSchedules.setValue(MyPlantCalendarUtils.myPlantCalendar(myPlantScheduleResponses, daySelect.getValue()));
                 }
             }
 

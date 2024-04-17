@@ -20,7 +20,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_splash);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("User", Context.MODE_PRIVATE);
         int idUser = sharedPreferences.getInt("idUser",0);
@@ -35,8 +34,6 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-//                Intent intent = new Intent(SplashActivity.this, TestActivity.class);
-//                startActivity(intent);
                 SplashActivity.this.overridePendingTransition(0, 0);
                 finish();
             }
