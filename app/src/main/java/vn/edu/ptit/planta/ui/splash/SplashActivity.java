@@ -12,7 +12,6 @@ import android.util.Log;
 
 import vn.edu.ptit.planta.ui.MainActivity;
 import vn.edu.ptit.planta.ui.guesthome.GuestHomeActivity;
-import vn.edu.ptit.planta.ui.test.TestActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
