@@ -18,6 +18,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -54,11 +62,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            int myPlantId = bundle.getInt("my_plant_id");
-            Log.e("ID MY PLANT", myPlantId + ">>>>>>>>>>>>>>>>>>>");
+            int myPlantId = bundle.getInt("my_plant_id_page_add");
             viewModel.getIdMyPlant().setValue(myPlantId);
-        }else{
-            viewModel.getIdMyPlant().setValue(1);
+
+            Glide.with(this)
+                    .load(bundle.getString("my_plant_image_page_add"))
+                    .placeholder(R.drawable.icon_no_mob)
+                    .override(300,300)
+                    .into(binding.circleImgMyplanta);
         }
 
         if(viewModel.getIdMyPlant()!= null && viewModel.getIdMyPlant().getValue()!= null) {
@@ -76,9 +87,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
             @Override
             public void handleOnBackPressed() {
                 if (!isDialogShown) {
-                    if(viewModel.getIsCheckBlack() != null && viewModel.getIsCheckBlack().getValue() != null) showDialog(viewModel.getIsCheckBlack().getValue()? "Nhấn lần nữa để xác nhận hoàn thành" : "Nhấn lần nữa để thoát");
-                    else showDialog("Nhấn lần nữa để thoát");
-                    isDialogShown = true;
+                    if(viewModel.getIsCheckBlack() != null && viewModel.getIsCheckBlack().getValue() != null) showToast(viewModel.getIsCheckBlack().getValue()? "Ấn phím back thêm lần nữa để hoàn thành lịch trình" : "Ấn phím back thêm lần nữa để bỏ qua lịch trình");
+                    else showToast("Ấn phím back thêm lần nữa để bỏ qua lịch trình");
                 } else {
                     Intent intent = new Intent(ScheduleActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -87,22 +97,26 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
                 }
             }
 
-            private void showDialog(String message) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleActivity.this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-                builder.setMessage(message)
-                        .setCancelable(false);
-
-                final AlertDialog alertDialog = builder.create();
+            private void showToast(String message) {
+                Toast toast = new Toast(ScheduleActivity.this);
+                View view = getLayoutInflater().inflate(R.layout.layout_custom_toast, (ViewGroup) findViewById(R.id.layout_custom_toast));
+                TextView tvMessage = view.findViewById(R.id.toast_text_message);
+                TextView tvTitle = view.findViewById(R.id.toast_text_title);
+                tvTitle.setVisibility(View.GONE);
+                tvMessage.setText(message);
+                toast.setView(view);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
+                isDialogShown = true;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        alertDialog.dismiss();
+                        isDialogShown = false;
                     }
-                }, 600);
-                alertDialog.show();
+                }, 3000);
             }
         });
-
     }
 
     private void initRecyclerViewSchedule() {

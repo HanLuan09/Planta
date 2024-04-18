@@ -57,10 +57,18 @@ public class AboutFragment extends Fragment {
         if(bundle.containsKey("myplant")){
             myPlant = (MyPlant) bundle.getSerializable("myplant");
         }
-
         aboutViewModel = new ViewModelProvider(this).get(AboutViewModel.class);
-        aboutViewModel.setIdUserAndMyPlant(idUser,myPlant.getId());
+        // Trang My Plant vào bundle
+        if(myPlant != null) {
+            aboutViewModel.setIdUserAndMyPlant(idUser, myPlant.getId());
+            Log.e("Test id" , "id " + myPlant.getId());
 
+        }else {
+            aboutViewModel.setIdUserAndMyPlant(idUser, bundle.getInt("id_myplant"));
+            Log.e("Test id" , "id " + bundle.getInt("id_myplant"));
+
+        }
+        //
         binding.setAboutViewModel(aboutViewModel);
         binding.setLifecycleOwner(this);
 

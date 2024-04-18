@@ -1,7 +1,5 @@
 package vn.edu.ptit.planta.ui.myplant;
 
-import android.graphics.Bitmap;
-
 import com.google.android.material.imageview.ShapeableImageView;
 
 import vn.edu.ptit.planta.model.myplant.MyPlant;

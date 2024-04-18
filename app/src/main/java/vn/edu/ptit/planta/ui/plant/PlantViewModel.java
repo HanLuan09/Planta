@@ -47,20 +47,20 @@ public class PlantViewModel extends ViewModel {
                         if(apiResponse.getResult() == null) dataStatus.setValue(new DataStatus(false, "Không có dữ liệu"));
                         else {
                             listPlants.setValue(apiResponse.getResult());
-                            dataStatus.setValue(new DataStatus(true, null));
+                            getDataStatus().setValue(new DataStatus(true, null));
                         }
 
                     }else {
-                        dataStatus.setValue(new DataStatus(false, apiResponse.getMessage()));
+                        getDataStatus().setValue(new DataStatus(false, apiResponse.getMessage()));
                     }
                 } else {
-                    dataStatus.setValue(new DataStatus(false, "Kết nối thất bại"));
+                    getDataStatus().setValue(new DataStatus(false, "Kết nối thất bại"));
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Plant>>> call, Throwable t) {
-                dataStatus.setValue(new DataStatus(false, "Không có kết nối"));
+                getDataStatus().setValue(new DataStatus(false, "Không có kết nối"));
             }
         });
 

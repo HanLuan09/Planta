@@ -1,6 +1,5 @@
 package vn.edu.ptit.planta.ui.calendarmyplant;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -24,10 +23,13 @@ import vn.edu.ptit.planta.model.care.CareSchedule;
 import vn.edu.ptit.planta.model.care.CareScheduleResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.utils.DateUtils;
+import vn.edu.ptit.planta.utils.MyPlantCalendarUtils;
 
 public class CalendarMyPlantViewModel extends ViewModel {
 
     private CalendarMyPlantNavigator navigator;
+
+    private MutableLiveData<Integer> userId;
 
     private MutableLiveData<List<CareScheduleResponse>> listCareSchedules;
 
@@ -35,6 +37,7 @@ public class CalendarMyPlantViewModel extends ViewModel {
     private MutableLiveData<String> daySelect;
 
     public CalendarMyPlantViewModel() {
+        userId = new MutableLiveData<>();
         listCareSchedules = new MutableLiveData<>();
         listMyPlantSchedules = new MutableLiveData<>();
         daySelect = new MutableLiveData<>();
@@ -46,6 +49,10 @@ public class CalendarMyPlantViewModel extends ViewModel {
 
     public void setCalendarMyPlantNavigator(CalendarMyPlantNavigator navigator) {
         this.navigator = navigator;
+    }
+
+    public MutableLiveData<Integer> getUserId() {
+        return userId;
     }
 
     public MutableLiveData<List<MyPlantScheduleResponse>> getListMyPlantSchedules() {
@@ -60,14 +67,14 @@ public class CalendarMyPlantViewModel extends ViewModel {
         return daySelect;
     }
     public void initData() {
-        RetrofitClient.getMyPlantService().getAllMyPlantCalendarByUser(1).enqueue(new Callback<ApiResponse<List<MyPlantScheduleResponse>>>() {
+        RetrofitClient.getMyPlantService().getAllMyPlantCalendarByUser(userId.getValue()).enqueue(new Callback<ApiResponse<List<MyPlantScheduleResponse>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<MyPlantScheduleResponse>>> call, Response<ApiResponse<List<MyPlantScheduleResponse>>> response) {
                 if(response.isSuccessful()) {
                     ApiResponse<List<MyPlantScheduleResponse>> apiResponse = response.body();
                     List<MyPlantScheduleResponse> myPlantScheduleResponses = apiResponse.getResult();
                     listMyPlantSchedules.setValue(myPlantScheduleResponses);
-                    listCareSchedules.setValue(myPlantToDayByUser(myPlantScheduleResponses, daySelect.getValue()));
+                    listCareSchedules.setValue(MyPlantCalendarUtils.myPlantCalendar(myPlantScheduleResponses, daySelect.getValue()));
                 }
             }
 

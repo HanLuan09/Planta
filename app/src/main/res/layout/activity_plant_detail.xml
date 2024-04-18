@@ -204,6 +204,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_detail_add_myplant"
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -272,6 +273,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/plant_image"
                             android:visibility="@{checkboxImage.checked ? View.VISIBLE : View.GONE}"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
