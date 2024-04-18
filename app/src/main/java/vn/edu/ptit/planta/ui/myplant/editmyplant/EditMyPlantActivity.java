@@ -1,11 +1,14 @@
 package vn.edu.ptit.planta.ui.myplant.editmyplant;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -40,11 +43,12 @@ import vn.edu.ptit.planta.utils.ImageUtils;
 public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlantNavigator{
     private Toolbar toolbar;
     private EditText etName, etGrownDate, etKindOfLight;
-    private ImageView ivChooseDate, ivChooseImage, ivImageMyplanta;
+    private ImageView ivChooseDate, ivChooseImage, ivImageMyPlant;
     private Button btnDelete, btnSave;
     private ActivityResultLauncher resultLauncher;
     private MyPlant myPlant;
     private MyPlantRequest myPlantRequest;
+    private int idUser;
     private Uri imageUri;
 
     @Override
@@ -76,7 +80,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
                 chooseImage();
             }
         });
-        ivImageMyplanta.setOnClickListener(new View.OnClickListener() {
+        ivImageMyPlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
@@ -103,17 +107,21 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
         back();
     }
     private void initData(){
+        SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
+        idUser = sharedPreferences.getInt("idUser", 0);
         getMyPlant();
 
         etName = findViewById(R.id.et_content_name_myplanta);
         etGrownDate = findViewById(R.id.et_content_growndate_myplanta);
         etKindOfLight = findViewById(R.id.et_content_kindoflight_myplanta);
-        ivImageMyplanta = findViewById(R.id.iv_image_myplanta);
+        ivImageMyPlant = findViewById(R.id.iv_image_myplanta);
 
         etName.setText(myPlant.getName());
         etGrownDate.setText(myPlant.getGrownDate());
         etKindOfLight.setText(myPlant.getKindOfLight());
-        glideImage(myPlant.getImage(), ivImageMyplanta);
+        glideImage(myPlant.getImage(), ivImageMyPlant);
+        imageUri = Uri.parse(myPlant.getImage());
+
     };
 
     private void chooseDate(String oldDate){
@@ -144,7 +152,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
                             Glide.with(EditMyPlantActivity.this)
                                     .load(imageUri)
                                     .placeholder(R.drawable.icon_no_image)
-                                    .into(ivImageMyplanta);
+                                    .into(ivImageMyPlant);
                         }catch (Exception e){
                             Toast.makeText(EditMyPlantActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
                         }
@@ -186,7 +194,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
             return false;
         }
 
-        if(ivImageMyplanta.getDrawable() == null){
+        if(ivImageMyPlant.getDrawable() == null){
             Toast.makeText(this, "Vui lòng chọn ảnh cây trồng!", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -204,7 +212,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
     }
 
     private void updateMyPlant() {
-        RetrofitClient.getMyPlantService().updateMyPlant(myPlant.getId(), myPlantRequest).enqueue(new Callback<ApiResponse<Boolean>>() {
+        RetrofitClient.getMyPlantService().updateMyPlant(idUser, myPlant.getId(), myPlantRequest).enqueue(new Callback<ApiResponse<Boolean>>() {
             @Override
             public void onResponse(Call<ApiResponse<Boolean>> call, Response<ApiResponse<Boolean>> response) {
                 if(response.isSuccessful()){
@@ -263,6 +271,7 @@ public class EditMyPlantActivity extends AppCompatActivity implements EditMyPlan
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(EditMyPlantActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void responseFalse(String message) {

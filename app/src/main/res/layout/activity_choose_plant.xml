@@ -64,18 +64,30 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <EditText
-                    android:id="@+id/search_my_plant"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_search_plant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search plant"
-                    android:textSize="20dp"
-                    android:inputType="text"
-                    android:layout_marginLeft="10dp"
-                    android:paddingVertical="10dp"
-                    android:background="@null"></EditText>
+                    android:layout_marginRight="50dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:boxStrokeWidth="0dp"
+                    app:boxBackgroundMode="none"
+                    app:endIconMode="clear_text"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiet_search_plant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textSize="16sp"
+                        android:hint="Search plants">
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
+                    android:id="@+id/iv_search"
                     android:layout_centerVertical="true"
                     android:layout_width="30dp"
                     android:layout_height="30dp"

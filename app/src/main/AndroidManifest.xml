@@ -73,6 +73,12 @@
             android:name=".ui.myplant.editmyplant.EditMyPlantActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.user.UserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.user.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:exported="false" />

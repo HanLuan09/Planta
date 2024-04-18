@@ -119,17 +119,10 @@ public class AboutFragment extends Fragment {
     }
 
     public void glideImage(String image, ImageView imageView) {
-        if (image != null) {
-            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            Glide.with(AboutFragment.this)
-                    .load(bitmap)
-                    .placeholder(R.drawable.icon_no_mob)
-                    .into(imageView);
-        } else {
-            imageView.setImageResource(R.drawable.icon_no_image);
-        }
+        Glide.with(AboutFragment.this)
+                .load(image)
+                .placeholder(R.drawable.icon_no_image)
+                .into(imageView);
     }
 
     private List<AttributeOfMyPlant> getListAttributeOfMyPlant(MyPlant myPlant) {

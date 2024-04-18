@@ -1,9 +1,12 @@
 package vn.edu.ptit.planta.ui.plant.chooseplant;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
+
 import vn.edu.ptit.planta.databinding.ActivityChoosePlantBinding;
 import vn.edu.ptit.planta.model.plant.Plant;
 import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
@@ -31,6 +37,9 @@ public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlan
     private RecyclerView rcvChoosePlant;
     private ChoosePlantAdapter choosePlantAdapter;
     private ChoosePlantViewModel choosePlantViewModel;
+    private TextInputLayout tilSearchPlant;
+    private TextInputEditText tietSearchPlant;
+    private ImageView ivSearch;
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -44,6 +53,20 @@ public class ChoosePlantActivity extends AppCompatActivity implements ChoosePlan
         binding.setLifecycleOwner(this);
 
         initRecycleView();
+        ivSearch = findViewById(R.id.iv_search);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tilSearchPlant = findViewById(R.id.til_search_plant);
+                tietSearchPlant = (TextInputEditText) tilSearchPlant.getEditText();
+                String key = tietSearchPlant.getText().toString();
+                if(key.isEmpty()){
+                    Toast.makeText(ChoosePlantActivity.this, "Vui lòng nhập từ khóa!", Toast.LENGTH_SHORT).show();
+                } else {
+                    choosePlantViewModel.setKeySearch(key);
+                }
+            }
+        });
         initBundleSearch();
         back();
     }

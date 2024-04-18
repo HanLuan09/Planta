@@ -28,13 +28,13 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(idUser == 0) {// chưa đăng nhập
+//                if(idUser == 0) {// chưa đăng nhập
                     Intent intent = new Intent(SplashActivity.this, GuestHomeActivity.class);
                     startActivity(intent);
-                }else {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+//                }else {
+//                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                }
 //                Intent intent = new Intent(SplashActivity.this, TestActivity.class);
 //                startActivity(intent);
                 SplashActivity.this.overridePendingTransition(0, 0);

@@ -20,6 +20,7 @@ public class ChoosePlantViewModel extends ViewModel {
     private List<Plant> plants;
     private MutableLiveData<Boolean> isSearch;
     private MutableLiveData<String> textSearch;
+    private String key;
 
 
     public ChoosePlantViewModel() {
@@ -29,6 +30,11 @@ public class ChoosePlantViewModel extends ViewModel {
 
     public void setChoosePlantNavigator(ChoosePlantNavigator choosePlantNavigator) {
         this.choosePlantNavigator = choosePlantNavigator;
+    }
+
+    public void setKeySearch(String newKey){
+        this.key = newKey;
+        initDataSearch();
     }
 
     public MutableLiveData<Boolean> getIsSearch() {
@@ -44,6 +50,27 @@ public class ChoosePlantViewModel extends ViewModel {
     private void initData() {
         plants = new ArrayList<>();
         RetrofitClient.getPlantService().listPlants().enqueue(new Callback<ApiResponse<List<Plant>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Plant>>> call, Response<ApiResponse<List<Plant>>> response) {
+                ApiResponse<List<Plant>> apiResponse = response.body();
+                if (response.isSuccessful()){
+                    if(apiResponse.isSuccess()){
+                        plants = apiResponse.getResult();
+                        listPlant.setValue(plants);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Plant>>> call, Throwable throwable) {
+
+            }
+        });
+    }
+
+    private void initDataSearch() {
+        plants = new ArrayList<>();
+        RetrofitClient.getPlantService().getPlantByName(key).enqueue(new Callback<ApiResponse<List<Plant>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Plant>>> call, Response<ApiResponse<List<Plant>>> response) {
                 ApiResponse<List<Plant>> apiResponse = response.body();

@@ -49,9 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 btnRegister.setEnabled(false);
 
-                tilUsername = (TextInputLayout) findViewById(R.id.til_username);
-                tilPassword = (TextInputLayout) findViewById(R.id.til_password);
-                tilConfirmPassword = (TextInputLayout) findViewById(R.id.til_confirm_password);
+                tilUsername = findViewById(R.id.til_username);
+                tilPassword = findViewById(R.id.til_password);
+                tilConfirmPassword = findViewById(R.id.til_confirm_password);
 
                 tietUsername = (TextInputEditText) tilUsername.getEditText();
                 tietPassword = (TextInputEditText) tilPassword.getEditText();
@@ -61,25 +61,16 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = tietPassword.getText().toString();
                 String confirmPassword = tietConfirmPassword.getText().toString();
 
-                if(checkPassword(password, confirmPassword)){
+                if(checkField(username, password, confirmPassword)){
                     User userSend = new User();
                     userSend.setUsername(username);
                     userSend.setPassword(password);
 
                     register(userSend);
-                    btnRegister.setEnabled(true);
                 }
-                else{
-                    Toast.makeText(RegisterActivity.this, "Please confirm the correct password!", Toast.LENGTH_SHORT).show();
-                }
+                btnRegister.setEnabled(true);
             }
         });
-    }
-
-    private Boolean checkPassword(String password, String confirmPassword){
-        if(password.equals(confirmPassword))
-            return true;
-        return false;
     }
     private void toLoginView() {
         tvLogin = findViewById(R.id.tv_signup_to_login);
@@ -91,18 +82,38 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    public void back(){
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
-        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    private boolean checkField(String username, String password, String confirmPassword) {
+        if(username.isEmpty() && password.isEmpty() && confirmPassword.isEmpty()){
+            Toast.makeText(this,"Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (username.isEmpty()) {
+            Toast.makeText(this,"Vui lòng nhập tài khoản!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (password.isEmpty()) {
+            Toast.makeText(this,"Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!checkPassword(password)) {
+            Toast.makeText(RegisterActivity.this, "Vui lòng nhập mật khẩu tối thiếu 6 ký tự!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!checkDuplicatePassword(password, confirmPassword)) {
+            Toast.makeText(RegisterActivity.this, "Vui lòng nhập lại đúng mật khẩu!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return  true;
+    }
+    private Boolean checkPassword(String password){
+        if(password.length() < 6)
+            return false;
+        return true;
+    }
+    private Boolean checkDuplicatePassword(String password, String confirmPassword){
+        if(password.equals(confirmPassword))
+            return true;
+        return false;
     }
     public void register(User userSend){
         RetrofitClient.getUserService().register(userSend).enqueue(new Callback<ApiResponse<UserResponse>>() {
@@ -122,13 +133,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    String message = "Invalid response!";
+                    String message = "Phản hồi không hợp lệ!";
                     responseFail(message);
                 }
             }
             @Override
             public void onFailure(Call<ApiResponse<UserResponse>> call, Throwable throwable) {
-                String message = "Fail connect to API";
+                String message = "Kết nối thất bại tới server!";
                 connectFail(message);
             }
         });
@@ -153,5 +164,18 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private void connectFail(String message) {
         Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+    public void back(){
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

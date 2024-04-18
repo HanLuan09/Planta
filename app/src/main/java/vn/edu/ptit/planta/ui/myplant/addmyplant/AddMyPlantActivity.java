@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -48,6 +49,7 @@ import vn.edu.ptit.planta.utils.ImageUtils;
 public class AddMyPlantActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText etName, etGrownDate, etKindOfLight;
+    private RadioButton rbWhite, rbRed, rbYellow, rbViolet;
     private ImageView ivChooseDate, ivChooseImage, ivImageMyplanta;
     private Button btnSave;
     private ProgressBar progressBar;
@@ -166,7 +168,7 @@ public class AddMyPlantActivity extends AppCompatActivity {
     }
 
     private void getPlant() {
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
         plant = null;
         if(bundle.containsKey("plant")){
             plant = (Plant) bundle.getSerializable("plant");
@@ -177,6 +179,11 @@ public class AddMyPlantActivity extends AppCompatActivity {
         String name = etName.getText().toString();
         String grownDate = etGrownDate.getText().toString();
         String kindOfLight = etKindOfLight.getText().toString();
+
+        if(TextUtils.isEmpty(name) && TextUtils.isEmpty(grownDate) && TextUtils.isEmpty(kindOfLight) && ivImageMyplanta.getDrawable() == null){
+            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         if(TextUtils.isEmpty(name)){
             Toast.makeText(this, "Vui lòng nhập tên cây trồng!", Toast.LENGTH_SHORT).show();
@@ -216,34 +223,7 @@ public class AddMyPlantActivity extends AppCompatActivity {
         return Uri.parse("android.resource://" + context.getPackageName() + "/" + drawableId);
     }
 
-    private String convertImageToString(ImageView imageView){
-
-        // Lấy bitmap từ ImageView
-        Bitmap bitmap = ((BitmapDrawable) ivImageMyplanta.getDrawable()).getBitmap();
-
-        // Tạo mảng lưu trữ bit map
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        // Thay đổi định dạng nén theo định dạng của ảnh ban đầu
-        Bitmap.CompressFormat compressFormat;
-        if (bitmap.hasAlpha()) {
-            compressFormat = Bitmap.CompressFormat.PNG; // Giữ nguyên định dạng PNG nếu có kênh alpha
-        } else {
-            compressFormat = Bitmap.CompressFormat.JPEG; // Nén về JPEG nếu không có kênh alpha
-        }
-
-        // Nén bitmap với định dạng và chất lượng tương ứng
-        bitmap.compress(compressFormat, 100, byteArrayOutputStream);
-
-        // Chuyển đổi ByteArrayOutputStream thành mảng byte
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        // Sử dụng mã hóa Base64 để chuyển đổi mảng byte thành chuỗi Base64
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
     private void addMyPlant() {
-        Log.e("MyPlant Image", myPlantRequest.getImage());
         RetrofitClient.getMyPlantService().addMyPlant(idUser, myPlantRequest).enqueue(new Callback<ApiResponse<MyPlantRequest>>() {
             @Override
             public void onResponse(Call<ApiResponse<MyPlantRequest>> call, Response<ApiResponse<MyPlantRequest>> response) {
@@ -260,13 +240,13 @@ public class AddMyPlantActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    String message = "Invalid response";
+                    String message = "Phản hồi không hợp lệ!";
                     responseInvalid(message);
                 }
             }
             @Override
             public void onFailure(Call<ApiResponse<MyPlantRequest>> call, Throwable throwable) {
-                String message = "Fail connect to server";
+                String message = "Kết nối tới server thất bại!";
                 connectFail(message);
             }
         });
@@ -276,10 +256,11 @@ public class AddMyPlantActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putInt("my_plant_id",myPlantResponse.getId());
 
-        Toast.makeText(this, message + " Continue set schedule!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message + " Tiếp tục đặt lịch trình!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AddMyPlantActivity.this, ScheduleActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 
     private void responseFalse(String message) {

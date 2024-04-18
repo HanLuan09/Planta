@@ -78,10 +78,10 @@ public class MyPlantDetailActivity extends AppCompatActivity {
 
     private void initBundle() {
         bundle = getIntent().getExtras();
-        if(bundle == null) return;
-        int id = bundle.getInt("id_myplant");
-        String name = bundle.getString("name_myplant");
-        String image = bundle.getString("image_myplant");
+        myPlant = (MyPlant) bundle.getSerializable("myplant");
+        int id = myPlant.getId();
+        String name = myPlant.getName();
+        String image = myPlant.getImage();
 
         binding.collapsingToolbar.setTitle(name);
 
@@ -120,9 +120,6 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_edit) {
-            bundle = getIntent().getExtras();
-            myPlant = (MyPlant) bundle.getSerializable("myplant");
-
             Bundle bundleOfEdit = new Bundle();
             bundleOfEdit.putSerializable("myplant",myPlant);
 

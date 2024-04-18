@@ -57,23 +57,30 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 btnLogin.setText(null);
 
-                tilUsername = (TextInputLayout) findViewById(R.id.til_username);
-                tilPassword = (TextInputLayout) findViewById(R.id.til_password);
+                tilUsername = findViewById(R.id.til_username);
+                tilPassword = findViewById(R.id.til_password);
 
                 tietUsername = (TextInputEditText) tilUsername.getEditText();
                 tietPassword = (TextInputEditText) tilPassword.getEditText();
 
-                User userSend = new User();
-                userSend.setUsername(tietUsername.getText().toString());
-                userSend.setPassword(tietPassword.getText().toString());
+                String username = tietUsername.getText().toString();
+                String password = tietPassword.getText().toString();
 
-                checkLogin(userSend);
+                if(checkField(username, password)) {
+
+                    User userSend = new User();
+                    userSend.setUsername(username);
+                    userSend.setPassword(password);
+
+                    checkLogin(userSend);
+                }
 
                 btnLogin.setText("Đăng nhập");
                 btnLogin.setEnabled(true);
             }
         });
     }
+
     private void toRegisterView() {
         tvRegister = findViewById(R.id.tv_login_to_signup);
         tvRegister.setOnClickListener(new View.OnClickListener() {
@@ -84,18 +91,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void back(){
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
-        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    private boolean checkField(String username, String password) {
+
+        if(username == null && password == null){
+            Toast.makeText(this,"Vui lòng nhập đầy đủ tài khoản và mật khẩu!", Toast.LENGTH_SHORT);
+            return false;
+        } else if (username == null) {
+            Toast.makeText(this,"Vui lòng nhập tài khoản!", Toast.LENGTH_SHORT);
+            return false;
+        } else if (password == null) {
+            Toast.makeText(this,"Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT);
+            return false;
+        }
+        else{
+            return  true;
+        }
     }
     public void checkLogin(User userSend){
         RetrofitClient.getUserService().login(userSend).enqueue(new Callback<ApiResponse<UserResponse>>() {
@@ -114,13 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    String message = "Invalid response!";
+                    String message = "Phản hồi không hợp lệ!";
                     responseFail(message);
                 }
             }
             @Override
             public void onFailure(Call<ApiResponse<UserResponse>> call, Throwable throwable) {
-                String message = "Fail connect to server!";
+                String message = "Kết nối thất bại tới server!";
                 connectFail(message);
             }
         });
@@ -148,5 +158,18 @@ public class LoginActivity extends AppCompatActivity {
     private void connectFail(String message) {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+    private void back(){
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+        toolbar.getNavigationIcon().setTint(getResources().getColor(R.color.colorGreenText));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

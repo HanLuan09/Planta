@@ -49,7 +49,6 @@ public class MyPlantFragment extends Fragment implements MyPlantNavigator {
         int idUser = sharedPreferences.getInt("idUser",0);
 
         myPlantViewModel = new ViewModelProvider(this).get(MyPlantViewModel.class);
-
         binding.setMyPlantViewModel(myPlantViewModel);
         binding.setLifecycleOwner(this);
 
@@ -99,32 +98,19 @@ public class MyPlantFragment extends Fragment implements MyPlantNavigator {
         Intent intent = new Intent(requireContext(), MyPlantDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("myplant",myPlant);
-        // Test Luân
-        bundle.putInt("id_myplant", myPlant.getId());
-        bundle.putString("name_myplant", myPlant.getName());
-        bundle.putString("image_myplant", myPlant.getImage());
-        //
+
+//        bundle.putInt("id_myplant", myPlant.getId());
+//        bundle.putString("name_myplant", myPlant.getName());
+//        bundle.putString("image_myplant", myPlant.getImage());
+
         intent.putExtras(bundle);
         startActivity(intent);
     }
     @Override
     public void glideImage(String image, ShapeableImageView shapeableImageView) {
-//        if (image != null) {
-//            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//
-//            Glide.with(requireContext())
-//                    .load(bitmap)
-//                    .placeholder(R.drawable.icon_no_mob)
-//                    .override(70, 70)
-//                    .into(shapeableImageView);
-//        } else {
-//            shapeableImageView.setImageResource(R.drawable.icon_no_image);
-//        }
-
         Glide.with(requireContext())
                 .load(image)
-                .placeholder(R.drawable.icon_no_mob)
+                .placeholder(R.drawable.icon_no_image)
                 .override(100, 100)
                 .into(shapeableImageView);
     }

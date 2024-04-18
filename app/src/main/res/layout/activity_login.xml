@@ -73,7 +73,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         app:boxStrokeColor="#80161823"
                         app:hintTextColor="#80161823">
-
+                        
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tiet_username"
                             android:layout_width="match_parent"
@@ -138,7 +138,6 @@
                             android:indeterminateTint="@color/white"/>
 
                     </RelativeLayout>
-
 
                 </LinearLayout>
                 <LinearLayout
