@@ -29,6 +29,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
@@ -62,6 +64,14 @@ public class CareFragment extends Fragment implements CareNavigator {
         binding.setCareViewModel(viewModel);
         binding.setLifecycleOwner(this);
         viewModel.setCareNavigator(this);
+
+        Glide.with(this)
+                .load(R.drawable.ic_loading)
+                .into(binding.loading);
+
+        Glide.with(this)
+                .load(R.drawable.ic_loading)
+                .into(binding.loading2);
 
         Bundle bundle = getArguments();
         if (bundle != null) {

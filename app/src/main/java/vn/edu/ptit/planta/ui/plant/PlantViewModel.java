@@ -32,7 +32,7 @@ public class PlantViewModel extends ViewModel {
     public MutableLiveData<DataStatus> getDataStatus() {
         if(dataStatus == null) {
             dataStatus = new MutableLiveData<>();
-            dataStatus.setValue(new DataStatus(false, "Đang kết nối"));
+            dataStatus.setValue(new DataStatus(false, false,"Đang kết nối"));
         }
         return dataStatus;
     }
@@ -44,23 +44,23 @@ public class PlantViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     ApiResponse<List<Plant>> apiResponse = response.body();
                     if(apiResponse.isSuccess()){
-                        if(apiResponse.getResult() == null) dataStatus.setValue(new DataStatus(false, "Không có dữ liệu"));
+                        if(apiResponse.getResult() == null) dataStatus.setValue(new DataStatus(false, true,"Không có dữ liệu"));
                         else {
                             listPlants.setValue(apiResponse.getResult());
-                            getDataStatus().setValue(new DataStatus(true, null));
+                            getDataStatus().setValue(new DataStatus(true, true, null));
                         }
 
                     }else {
-                        getDataStatus().setValue(new DataStatus(false, apiResponse.getMessage()));
+                        getDataStatus().setValue(new DataStatus(false, true, apiResponse.getMessage()));
                     }
                 } else {
-                    getDataStatus().setValue(new DataStatus(false, "Kết nối thất bại"));
+                    getDataStatus().setValue(new DataStatus(false, true, "Kết nối thất bại"));
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Plant>>> call, Throwable t) {
-                getDataStatus().setValue(new DataStatus(false, "Không có kết nối"));
+                getDataStatus().setValue(new DataStatus(false, true,"Không có kết nối"));
             }
         });
 
@@ -80,17 +80,17 @@ public class PlantViewModel extends ViewModel {
                         }else {
                             listPlants.setValue(apiResponse.getResult());
                         }
-                        dataStatus.setValue(new DataStatus(true, null));
+                        dataStatus.setValue(new DataStatus(true, true, null));
                         currentPage++;
                     }
                 }else {
-                    dataStatus.setValue(new DataStatus(false, "Kết nối thất bại"));
+                    dataStatus.setValue(new DataStatus(false, true, "Kết nối thất bại"));
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Plant>>> call, Throwable t) {
-                dataStatus.setValue(new DataStatus(false, "Không có kết nối"));
+                dataStatus.setValue(new DataStatus(false, true, "Không có kết nối"));
             }
         });
     }

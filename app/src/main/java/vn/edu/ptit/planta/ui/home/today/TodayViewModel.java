@@ -54,7 +54,7 @@ public class TodayViewModel extends ViewModel {
     public MutableLiveData<DataStatus> getDataStatus() {
         if(dataStatus == null) {
             dataStatus = new MutableLiveData<>();
-            dataStatus.setValue(new DataStatus(false, "Đang kết nối"));
+            dataStatus.setValue(new DataStatus(false, false, "Đang kết nối"));
         }
         return dataStatus;
     }
@@ -68,24 +68,24 @@ public class TodayViewModel extends ViewModel {
                     if (apiResponse.isSuccess()) {
                         careSchedules = MyPlantCalendarUtils.myPlantCalendar(apiResponse.getResult(), selectToday());
 
-                        if(careSchedules == null) dataStatus.setValue(new DataStatus(false, "Không có dữ liệu"));
+                        if(careSchedules == null) dataStatus.setValue(new DataStatus(false, true, "Không có dữ liệu"));
                         else{
                             listMyPlantSchedules.setValue(apiResponse.getResult());
                             listCareSchedules.setValue(careSchedules);
-                            dataStatus.setValue(new DataStatus(true, null));
+                            dataStatus.setValue(new DataStatus(true, true,null));
                         }
                     }else{
-                        dataStatus.setValue(new DataStatus(false, apiResponse.getMessage()));
+                        dataStatus.setValue(new DataStatus(false, true, apiResponse.getMessage()));
                     }
                 }
                 else {
-                    dataStatus.setValue(new DataStatus(false, "Kết nối thất bại"));
+                    dataStatus.setValue(new DataStatus(false, true,"Kết nối thất bại"));
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<MyPlantScheduleResponse>>> call, Throwable throwable) {
-                dataStatus.setValue(new DataStatus(false, "Không có kết nối"));
+                dataStatus.setValue(new DataStatus(false, true,"Không có kết nối"));
             }
         });
     }

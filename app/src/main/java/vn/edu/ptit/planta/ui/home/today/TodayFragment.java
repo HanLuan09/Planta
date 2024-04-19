@@ -24,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +65,10 @@ public class TodayFragment extends Fragment {
         binding.setTodayViewModel(viewModel);
         //binding.setLifecycleOwner(this);
         binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        Glide.with(this)
+                .load(R.drawable.loading)
+                .into(binding.loading);
 
         if(idUser != 0) {
             viewModel.getUserId().setValue(idUser);

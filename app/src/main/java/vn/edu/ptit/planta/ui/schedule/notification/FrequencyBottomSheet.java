@@ -117,11 +117,6 @@ public class FrequencyBottomSheet extends BottomSheetDialogFragment {
                 RadioButton radioButton = binding.getRoot().findViewById(checkedId);
                 if (radioButton != null) {
 
-                    if(rbWater.isChecked()){
-
-                    }else if(rbFertilizer.isChecked()){
-                        Toast.makeText(requireContext(), "Bạn đã chọn nước 2" , Toast.LENGTH_LONG).show();
-                    }
                     if(rbOther.isChecked()){
 
                         binding.textExercise.addTextChangedListener(new TextWatcher() {

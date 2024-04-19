@@ -42,10 +42,18 @@
                         android:layout_centerHorizontal="true">
 
                         <ImageView
+                            android:id="@+id/loading"
+                            android:visibility="@{todayViewModel.dataStatus.loader? View.GONE : View.VISIBLE}"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/loading" />
+                        <ImageView
+                            android:visibility="@{todayViewModel.dataStatus.loader? View.VISIBLE : View.GONE}"
                             android:layout_width="145dp"
                             android:layout_height="125dp"
                             android:src="@drawable/ic_prof_bloom" />
                         <TextView
+                            android:visibility="@{todayViewModel.dataStatus.loader? View.VISIBLE : View.GONE}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{todayViewModel.dataStatus.message}"

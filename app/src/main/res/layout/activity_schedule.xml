@@ -140,14 +140,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/tiktok_medium"
                     android:background="@drawable/custom_button_2"
-                    android:text="@{scheduleViewModel.busy ? `` : `Hoàn thành`}"/>
+                    android:text="Hoàn thành"/>
 
-                    <ProgressBar
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerInParent="true"
-                        android:indeterminateTint="@color/white"
-                        android:visibility="@{scheduleViewModel.busy? View.VISIBLE : View.GONE}" />
             </RelativeLayout>
 
         </RelativeLayout>
