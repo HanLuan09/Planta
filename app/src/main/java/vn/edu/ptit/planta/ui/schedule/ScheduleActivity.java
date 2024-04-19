@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -22,6 +26,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +89,122 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
     private void initOnBackPressedDispatcher() {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                String message = "Xác nhận bỏ qua lịch trình";
+                if(viewModel.getIsCheckBlack() != null && viewModel.getIsCheckBlack().getValue() != null) {
+                    message = viewModel.getIsCheckBlack().getValue() ? "Xác nhận hoàn thành lịch trình" : "Xác nhận bỏ qua lịch trình";
+                }
+
+                final Dialog dialog = new Dialog(ScheduleActivity.this);
+                openDialog(dialog,  message);
+                dialog.show();
+
+            }
+        });
+    }
+
+    private void initRecyclerViewSchedule() {
+        recyclerView = binding.rcvSchedule;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        setAdapterSchedules();
+    }
+
+    private void setAdapterSchedules() {
+        viewModel.getListSchedules().observe(this, new Observer<List<MySchedule>>() {
+            @Override
+            public void onChanged(List<MySchedule> schedules) {
+                if (scheduleAdapter == null) {
+                    scheduleAdapter = new ScheduleAdapter(schedules);
+                    scheduleAdapter.setScheduleNavigator(ScheduleActivity.this);
+                    recyclerView.setAdapter(scheduleAdapter);
+                } else {
+                    scheduleAdapter.updateData(schedules);
+                }
+
+                if(schedules.size() > 0) viewModel.getIsCheckBlack().setValue(true);
+                else viewModel.getIsCheckBlack().setValue(false);
+            }
+        });
+    }
+
+    @Override
+    public void handleAddNotification() {
+        Intent intent = new Intent(this, AddNotificationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
+        intent.putExtras(bundle);
+        mActivityResultLauncher.launch(intent);
+        this.overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void handleBlackNotification() {
+        final Dialog dialog = new Dialog(this);
+        openDialog(dialog,  "Xác nhận hoàn thành lịch trình");
+        dialog.show();
+    }
+
+    @Override
+    public void handleEditNotification(MySchedule schedule) {
+        Intent intent = new Intent(this, AddNotificationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("schedule_care", schedule);
+        bundle.putInt("care_id", 1);
+        bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
+        intent.putExtras(bundle);
+        mActivityResultLauncher.launch(intent);
+        this.overridePendingTransition(0, 0);
+    }
+    private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == Activity.RESULT_OK){
+                viewModel.initDataSchedule();
+                setAdapterSchedules();
+            }
+        }
+    });
+
+    private void openDialog(@NonNull Dialog dialog, String message) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_dialog);
+        Window window = dialog.getWindow();
+        if(window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(false);
+        TextView tvCancel = dialog.findViewById(R.id.dialog_cancel);
+        TextView tvOk = dialog.findViewById(R.id.dialog_sure);
+        TextView tvName = dialog.findViewById(R.id.dialog_text_name);
+        TextView tvMessage = dialog.findViewById(R.id.dialog_text_message);
+        tvMessage.setText(message);
+        tvName.setText("Thông báo");
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(ScheduleActivity.this, MainActivity.class);
+                startActivity(intent);
+                ScheduleActivity.this.overridePendingTransition(0, 0);
+                finishAffinity();
+            }
+        });
+    }
+
+
+    private void onBackPressedDispatcher() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             private boolean isDialogShown = false;
             @Override
             public void handleOnBackPressed() {
@@ -118,71 +240,4 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
             }
         });
     }
-
-    private void initRecyclerViewSchedule() {
-        recyclerView = binding.rcvSchedule;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        setAdapterSchedules();
-    }
-
-    private void setAdapterSchedules() {
-        viewModel.getListSchedules().observe(this, new Observer<List<MySchedule>>() {
-            @Override
-            public void onChanged(List<MySchedule> schedules) {
-                if (scheduleAdapter == null) {
-                    scheduleAdapter = new ScheduleAdapter(schedules);
-                    scheduleAdapter.setScheduleNavigator(ScheduleActivity.this);
-                    recyclerView.setAdapter(scheduleAdapter);
-                } else {
-                    scheduleAdapter.updateData(schedules);
-                }
-
-                if(schedules.size() > 0) viewModel.getIsCheckBlack().setValue(true);
-                else viewModel.getIsCheckBlack().setValue(false);
-
-                Log.e("Test baab ", viewModel.getIsCheckBlack().getValue().toString());
-            }
-        });
-    }
-
-    @Override
-    public void handleAddNotification() {
-        Intent intent = new Intent(this, AddNotificationActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
-        intent.putExtras(bundle);
-        mActivityResultLauncher.launch(intent);
-        this.overridePendingTransition(0, 0);
-    }
-
-    @Override
-    public void handleBlackNotification() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        this.overridePendingTransition(0, 0);
-        finish();
-    }
-
-    @Override
-    public void handleEditNotification(MySchedule schedule) {
-        Intent intent = new Intent(this, AddNotificationActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("schedule_care", schedule);
-        bundle.putInt("care_id", 1);
-        bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
-        intent.putExtras(bundle);
-        mActivityResultLauncher.launch(intent);
-        this.overridePendingTransition(0, 0);
-    }
-    private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == Activity.RESULT_OK){
-                viewModel.initDataSchedule();
-                setAdapterSchedules();
-            }
-        }
-    });
-
 }

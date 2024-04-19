@@ -60,7 +60,6 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation ("com.google.code.gson:gson:2.10.0")
 
-
     implementation ("com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3")
 
 }

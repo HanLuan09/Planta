@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
+import vn.edu.ptit.planta.model.DataStatus;
 import vn.edu.ptit.planta.model.care.CareCalendar;
 import vn.edu.ptit.planta.model.care.CareCalendarResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
@@ -35,6 +36,8 @@ public class CareViewModel extends ViewModel {
     private MutableLiveData<List<MySchedule>> listSchedules;
 
     private MutableLiveData<List<CareCalendarResponse>> listCareCalendars;
+
+    private MutableLiveData<DataStatus> dataStatus;
 
     public CareViewModel() {
         idMyPlant = new MutableLiveData<>();
@@ -56,23 +59,35 @@ public class CareViewModel extends ViewModel {
         return listCareCalendars;
     }
 
+    public MutableLiveData<DataStatus> getDataStatus() {
+        if(dataStatus == null) {
+            dataStatus = new MutableLiveData<>();
+            dataStatus.setValue(new DataStatus(false, false, "Đang kết nối"));
+        }
+        return dataStatus;
+    }
+
     public void initDataSchedule() {
         RetrofitClient.getMyScheduleService().myScheduleByPlant(idMyPlant.getValue()).enqueue(new Callback<ApiResponse<List<MySchedule>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<MySchedule>>> call, Response<ApiResponse<List<MySchedule>>> response) {
                 if(response.isSuccessful()){
                     ApiResponse<List<MySchedule>> apiResponse = response.body();
-                    listSchedules.setValue(apiResponse.getResult());
-                    listCareCalendars.setValue(MyPlantCalendarUtils.myCareCalendar(apiResponse.getResult()));
+                    if(apiResponse.getResult() == null || apiResponse.getResult().size() == 0){
+                        dataStatus.setValue(new DataStatus(false, true, "Không có lịch trình"));
+                    }else {
+                        listSchedules.setValue(apiResponse.getResult());
+                        listCareCalendars.setValue(MyPlantCalendarUtils.myCareCalendar(apiResponse.getResult()));
+                        dataStatus.setValue(new DataStatus(true, true,null));
+                    }
                 }else{
-
+                    dataStatus.setValue(new DataStatus(false, true,"Kết nối thất bại"));
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<MySchedule>>> call, Throwable throwable) {
-                Log.e("test 2", "Error: " + throwable.toString());
-
+                dataStatus.setValue(new DataStatus(false, true,"Không có kết nối"));
             }
         });
 

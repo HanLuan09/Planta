@@ -25,8 +25,8 @@ import java.util.List;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.FragmentPlantBinding;
 import vn.edu.ptit.planta.model.plant.Plant;
-import vn.edu.ptit.planta.ui.plant.chooseplant.ChoosePlantActivity;
 import vn.edu.ptit.planta.ui.plant.plantdetail.PlantDetailActivity;
+import vn.edu.ptit.planta.ui.plant.search.PlantSearchActivity;
 
 public class PlantFragment extends Fragment implements PlantNavigator {
 
@@ -49,6 +49,10 @@ public class PlantFragment extends Fragment implements PlantNavigator {
         binding.setLifecycleOwner(this);
 
         viewModel.setPlantNavigator(this);
+
+        Glide.with(this)
+                .load(R.drawable.loading)
+                .into(binding.loading);
 
         listPlantObserve();
 
@@ -146,7 +150,7 @@ public class PlantFragment extends Fragment implements PlantNavigator {
 
     @Override
     public void handlePlantSearch() {
-        Intent intent = new Intent(requireContext(), ChoosePlantActivity.class);
+        Intent intent = new Intent(requireContext(), PlantSearchActivity.class);
         Bundle bundle = new Bundle();
         bundle.putBoolean("is_search", true);
         intent.putExtras(bundle);

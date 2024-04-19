@@ -14,6 +14,9 @@ public interface PlantService {
     @GET("plant/all")
     Call<ApiResponse<List<Plant>>> listPlants();
 
+    @GET("plant/search")
+    Call<ApiResponse<List<Plant>>> getPlantByName(@Query("key") String key);
+
     @GET("plant/page")
     Call<ApiResponse<List<Plant>>> listPlantPage(@Query("page") int page, @Query("limit") int limit);
 
