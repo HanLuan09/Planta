@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="careViewModel"
             type="vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareViewModel" />
@@ -65,18 +66,62 @@
 
                     </LinearLayout>
                 </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
+                <!-- Lịch trình -->
+                <RelativeLayout
                     android:layout_below="@id/care_layout"
-                    android:id="@+id/id_rcv_care"
+                    android:id="@+id/layout_care_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp" />
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:visibility="@{careViewModel.dataStatus.status? View.GONE : View.VISIBLE}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:layout_margin="10dp"
+                            android:id="@+id/loading"
+                            android:visibility="@{careViewModel.dataStatus.loader? View.GONE : View.VISIBLE}"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_loading" />
+                        <ImageView
+                            android:visibility="@{careViewModel.dataStatus.loader? View.VISIBLE : View.GONE}"
+                            android:layout_width="125dp"
+                            android:layout_height="115dp"
+                            android:src="@drawable/ic_prof_bloom" />
+                        <TextView
+                            android:layout_marginBottom="10dp"
+                            android:visibility="@{careViewModel.dataStatus.loader? View.VISIBLE : View.GONE}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{careViewModel.dataStatus.message}"
+                            android:textColor="@color/colorGreenText"
+                            android:textSize="@dimen/text_size_h9"
+                            android:fontFamily="@font/tiktok_medium"/>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:visibility="@{careViewModel.dataStatus.status? View.VISIBLE : View.GONE}"
+                        android:id="@+id/id_rcv_care"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp" />
+
+                </RelativeLayout>
+
+                <!--  -->
                 <LinearLayout
-                    android:layout_below="@id/id_rcv_care"
+                    android:layout_below="@id/layout_care_3"
                     android:layout_width="match_parent"
                     android:background="@color/colorBackground"
                     android:layout_height="wrap_content">
@@ -133,6 +178,38 @@
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
 
+<!--                        -->
+                        <LinearLayout
+                            android:visibility="@{careViewModel.dataStatus.status? View.GONE : View.VISIBLE}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_centerHorizontal="true">
+
+                            <ImageView
+                                android:layout_marginTop="20dp"
+                                android:id="@+id/loading_2"
+                                android:visibility="@{careViewModel.dataStatus.loader? View.GONE : View.VISIBLE}"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_loading" />
+                            <ImageView
+                                android:visibility="@{careViewModel.dataStatus.loader? View.VISIBLE : View.GONE}"
+                                android:layout_width="125dp"
+                                android:layout_height="115dp"
+                                android:src="@drawable/ic_prof_bloom" />
+                            <TextView
+                                android:layout_marginBottom="10dp"
+                                android:visibility="@{careViewModel.dataStatus.loader? View.VISIBLE : View.GONE}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{careViewModel.dataStatus.message}"
+                                android:textColor="@color/colorGreenText"
+                                android:textSize="@dimen/text_size_h9"
+                                android:fontFamily="@font/tiktok_medium"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

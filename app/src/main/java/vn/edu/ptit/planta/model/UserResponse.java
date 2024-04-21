@@ -1,12 +1,23 @@
 package vn.edu.ptit.planta.model;
 
-public class UserResponse {
+import java.io.Serializable;
+
+public class UserResponse implements Serializable {
     private int id;
     private String name;
     private String phone;
     private String address;
     private String email;
     private String token;
+
+    public UserResponse() {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+        this.token = token;
+    }
 
     public UserResponse(int id, String name, String phone, String address, String email, String token) {
         this.id = id;

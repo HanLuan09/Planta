@@ -13,10 +13,10 @@ import vn.edu.ptit.planta.model.plant.PlantDetail;
 public class PlantDetailViewModel extends ViewModel {
 
     private MutableLiveData<Integer> idPlant;
-    private MutableLiveData<PlantDetail> mPlantDetail;
+    private MutableLiveData<PlantDetail> plantDetail;
 
     public PlantDetailViewModel() {
-        mPlantDetail = new MutableLiveData<>();
+        plantDetail = new MutableLiveData<>();
         idPlant = new MutableLiveData<>();
     }
 
@@ -31,9 +31,8 @@ public class PlantDetailViewModel extends ViewModel {
             public void onResponse(Call<ApiResponse<PlantDetail>> call, Response<ApiResponse<PlantDetail>> response) {
                 if (response.isSuccessful()) {
                     ApiResponse<PlantDetail> apiResponse = response.body();
-                    PlantDetail plantDetail = apiResponse.getResult();
-                    if (apiResponse.isSuccess() && plantDetail != null) {
-                        mPlantDetail.setValue(plantDetail);
+                    if (apiResponse.isSuccess() && apiResponse.getResult() != null) {
+                        plantDetail.setValue(apiResponse.getResult());
                     }
                 } else {
                     // Xử lý khi có lỗi trả về từ API
@@ -48,6 +47,6 @@ public class PlantDetailViewModel extends ViewModel {
     }
 
     public MutableLiveData<PlantDetail> getPlantDetail() {
-        return mPlantDetail;
+        return plantDetail;
     }
 }

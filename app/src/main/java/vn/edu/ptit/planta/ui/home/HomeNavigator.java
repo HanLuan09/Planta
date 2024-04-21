@@ -5,4 +5,5 @@ public interface HomeNavigator {
     public void handleMyPlantFragment();
     public void handleCalendarMyPlant();
     public void handleAddMyGarden();
+    public void handleNotification();
 }

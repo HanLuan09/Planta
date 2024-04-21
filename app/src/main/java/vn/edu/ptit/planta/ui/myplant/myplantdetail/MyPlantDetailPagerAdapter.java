@@ -47,8 +47,6 @@ public class MyPlantDetailPagerAdapter extends FragmentStateAdapter {
             fragment.setArguments(bundle);
         }
         return fragment;
-
-
     }
 
     @Override

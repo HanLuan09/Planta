@@ -9,7 +9,6 @@
         <variable
             name="searchMyPlantViewModel"
             type="vn.edu.ptit.planta.ui.myplant.search.SearchMyPlantViewModel" />
-
     </data>
 
     <LinearLayout
@@ -29,22 +28,26 @@
             android:elevation="6dp"
             android:background="@color/white">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center_vertical">
 
                 <ImageView
+                    android:onClick="@{() -> searchMyPlantViewModel.onBackClick()}"
+                    android:id="@+id/backspaceImageView"
                     style="@style/Widget.AppCompat.ActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_backspace"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_search_my_plant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_toEndOf="@id/backspaceImageView"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     app:boxStrokeWidth="0dp"
                     app:boxBackgroundMode="none"
@@ -52,16 +55,25 @@
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editText"
+                        android:id="@+id/tiet_search_my_plant"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="@={searchMyPlantViewModel.textSearch}"
                         android:textSize="16sp"
-                        android:hint="Search my plants"/>
+                        android:hint="Search my plants">
+                    </com.google.android.material.textfield.TextInputEditText>
+
                 </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_search"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -69,17 +81,105 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:padding="16dp"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <include layout="@layout/item_my_plant"/>
-                <include layout="@layout/item_my_plant"/>
-                <include layout="@layout/item_my_plant"/>
+                <!--   Chưa tìm kiếm     -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:visibility="@{searchMyPlantViewModel.isSearch ? View.GONE : View.VISIBLE}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/ic_prof_bloom" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cùng tìm cây trồng nào!"
+                            android:fontFamily="@font/tiktok_medium"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!--   Không có dữ liệu     -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:visibility="@{searchMyPlantViewModel.isData == false &amp;&amp; searchMyPlantViewModel.isSearch == true ? View.VISIBLE : View.GONE}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/ic_prof_bloom" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bạn chưa có cây trồng nào!"
+                            android:fontFamily="@font/tiktok_medium"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!--   Có dữ liệu     -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="20dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp"
+                                android:paddingRight="20dp"
+                                android:paddingLeft="20dp"
+                                android:paddingBottom="60dp">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:visibility="@{searchMyPlantViewModel.isData == true ? View.VISIBLE : View.GONE}"
+                                    android:id="@+id/id_rcv_search_myplant"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </androidx.core.widget.NestedScrollView>
+
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="@{searchMyPlantViewModel.isLoad ? View.VISIBLE : View.GONE}" />
+            </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
         

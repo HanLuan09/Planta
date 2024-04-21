@@ -22,8 +22,11 @@ public class HomeViewModel extends ViewModel {
         if (homeNavigator != null) homeNavigator.handleCalendarMyPlant();
     }
 
-    public  void onAddMyGardenClick() {
+    public void onAddMyGardenClick() {
         if (homeNavigator != null) homeNavigator.handleAddMyGarden();
     }
 
+    public void onNotificationClick() {
+        if (homeNavigator != null) homeNavigator.handleNotification();
+    }
 }

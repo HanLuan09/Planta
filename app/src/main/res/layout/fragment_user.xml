@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="userViewModel"
+            type="vn.edu.ptit.planta.ui.user.UserViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -61,23 +63,23 @@
                         android:layout_toEndOf="@id/image_user">
 
                         <TextView
-                            android:id="@+id/fullName_user"
+                            android:id="@+id/tv_fullName_user"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Hán Văn Luân"
+                            android:text="Tên người dùng"
                             android:textSize="@dimen/text_size_h4"
                             android:fontFamily="@font/tiktok_bold"
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/gender_birth"
+                            android:id="@+id/tv_phone_user"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/fullName_user"
+                            android:layout_below="@id/tv_fullName_user"
                             android:textSize="@dimen/text_size_h8"
                             android:textColor="@color/white"
                             android:fontFamily="@font/tiktok_medium"
-                            android:text="Nam - 04/10/2002" />
+                            android:text="Số điện thoại" />
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -386,8 +388,8 @@
                     app:cardElevation="0dp">
 
                     <RelativeLayout
-                        android:clickable="true"
-                        android:focusable="true"
+
+                        android:onClick="@{()-> userViewModel.onLogoutClick()}"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -409,14 +411,6 @@
                             android:textAllCaps="false"
                             android:fontFamily="@font/tiktok_medium"
                             android:textColor="#303030" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_right"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="15dp"
-                            android:layout_alignParentEnd="true" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>

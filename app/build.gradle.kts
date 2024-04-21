@@ -49,7 +49,7 @@ dependencies {
     implementation ("androidx.work:work-runtime:2.7.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("androidx.recyclerview:recyclerview:VERSION")
-
+    implementation ("com.google.android.gms:play-services-vision:20.1.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -60,7 +60,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation ("com.google.code.gson:gson:2.10.0")
 
-
     implementation ("com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3")
+
+    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("com.android.volley:volley:1.2.1")
 
 }

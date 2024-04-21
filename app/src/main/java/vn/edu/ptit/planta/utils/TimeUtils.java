@@ -17,6 +17,15 @@ public class TimeUtils {
         return sdfOutput.format(time);
     }
 
+    @NonNull
+    public static String formatToHHMMSS(Time time) {
+        if (time == null) {
+            return "";
+        }
+        SimpleDateFormat sdfOutput = new SimpleDateFormat("HH:mm:ss");
+        return sdfOutput.format(time);
+    }
+
     public static Time stringToTime(String time) {
         if (time == null) {
             return null;

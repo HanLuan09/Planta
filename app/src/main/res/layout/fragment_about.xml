@@ -5,6 +5,9 @@
 
     <data>
         <import type="android.view.View"/>
+        <variable
+            name="aboutViewModel"
+            type="vn.edu.ptit.planta.ui.myplant.myplantdetail.about.AboutViewModel" />
     </data>
 
     <LinearLayout
@@ -14,7 +17,33 @@
         android:orientation="vertical"
         tools:context=".ui.myplant.myplantdetail.about.AboutFragment">
 
+        <!--   Chưa có dữ liệu     -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:visibility="@{aboutViewModel.isData? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_prof_bloom" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Không lấy được thông tin!"
+                    android:fontFamily="@font/tiktok_medium"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--   Có dữ liệu     -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -38,6 +67,7 @@
                         android:paddingBottom="75dp">
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:visibility="@{aboutViewModel.isData? View.VISIBLE : View.GONE}"
                             android:id="@+id/recyclerview_about"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />

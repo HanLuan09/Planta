@@ -8,6 +8,8 @@ public interface ScheduleNavigator {
 
     public void handleBlackNotification();
 
+    public void handleSubmitNotification();
+
     public void handleEditNotification(MySchedule schedule);
 
 }

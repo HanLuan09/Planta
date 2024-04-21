@@ -1,5 +1,9 @@
 package vn.edu.ptit.planta.ui.myplant;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +18,15 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 import vn.edu.ptit.planta.R;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 
 public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.MyPlantViewHolder> {
 
-    private List<String> listMyPlants;
+    private List<MyPlant> listMyPlants;
 
     private MyPlantNavigator myPlantNavigator;
 
-    public MyPlantAdapter(List<String> listMyPlants) {
+    public MyPlantAdapter(List<MyPlant> listMyPlants) {
         this.listMyPlants = listMyPlants;
     }
 
@@ -29,7 +34,7 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.MyPlantV
         this.myPlantNavigator = navigator;
     }
 
-    public void updateData(List<String> newData) {
+    public void updateData(List<MyPlant> newData) {
         this.listMyPlants = newData;
         notifyDataSetChanged();
     }
@@ -43,16 +48,17 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.MyPlantV
 
     @Override
     public void onBindViewHolder(@NonNull MyPlantViewHolder holder, int position) {
-        String s = listMyPlants.get(position);
-        if(s == null) return;
-        holder.textViewName.setText(s);
-        holder.textViewDesc.setText("10/12/2023");
-        holder.shapeableImageView.setImageResource(R.drawable.plant_img);
+        MyPlant myPlant = listMyPlants.get(position);
+        if(myPlant == null) return;
+
+        holder.textViewName.setText(myPlant.getName());
+        holder.textViewDesc.setText(myPlant.getGrownDate());
+        myPlantNavigator.glideImage(myPlant.getImage(),holder.shapeableImageView);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(myPlantNavigator != null) myPlantNavigator.handleMyPlantDetail();
+                if(myPlantNavigator != null) myPlantNavigator.handleMyPlantDetail(myPlant);
             }
         });
     }

@@ -57,13 +57,13 @@
                     android:ellipsize="end"/>
 
                 <TextView
-                    android:id="@+id/tv_desc_plant"
+                    android:id="@+id/tv_type_plant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:textSize="12sp"
                     android:textColor="@color/colorPrimary"
-                    android:text="Khu vườn 20/12/2023"
+                    android:text="Loại cây"
                     android:maxLines="1"
                     android:ellipsize="end"/>
             </LinearLayout>

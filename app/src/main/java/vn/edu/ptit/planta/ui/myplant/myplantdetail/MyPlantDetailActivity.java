@@ -3,6 +3,7 @@ package vn.edu.ptit.planta.ui.myplant.myplantdetail;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityMyPlantDetailBinding;
+import vn.edu.ptit.planta.model.myplant.MyPlant;
 import vn.edu.ptit.planta.ui.myplant.editmyplant.EditMyPlantActivity;
 
 public class MyPlantDetailActivity extends AppCompatActivity {
@@ -33,6 +35,7 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     private MyPlantDetailPagerAdapter adapter;
     private Toolbar toolbar;
     private Bundle bundle;
+    private MyPlant myPlant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +77,20 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     }
 
     private void initBundle() {
+
         bundle = getIntent().getExtras();
         if(bundle == null) return;
+        myPlant = (MyPlant) bundle.getSerializable("myplant");
+
         int id = bundle.getInt("id_myplant");
-        String name = bundle.getString("name_myplant");
-        String image = bundle.getString("image_myplant");
+        String name = myPlant == null? bundle.getString("name_myplant") : myPlant.getName();
+        String image = myPlant == null? bundle.getString("image_myplant") : myPlant.getImage();
 
         binding.collapsingToolbar.setTitle(name);
 
         Glide.with(this)
                 .load(image)
+                .placeholder(R.drawable.icon_no_mob)
                 .override(400,400)
                 .into(binding.ivMyPlantDetail);
     }
@@ -117,8 +124,13 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_edit) {
+            Bundle bundleOfEdit = new Bundle();
+            bundleOfEdit.putSerializable("myplant",myPlant);
+
             Intent intent = new Intent(this, EditMyPlantActivity.class);
+            intent.putExtras(bundleOfEdit);
             startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);

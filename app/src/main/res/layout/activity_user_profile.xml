@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="User information"
+                    android:gravity="start"
+                    android:textColor="@color/colorGreenBanana"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/tiktok_bold"></TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="30dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="30dp"
+                        android:paddingBottom="75dp">
+
+                        <Switch
+                            android:id="@+id/switch_enable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Chỉnh sửa thông tin"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/tiktok_medium"
+                            android:paddingVertical="20dp"
+                            android:ellipsize="end"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_name"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginTop="5dp"
+                            android:foreground="?android:attr/selectableItemBackground">
+
+                            <LinearLayout
+                                android:id="@+id/layout_expand_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/rounder_background"
+                                android:gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10">
+
+                                    <LinearLayout
+                                        android:id="@+id/layout_title_user_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_user_name"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/tiktok_bold"
+                                            android:paddingVertical="10dp"
+                                            android:text="Tên người dùng"
+                                            android:maxLines="1"
+                                            android:ellipsize="end"/>
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_content_user_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/layout_title_user_name"
+                                android:layout_marginTop="40dp"
+                                android:layout_marginHorizontal="20dp"
+                                android:paddingBottom="10dp">
+
+                                <EditText
+                                    android:id="@+id/et_content_user_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Tên người dùng"
+                                    android:inputType="textPersonName"
+                                    android:paddingVertical="10dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:background="@android:color/transparent"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_phone"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginTop="5dp"
+                            android:foreground="?android:attr/selectableItemBackground">
+
+                            <LinearLayout
+                                android:id="@+id/layout_expand_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/rounder_background"
+                                android:gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10">
+
+                                    <LinearLayout
+                                        android:id="@+id/layout_title_user_phone"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_title_user_phone"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/tiktok_bold"
+                                            android:text="Số điện thoại"
+                                            android:paddingVertical="10dp"
+                                            android:maxLines="1"
+                                            android:ellipsize="end"/>
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_content_user_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/layout_title_user_phone"
+                                android:layout_marginTop="40dp"
+                                android:layout_marginHorizontal="20dp"
+                                android:paddingBottom="10dp">
+
+                                <EditText
+                                    android:id="@+id/et_content_user_phone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Số điện thoại"
+                                    android:inputType="text"
+                                    android:paddingVertical="10dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:background="@android:color/transparent"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_email"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginTop="5dp"
+                            android:foreground="?android:attr/selectableItemBackground">
+
+                            <LinearLayout
+                                android:id="@+id/layout_expand_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/rounder_background"
+                                android:gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10">
+
+                                    <LinearLayout
+                                        android:id="@+id/layout_title_user_email"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_title_user_email"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/tiktok_bold"
+                                            android:paddingVertical="10dp"
+                                            android:text="Email"
+                                            android:maxLines="1"
+                                            android:ellipsize="end"/>
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_content_user_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/layout_title_user_email"
+                                android:layout_marginTop="40dp"
+                                android:layout_marginHorizontal="20dp"
+                                android:paddingBottom="10dp">
+
+                                <EditText
+                                    android:id="@+id/et_content_user_email"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Email"
+                                    android:inputType="textEmailAddress"
+                                    android:paddingVertical="10dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:background="@android:color/transparent"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_address"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginTop="5dp"
+                            android:foreground="?android:attr/selectableItemBackground">
+
+                            <LinearLayout
+                                android:id="@+id/layout_expand_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/rounder_background"
+                                android:gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10">
+
+                                    <LinearLayout
+                                        android:id="@+id/layout_title_user_address"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_title_user_address"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/tiktok_bold"
+                                            android:paddingVertical="10dp"
+                                            android:text="Địa chỉ"
+                                            android:maxLines="1"
+                                            android:ellipsize="end"/>
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_content_user_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/layout_title_user_address"
+                                android:layout_marginTop="40dp"
+                                android:layout_marginHorizontal="20dp"
+                                android:paddingBottom="10dp">
+
+                                <EditText
+                                    android:id="@+id/et_content_user_address"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Email"
+                                    android:inputType="text"
+                                    android:paddingVertical="10dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:background="@android:color/transparent"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="20dp">
+                            <Button
+                                android:id="@+id/btn_save"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:text="Save"
+                                android:textSize="16dp"
+                                android:fontFamily="@font/tiktok_medium"
+                                android:background="@drawable/background_button_accept"
+                                android:backgroundTint="@color/colorBtnAccept"/>
+
+                            <ProgressBar
+                                android:id="@+id/progressBar"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone"
+                                android:indeterminateTint="@color/white"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

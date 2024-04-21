@@ -19,7 +19,6 @@ import vn.edu.ptit.planta.model.myschedule.MySchedule;
 public class ScheduleViewModel extends ViewModel {
 
     private MutableLiveData<Integer> idMyPlant;
-    private MutableLiveData<Boolean> busy;
     private MutableLiveData<List<MySchedule>> listSchedules;
     private ScheduleNavigator scheduleNavigator;
     private MutableLiveData<Boolean> isCheckBlack;
@@ -45,15 +44,6 @@ public class ScheduleViewModel extends ViewModel {
         if(isCheckBlack == null) isCheckBlack = new MutableLiveData<>();
         return isCheckBlack;
     }
-    public MutableLiveData<Boolean> getBusy() {
-
-        if (busy == null) {
-            busy = new MutableLiveData<>();
-            busy.setValue(false);
-        }
-
-        return busy;
-    }
 
     public void initDataSchedule() {
         RetrofitClient.getMyScheduleService().myScheduleByPlant(idMyPlant.getValue()).enqueue(new Callback<ApiResponse<List<MySchedule>>>() {
@@ -63,14 +53,11 @@ public class ScheduleViewModel extends ViewModel {
                     ApiResponse<List<MySchedule>> apiResponse = response.body();
                     listSchedules.setValue(apiResponse.getResult());
                     isCheckBlack.setValue(listSchedules.getValue().size()>0? true: false);
-                }else{
-
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<MySchedule>>> call, Throwable throwable) {
-                Log.e("test 2", "Error: " + throwable.toString());
 
             }
         });
@@ -82,15 +69,7 @@ public class ScheduleViewModel extends ViewModel {
     }
 
     public void handleSubmit() {
-        getBusy().setValue(true); //View.VISIBLE
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                scheduleNavigator.handleBlackNotification();
-                busy.setValue(false); // == View.GONE
-
-            }
-        }, 3000);
+        scheduleNavigator.handleSubmitNotification();
     }
     public void onBlackClick(){
         if(scheduleNavigator != null) scheduleNavigator.handleBlackNotification();
