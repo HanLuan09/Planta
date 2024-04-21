@@ -1,4 +1,4 @@
-package vn.edu.ptit.planta.ui.schedule.notification;
+package vn.edu.ptit.planta.ui.schedule.schedulecare;
 
 import android.os.Handler;
 
@@ -16,9 +16,9 @@ import vn.edu.ptit.planta.model.ApiResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
 
-public class AddNotificationViewModel extends ViewModel {
+public class ScheduleCareViewModel extends ViewModel {
 
-    private NotificationNavigator notificationNavigator;
+    private ScheduleCareNavigator notificationNavigator;
     private MutableLiveData<Integer> checkDialog;
     private MutableLiveData<Integer> idMySchedule;
     private MutableLiveData<String> exercise;
@@ -33,7 +33,7 @@ public class AddNotificationViewModel extends ViewModel {
     private boolean edit = false;
 
 
-    public void setNotificationNavigator(NotificationNavigator navigator) {
+    public void setNotificationNavigator(ScheduleCareNavigator navigator) {
         this.notificationNavigator = navigator;
     }
 

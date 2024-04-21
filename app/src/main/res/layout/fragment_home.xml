@@ -48,6 +48,7 @@
                     android:layout_centerVertical="true">
 
                     <ImageView
+                        android:onClick="@{() -> homeViewModel.onNotificationClick()}"
                         style="@style/Widget.AppCompat.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

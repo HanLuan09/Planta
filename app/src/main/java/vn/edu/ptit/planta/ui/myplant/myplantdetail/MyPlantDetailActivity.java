@@ -77,11 +77,14 @@ public class MyPlantDetailActivity extends AppCompatActivity {
     }
 
     private void initBundle() {
+
         bundle = getIntent().getExtras();
+        if(bundle == null) return;
         myPlant = (MyPlant) bundle.getSerializable("myplant");
-        int id = myPlant.getId();
-        String name = myPlant.getName();
-        String image = myPlant.getImage();
+
+        int id = bundle.getInt("id_myplant");
+        String name = myPlant == null? bundle.getString("name_myplant") : myPlant.getName();
+        String image = myPlant == null? bundle.getString("image_myplant") : myPlant.getImage();
 
         binding.collapsingToolbar.setTitle(name);
 

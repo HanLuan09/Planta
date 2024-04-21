@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +40,7 @@ import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareCalendarAdapter;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareScheduleCalendarAdapter;
-import vn.edu.ptit.planta.ui.schedule.notification.AddNotificationActivity;
+import vn.edu.ptit.planta.ui.schedule.schedulecare.ScheduleCareActivity;
 import vn.edu.ptit.planta.utils.DateUtils;
 import vn.edu.ptit.planta.utils.TimeUtils;
 
@@ -153,7 +152,7 @@ public class CareFragment extends Fragment implements CareNavigator {
 
     @Override
     public void handleEditNotification(MySchedule schedule) {
-        Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
+        Intent intent = new Intent(requireContext(), ScheduleCareActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("schedule_care", schedule);
         bundle.putInt("care_id", 1);
@@ -164,7 +163,7 @@ public class CareFragment extends Fragment implements CareNavigator {
 
     @Override
     public void handleAddNotification() {
-        Intent intent = new Intent(requireContext(), AddNotificationActivity.class);
+        Intent intent = new Intent(requireContext(), ScheduleCareActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
         intent.putExtras(bundle);

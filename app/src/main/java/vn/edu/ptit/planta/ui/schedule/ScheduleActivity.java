@@ -14,16 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -39,10 +36,8 @@ import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.ActivityScheduleBinding;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.ui.MainActivity;
-import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.CareFragment;
-import vn.edu.ptit.planta.ui.myplant.myplantdetail.care.adapter.CareAdapter;
 import vn.edu.ptit.planta.ui.schedule.adapter.ScheduleAdapter;
-import vn.edu.ptit.planta.ui.schedule.notification.AddNotificationActivity;
+import vn.edu.ptit.planta.ui.schedule.schedulecare.ScheduleCareActivity;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleNavigator {
 
@@ -131,7 +126,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
 
     @Override
     public void handleAddNotification() {
-        Intent intent = new Intent(this, AddNotificationActivity.class);
+        Intent intent = new Intent(this, ScheduleCareActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("care_my_plant_id", viewModel.getIdMyPlant().getValue());
         intent.putExtras(bundle);
@@ -142,13 +137,20 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleNavig
     @Override
     public void handleBlackNotification() {
         final Dialog dialog = new Dialog(this);
+        openDialog(dialog,  "Xác nhận bỏ qua lịch trình");
+        dialog.show();
+    }
+
+    @Override
+    public void handleSubmitNotification() {
+        final Dialog dialog = new Dialog(this);
         openDialog(dialog,  "Xác nhận hoàn thành lịch trình");
         dialog.show();
     }
 
     @Override
     public void handleEditNotification(MySchedule schedule) {
-        Intent intent = new Intent(this, AddNotificationActivity.class);
+        Intent intent = new Intent(this, ScheduleCareActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("schedule_care", schedule);
         bundle.putInt("care_id", 1);

@@ -1,11 +1,9 @@
-package vn.edu.ptit.planta.ui.schedule.notification;
+package vn.edu.ptit.planta.ui.schedule.schedulecare;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +23,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.databinding.BottomSheetFrequencyBinding;
-import vn.edu.ptit.planta.ui.home.HomeViewModel;
 
 public class FrequencyBottomSheet extends BottomSheetDialogFragment {
 
     private BottomSheetFrequencyBinding binding;
-    private AddNotificationViewModel viewModel;
+    private ScheduleCareViewModel viewModel;
     private Button buttonDialog;
     private NumberPicker numberPicker;
 
@@ -46,7 +43,7 @@ public class FrequencyBottomSheet extends BottomSheetDialogFragment {
         BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
 
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.bottom_sheet_frequency, null, false);
-        viewModel = new ViewModelProvider(requireActivity()).get(AddNotificationViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(ScheduleCareViewModel.class);
         binding.setNotificationViewModel(viewModel);
         binding.setLifecycleOwner(this);
 

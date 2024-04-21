@@ -69,7 +69,7 @@ public class ScheduleViewModel extends ViewModel {
     }
 
     public void handleSubmit() {
-        scheduleNavigator.handleBlackNotification();
+        scheduleNavigator.handleSubmitNotification();
     }
     public void onBlackClick(){
         if(scheduleNavigator != null) scheduleNavigator.handleBlackNotification();

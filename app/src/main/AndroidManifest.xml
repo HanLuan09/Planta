@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.notification.NotificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.plant.search.PlantSearchActivity"
             android:exported="false" />
         <activity
@@ -29,7 +32,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Planta" />
         <activity
-            android:name=".ui.schedule.notification.AddNotificationActivity"
+            android:name=".ui.schedule.schedulecare.ScheduleCareActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

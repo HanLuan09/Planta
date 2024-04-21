@@ -1,4 +1,4 @@
-package vn.edu.ptit.planta.ui.schedule.notification;
+package vn.edu.ptit.planta.ui.schedule.schedulecare;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,26 +31,25 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import vn.edu.ptit.planta.R;
-import vn.edu.ptit.planta.databinding.ActivityAddNotificationBinding;
+import vn.edu.ptit.planta.databinding.ActivityScheduleCareBinding;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
 import vn.edu.ptit.planta.utils.DateUtils;
 import vn.edu.ptit.planta.utils.TimeUtils;
 
-public class AddNotificationActivity extends AppCompatActivity implements NotificationNavigator {
+public class ScheduleCareActivity extends AppCompatActivity implements ScheduleCareNavigator {
 
-    private ActivityAddNotificationBinding binding;
-    private AddNotificationViewModel viewModel;
-
+    private ActivityScheduleCareBinding binding;
+    private ScheduleCareViewModel viewModel;
     private int careId = 0;
     private int myplantId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_notification);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule_care);
 
-        viewModel = new ViewModelProvider(this).get(AddNotificationViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ScheduleCareViewModel.class);
         binding.setNotificationViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
@@ -250,7 +249,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
     @Override
     public void handleDialogScheduleSuccess(String message) {
 
-        Toast toast = new Toast(AddNotificationActivity.this);
+        Toast toast = new Toast(ScheduleCareActivity.this);
         View view = getLayoutInflater().inflate(R.layout.layout_custom_toast, (ViewGroup) findViewById(R.id.layout_custom_toast));
         TextView tvMessage = view.findViewById(R.id.toast_text_message);
         TextView tvTitle = view.findViewById(R.id.toast_text_title);
@@ -272,7 +271,7 @@ public class AddNotificationActivity extends AppCompatActivity implements Notifi
 
     @Override
     public void handleDialogScheduleFail(String message) {
-        Toast toast = new Toast(AddNotificationActivity.this);
+        Toast toast = new Toast(ScheduleCareActivity.this);
         View view = getLayoutInflater().inflate(R.layout.layout_custom_toast, (ViewGroup) findViewById(R.id.layout_custom_toast));
         TextView tvMessage = view.findViewById(R.id.toast_text_message);
         TextView tvTitle = view.findViewById(R.id.toast_text_title);

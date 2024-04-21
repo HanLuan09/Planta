@@ -98,6 +98,7 @@ public class MyPlantFragment extends Fragment implements MyPlantNavigator {
         Intent intent = new Intent(requireContext(), MyPlantDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("myplant",myPlant);
+        bundle.putInt("id_myplant", myPlant.getId());
 
         intent.putExtras(bundle);
         startActivity(intent);
