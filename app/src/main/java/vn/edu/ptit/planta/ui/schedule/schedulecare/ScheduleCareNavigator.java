@@ -1,6 +1,6 @@
-package vn.edu.ptit.planta.ui.schedule.notification;
+package vn.edu.ptit.planta.ui.schedule.schedulecare;
 
-public interface NotificationNavigator {
+public interface ScheduleCareNavigator {
 
     public void handleError(Throwable throwable);
     public void handleCloseNotification();

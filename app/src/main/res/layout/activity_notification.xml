@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".ui.notification.NotificationActivity">
+
+    <ImageView
+        android:id="@+id/id_btn_noti"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_backspace"
+        app:tint="@color/black"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/id_btn_noti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llDoC"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtTemper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="92dp"
+                    android:text="27°C"
+                    android:textColor="@color/white"
+                    android:textSize="80dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imgWeatherIcon"
+                    android:layout_weight="1"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintStart_toEndOf="@+id/txtTemper"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/icon_no_image" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="24dp"
+                android:layout_below="@id/llDoC"
+                android:text="Hà Nội"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <LinearLayout
+                android:id="@+id/llThongtin"
+                android:weightSum="2"
+                android:layout_below="@id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtTemperState"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_below="@id/textView2"
+                    android:text="28"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                <TextView
+                    android:id="@+id/txtHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_below="@id/txtTemperState"
+                    android:text="28"
+                    android:textColor="@color/white"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txtWind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="24dp"
+                android:layout_below="@id/llThongtin"
+                android:text="28"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtChuY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="24dp"
+                android:layout_below="@id/txtWind"
+                android:text="Chú ý:"
+                android:textColor="@color/red"
+                android:textSize="30dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtWind" />
+
+            <TextView
+                android:id="@+id/txtAdviceTemp"
+                android:layout_below="@id/txtChuY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="20dp"
+                android:text="temp"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="@id/txtChuY"
+                app:layout_constraintTop_toBottomOf="@+id/txtChuY" />
+            <TextView
+                android:id="@+id/txtAdviceHumi"
+                android:layout_below="@id/txtAdviceTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="20dp"
+                android:text="humi"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="@id/txtChuY"
+                app:layout_constraintTop_toBottomOf="@+id/txtChuY" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

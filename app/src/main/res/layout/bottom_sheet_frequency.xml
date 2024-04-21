@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="notificationViewModel"
-            type="vn.edu.ptit.planta.ui.schedule.notification.AddNotificationViewModel" />
+            type="vn.edu.ptit.planta.ui.schedule.schedulecare.ScheduleCareViewModel" />
     </data>
 
     <LinearLayout

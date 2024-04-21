@@ -7,13 +7,13 @@
         <import type="android.view.View"/>
         <variable
             name="notificationViewModel"
-            type="vn.edu.ptit.planta.ui.schedule.notification.AddNotificationViewModel" />
+            type="vn.edu.ptit.planta.ui.schedule.schedulecare.ScheduleCareViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.schedule.notification.AddNotificationActivity"
+        tools:context=".ui.schedule.schedulecare.ScheduleCareActivity"
         android:background="@color/white"
         android:padding="10dp">
 

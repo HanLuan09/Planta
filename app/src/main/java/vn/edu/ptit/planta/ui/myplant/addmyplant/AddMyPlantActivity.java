@@ -252,12 +252,13 @@ public class AddMyPlantActivity extends AppCompatActivity {
         });
     }
 
-    private void responseTrue(String message, MyPlantRequest myPlantResponse) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("my_plant_id",myPlantResponse.getId());
+    private void responseTrue(String message, @NonNull MyPlantRequest myPlantResponse) {
 
         Toast.makeText(this, message + " Tiếp tục đặt lịch trình!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AddMyPlantActivity.this, ScheduleActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("my_plant_id_page_add",myPlantResponse.getId());
+        bundle.putString("my_plant_image_page_add",myPlantResponse.getImage());
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
