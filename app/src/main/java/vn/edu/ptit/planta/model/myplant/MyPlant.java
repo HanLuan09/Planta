@@ -2,6 +2,8 @@ package vn.edu.ptit.planta.model.myplant;
 
 import java.util.Date;
 
+import vn.edu.ptit.planta.model.plant.Plant;
+
 public class MyPlant {
     private int id;
     private String name;

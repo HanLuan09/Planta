@@ -46,7 +46,6 @@
                 app:shapeAppearanceOverlay="@style/MyShapeAppearanceOverlay"
                 app:tint="@color/white" />
 
-
         </LinearLayout>
 
     </RelativeLayout>
