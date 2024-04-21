@@ -1,6 +1,8 @@
 package vn.edu.ptit.planta.ui.note;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
     private String id;
     private String description;
     private String date;
@@ -8,16 +10,19 @@ public class Note {
     private String fruits;
     private String height;
 
+    private String image;
+
     public Note() {
     }
 
-    public Note(String id, String description, String date, String flowers, String fruits, String height) {
+    public Note(String id, String description, String date, String flowers, String fruits, String height, String image) {
         this.id = id;
         this.description = description;
         this.date = date;
         this.flowers = flowers;
         this.fruits = fruits;
         this.height = height;
+        this.image = image;
     }
 
     public String getId() {
@@ -66,5 +71,13 @@ public class Note {
 
     public void setHeight(String height) {
         this.height = height;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
