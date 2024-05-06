@@ -1,22 +1,18 @@
 package vn.edu.ptit.planta.ui.note;
 
-import static android.content.Intent.getIntent;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
-import android.content.Intent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,34 +26,48 @@ import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.data.service.NoteService;
 import vn.edu.ptit.planta.model.ApiResponse;
 
-public class NoteFragment extends Fragment {
+public class NoteFragment extends Fragment implements OnNoteAddedListener{
 
     private RecyclerView recyclerView;
+
+//    private ListView listView;
     private NoteAdapter adapter;
     private NoteService noteService;
+
+    int myPlantId = 0;
+
+    // Khai báo một biến để lưu trữ tham chiếu đến NoteFragment
+    private static NoteFragment instance;
+
+    // Phương thức static để cung cấp tham chiếu đến NoteFragment
+    public static NoteFragment getInstance() {
+        return instance;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        instance = this;
+    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note, container, false);
-
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.listView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // Khởi tạo NoteService
+//
+//        // Khởi tạo NoteService
         noteService = RetrofitClient.getNoteService();
-        int myPlantId = 0;
+//
         Bundle bundle = getArguments();
         if (bundle != null) {
             myPlantId = bundle.getInt("id_myplant");
-            //viewModel.getIdMyPlant().setValue(myPlantId);
         }
-
 
         // Gọi phương thức để lấy danh sách ghi chú từ API
         fetchNotesByPlantId(myPlantId);
-        Toast.makeText(getContext(), "Id đây " + myPlantId, Toast.LENGTH_SHORT).show();
 
 
         FloatingActionButton addNoteButton = view.findViewById(R.id.addNote);
@@ -81,8 +91,9 @@ public class NoteFragment extends Fragment {
                     if (apiResponse != null && apiResponse.getResult() != null) {
                         // Cập nhật danh sách ghi chú mới
                         List<Note> notes = apiResponse.getResult();
-                        updateNotesList(notes);
-                        Toast.makeText(getContext(), "Danh sách ghi chú đã được cập nhật!", Toast.LENGTH_SHORT).show();
+                        adapter = new NoteAdapter(getContext(), (ArrayList<Note>) notes);
+                        recyclerView.setAdapter(adapter);
+//                        Toast.makeText(getContext(), "Danh sách ghi chú đã được cập nhật!", Toast.LENGTH_SHORT).show();
                         // Hoặc ghi log
                         Log.d("NoteFragment", "Danh sách ghi chú đã được cập nhật!");
                     }
@@ -104,14 +115,19 @@ public class NoteFragment extends Fragment {
     }
 
 
-    private void updateNotesList(List<Note> notes) {
-        // Cập nhật danh sách ghi chú vào adapter
-        adapter = new NoteAdapter(getContext(), (ArrayList<Note>) notes);
-        recyclerView.setAdapter(adapter);
-    }
-
     private void openAddNoteDialog() {
         DialogNote dialogNote = new DialogNote();
+
+        Bundle args = new Bundle();
+        args.putInt("id_myplant1", myPlantId);
+        dialogNote.setArguments(args);
+
+        dialogNote.setOnNoteAddedListener(this);
         dialogNote.show(getChildFragmentManager(), "DialogNote");
+    }
+
+    @Override
+    public void onNoteAdded() {
+        fetchNotesByPlantId(myPlantId);
     }
 }

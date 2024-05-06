@@ -3,8 +3,6 @@ package vn.edu.ptit.planta.ui.myplant;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +28,7 @@ import vn.edu.ptit.planta.databinding.FragmentMyPlantBinding;
 import vn.edu.ptit.planta.model.myplant.MyPlant;
 import vn.edu.ptit.planta.ui.myplant.myplantdetail.MyPlantDetailActivity;
 import vn.edu.ptit.planta.ui.myplant.search.SearchMyPlantActivity;
+import vn.edu.ptit.planta.ui.note.NoteFragment;
 
 public class MyPlantFragment extends Fragment implements MyPlantNavigator {
     private FragmentMyPlantBinding binding;

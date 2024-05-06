@@ -62,6 +62,7 @@
             android:label="@string/title_activity_search_my_plant"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Planta" />
+        <activity android:name=".ui.note.NoteFragment" />
         <activity
             android:name=".ui.guesthome.GuestHomeActivity"
             android:exported="false"

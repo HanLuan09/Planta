@@ -14,6 +14,8 @@ import vn.edu.ptit.planta.model.care.CareCalendarResponse;
 import vn.edu.ptit.planta.model.myschedule.MySchedule;
 import vn.edu.ptit.planta.model.myschedule.MyScheduleRequest;
 import vn.edu.ptit.planta.ui.note.Note;
+import vn.edu.ptit.planta.ui.note.NoteResponse;
+import vn.edu.ptit.planta.ui.note.SampleResponse;
 
 public interface NoteService {
     @GET("notes")
@@ -23,7 +25,7 @@ public interface NoteService {
     Call<ApiResponse<Note>> getNoteById(@Path("id") int id);
 
     @POST("notes")
-    Call<ApiResponse<Note>> createNote(@Body Note note);
+    Call<ApiResponse<NoteResponse>> createNote(@Body NoteResponse note);
 
     @PUT("notes/{id}")
     Call<ApiResponse<Note>> updateNote(@Path("id") int id, @Body Note note);
@@ -33,5 +35,9 @@ public interface NoteService {
 
     @GET("notes/by-plant/{idMyPlant}")
     Call<ApiResponse<List<Note>>> getAllNotesByMyPlantId(@Path("idMyPlant") int idMyPlant);
+
+    @GET("notes/sample/{idMyPlant}")
+    Call<ApiResponse<SampleResponse>> getSampleByMyPlantId(@Path("idMyPlant") int idMyPlant);
+
 }
 

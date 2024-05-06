@@ -1,7 +1,5 @@
 package vn.edu.ptit.planta.ui.note;
 
-import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -10,9 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.telecom.Call;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,47 +29,39 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import retrofit2.Callback;
-import retrofit2.HttpException;
 import retrofit2.Response;
 import vn.edu.ptit.planta.R;
 import vn.edu.ptit.planta.data.RetrofitClient;
 import vn.edu.ptit.planta.model.ApiResponse;
-import vn.edu.ptit.planta.ui.MainActivity;
 
-public class DialogNote extends DialogFragment {
-
+public class UpdateNote extends DialogFragment {
     private static final int REQUEST_IMAGE_CAPTURE = 141;
     ImageView plantImageView;
-    ImageView captureButton;
 
     Bitmap capturedPhoto;
 
+    ImageView captureButton;
+
     int myPlantId = 0;
 
-    private OnNoteAddedListener onNoteAddedListener;
+    Bitmap bitmap;
 
-    public void setOnNoteAddedListener(OnNoteAddedListener listener) {
-        this.onNoteAddedListener = listener;
+    String imgBase64;
+
+    String selectedDate;
+
+    public void setOnNoteUpdateListener(View.OnClickListener onClickListener) {
     }
 
-    private OnNoteUpdate onNoteUpdate;
-
-    public void setOnNoteUpdateListener(OnNoteUpdate listener) {
-        this.onNoteUpdate = listener;
-    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_note, null);
+        View dialogView = inflater.inflate(R.layout.dialog_note_update, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setView(dialogView);
@@ -79,12 +69,36 @@ public class DialogNote extends DialogFragment {
         final EditText edDes, edFlower, edFruit, edHeight;
         final TextView tvSelectedDate;
         final ImageView tvSelectedDate1;
+
         edDes = dialogView.findViewById(R.id.edDes);
         tvSelectedDate = dialogView.findViewById(R.id.tvSelectedDate);
         tvSelectedDate1 = dialogView.findViewById(R.id.tvSelectedDate1);
         edFlower = dialogView.findViewById(R.id.edFlower);
         edFruit = dialogView.findViewById(R.id.edFruit);
         edHeight = dialogView.findViewById(R.id.edHeight);
+        plantImageView = dialogView.findViewById(R.id.surfaceView);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String description = bundle.getString("description");
+            String date = bundle.getString("date");
+            int flowers = bundle.getInt("flowers");
+            int fruits = bundle.getInt("fruits");
+            int height = bundle.getInt("height");
+            imgBase64 = bundle.getString("img");
+            int id = bundle.getInt("id");
+
+            edDes.setText(description);
+            tvSelectedDate.setText(date);
+            edFlower.setText(String.valueOf(flowers));
+            edFruit.setText(String.valueOf(fruits));
+            edHeight.setText(String.valueOf(height));
+            if (imgBase64 != null && !imgBase64.isEmpty()) {
+                byte[] decodedString = Base64.decode(imgBase64, Base64.DEFAULT);
+                bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                plantImageView.setImageBitmap(bitmap);
+            }
+        }
 
         tvSelectedDate1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +115,7 @@ public class DialogNote extends DialogFragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         // Xử lý khi người dùng chọn ngày
                         // Ở đây, bạn có thể cập nhật TextView để hiển thị ngày đã chọn
-                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         tvSelectedDate.setText(selectedDate);
                     }
                 }, year, month, dayOfMonth);
@@ -111,10 +125,10 @@ public class DialogNote extends DialogFragment {
             }
         });
 
-        builder.setTitle("Add Note");
-        builder.setIcon(R.drawable.add);
+        builder.setTitle("Update Note");
+        builder.setIcon(R.drawable.update);
 
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Không cần thực hiện bất kỳ hành động nào ở đây
@@ -138,7 +152,7 @@ public class DialogNote extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         String description = edDes.getText().toString();
-                        String date = tvSelectedDate.getText().toString();
+                        String date = tvSelectedDate.getText().toString(); // Lấy ngày đã chọn từ TextView
                         String flowers = edFlower.getText().toString();
                         String fruits = edFruit.getText().toString();
                         String height = edHeight.getText().toString();
@@ -164,18 +178,12 @@ public class DialogNote extends DialogFragment {
 
                         if (isValid) {
                             // Nếu dữ liệu hợp lệ, thực hiện các hành động cần thiết
-                            NoteResponse noteResponse = new NoteResponse();
+                            Note noteResponse = new Note();
                             noteResponse.setDescription(description);
                             noteResponse.setDate(date);
                             noteResponse.setFlowers(Integer.parseInt(flowers));
                             noteResponse.setFruits(Integer.parseInt(fruits));
                             noteResponse.setHeight(Integer.parseInt(height));
-
-                            Bundle bundle = getArguments();
-                            if (bundle != null) {
-                                myPlantId = bundle.getInt("id_myplant1");
-                            }
-
 
 
                             String encodedImage = null;
@@ -187,30 +195,30 @@ public class DialogNote extends DialogFragment {
                                 plantImageView.setImageBitmap(capturedPhoto);
                                 // Lưu chuỗi Base64 vào đối tượng noteResponse
                                 noteResponse.setImage(encodedImage);
+                            }else{
+                                noteResponse.setImage(imgBase64);
                             }
 
-                            noteResponse.setIdmyplant(myPlantId);
 
-                            // Gọi phương thức createNote trong NoteService
-                            RetrofitClient.getNoteService().createNote(noteResponse).enqueue(new Callback<ApiResponse<NoteResponse>>() {
+                            int noteId = getArguments().getInt("id");
+                            RetrofitClient.getNoteService().updateNote(noteId, noteResponse).enqueue(new Callback<ApiResponse<Note>>() {
                                 @Override
-                                public void onResponse(retrofit2.Call<ApiResponse<NoteResponse>> call, Response<ApiResponse<NoteResponse>> response) {
-                                    // Xử lý khi tạo ghi chú thành công
+                                public void onResponse(retrofit2.Call<ApiResponse<Note>> call, Response<ApiResponse<Note>> response) {
+                                    if (response.isSuccessful()) {
 
-                                    if (onNoteAddedListener != null) {
-                                        onNoteAddedListener.onNoteAdded();
+                                        // Gọi phương thức onNoteAdded() của NoteFragment để cập nhật danh sách ghi chú
+                                        NoteFragment.getInstance().onNoteAdded();
+
+                                        Toast.makeText(requireContext(), "Note updated successfully", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(requireContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                                     }
-
-                                    ChartFragment.getInstance().OnUpdate();
-
-                                    Toast.makeText(requireContext(), "Note added successfully", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss(); // Đóng dialog sau khi thêm ghi chú thành công
                                 }
 
                                 @Override
-                                public void onFailure(retrofit2.Call<ApiResponse<NoteResponse>> call, Throwable throwable) {
-                                    // Xử lý khi có lỗi xảy ra khi gọi API
-                                    Toast.makeText(requireContext(), "Failed to add note", Toast.LENGTH_SHORT).show();
+                                public void onFailure(retrofit2.Call<ApiResponse<Note>> call, Throwable throwable) {
+                                    Toast.makeText(requireContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -220,7 +228,7 @@ public class DialogNote extends DialogFragment {
         });
 
         // Improved variable name for clarity
-        plantImageView = dialogView.findViewById(R.id.surfaceView);
+
         captureButton = dialogView.findViewById(R.id.btnCapture);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,5 +261,8 @@ public class DialogNote extends DialogFragment {
         byte[] imageBytes = baos.toByteArray(); // Chuyển đổi ByteArrayOutputStream thành mảng byte
         return Base64.encodeToString(imageBytes, Base64.DEFAULT); // Mã hóa mảng byte thành chuỗi Base64
     }
+
+
+
 
 }

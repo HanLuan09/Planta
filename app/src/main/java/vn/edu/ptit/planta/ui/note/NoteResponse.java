@@ -1,10 +1,8 @@
 package vn.edu.ptit.planta.ui.note;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Note implements Serializable {
-    private int id;
+public class NoteResponse implements Serializable {
     private String description;
     private int flowers;
     private int fruits;
@@ -14,12 +12,11 @@ public class Note implements Serializable {
 
     private Integer idmyplant;
 
-    public Note() {
+    public NoteResponse() {
         super();
     }
 
-    public Note(int id, String description, int flowers, int fruits, int height, String date, String image, Integer idmyplant) {
-        this.id = id;
+    public NoteResponse(String description, int flowers, int fruits, int height, String date, String image, Integer idmyplant) {
         this.description = description;
         this.date = date;
         this.flowers = flowers;
@@ -27,14 +24,6 @@ public class Note implements Serializable {
         this.height = height;
         this.image = image;
         this.idmyplant = idmyplant;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDescription() {
